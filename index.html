@@ -411,6 +411,12 @@
                         <option value="workbook">Workbook</option>
                         <option value="selectedcells">Selected cells(A1)</option>
                       </select>
+                      <div class="selected-cells mt-3">
+                        <div class="">
+                            <label class="form-label">Range</label>
+                            <input type="number" class="form-control">
+                        </div>
+                      </div>
                     </div>  
                     <div class="col-6">
                       <label for="paper-size-${wid}-${tid}" class="form-label">Paper size</label>
@@ -662,7 +668,7 @@
       if(!task) $(`#task-modal-${wid}-${tid}`).modal("show");
 
       // check page setup custom check box
-      $(`.custom-page-input-container, .fit-to-pagebreaks-input-groups, .custom-margin, .custom-paper-size`).hide();
+      $(`.custom-page-input-container, .fit-to-pagebreaks-input-groups, .custom-margin, .custom-paper-size, .selected-cells`).hide();
       $(`#set-custom-page-${wid}-${tid}`).change(function() {
         if ($(`#set-custom-page-${wid}-${tid}`).prop(`checked`)) {
             $(`.custom-page-input-container`).show();
@@ -698,6 +704,16 @@
           $(`.custom-paper-size`).show();
         }else{
           $(`.custom-paper-size`).hide();
+        }
+      });
+
+      // Selected print
+      $(`#print-${wid}-${tid}`).change(function(){
+        let selectedValue = $(this).children("option:selected").val();
+        if(selectedValue === "selectedcells"){
+          $(`.selected-cells`).show();
+        }else{
+          $(`.selected-cells`).hide();
         }
       });
 
