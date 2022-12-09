@@ -433,7 +433,7 @@
                         <option value="workbook">Workbook</option>
                         <option value="selectedcells">Selected cells(A1)</option>
                       </select>
-                      <span class="input-group-text bg-theme">Range</span>
+                      <span class="input-group-text bg-theme range-span">Range</span>
                       <input type="text" class="form-control" id="print-range-${wid}-${tid}" aria-label="Range input" >
                     </div>
                   </td>
@@ -496,9 +496,9 @@
                         <option value="custom">Custom</option>
                         <option value="fittipagebreaks">Fit to pagebreaks (100%)</option>
                       </select>
-                      <span class="input-group-text bg-theme">Break row at</span>
+                      <span class="input-group-text bg-theme break-span">Break row at</span>
                       <input type="number" class="form-control" value="20" id="break-row-${wid}-${tid}">
-                      <span class="input-group-text bg-theme">Break column at</span>
+                      <span class="input-group-text bg-theme break-span">Break column at</span>
                       <input type="number" class="form-control" value="5" id="break-column-${wid}-${tid}">
                     </div>
                   </td>
@@ -630,8 +630,12 @@
       $(`#tasks-point-${wid}`).append(html_task);
       if (!task) $(`#task-modal-${wid}-${tid}`).modal("show");
 
+      // Initially disabled margin and page sizes value
       $(`#margins-top-${wid}-${tid}, #margins-left-${wid}-${tid}, #margins-right-${wid}-${tid}, #margins-bottom-${wid}-${tid}, 
         #size-height-${wid}-${tid},#size-width-${wid}-${tid} `).prop('disabled', true);
+
+      // Hide range, break row at, break column text box
+      $(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
 
       $(`#size-${wid}-${tid}`)
         .on("change", function() {
@@ -704,6 +708,28 @@
             $(`#margins-right-${wid}-${tid}`).val(top.val())
             $(`#margins-bottom-${wid}-${tid}`).val(top.val())
         })
+
+      $(`#print-${wid}-${tid}`)
+        .on("change", function() {
+          var value = $(this)
+            .children('option:selected').val();
+          if(value == "selectedcells"){
+            $(`.range-span, #print-range-${wid}-${tid}`).show()
+          } else{
+            $(`.range-span, #print-range-${wid}-${tid}`).hide()
+          }  
+      })
+
+      $(`#scale-${wid}-${tid}`)
+        .on("change", function() {
+          var value = $(this)
+            .children('option:selected').val();
+          if(value == "fittipagebreaks"){
+            $(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).show();
+          } else{
+            $(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
+          } 
+      })
 
       $(`.done-${wid}-${tid}`).on('click', function (e) {
         e.preventDefault()
