@@ -34,6 +34,18 @@
       margin-left: 1px solid #c6a5ff;
       z-index: 1;
     }
+    label {
+        font-weight: 500!important;
+        color: #374151!important;
+    }
+  
+		.bg-theme {
+			background: rgba(103, 58, 183, .07) !important;
+		}
+
+		.text-theme {
+			color: #673ab7;
+    }
   </style>
 </head>
 
@@ -431,18 +443,18 @@
                     <label for="size-1d" class="form-label">Paper size</label>
                     <div class="input-group">
                       <select class="form-select" id="size-1d">
-                        <option selected value="letter">Letter (8.5" * 11")</option>
-                        <option value="tabloid">Tabloid (11" * 17")</option>
-                        <option value="legal">Legal (8.5" * 14")</option>
-                        <option value="statement">Statement (5.5" * 8.5")</option>
-                        <option value="executive">Executive (7.25" * 10.5")</option>
-                        <option value="folio">Folio (8.5" * 13")</option>
-                        <option value="a3">A3 (11.69" * 16.54")</option>
-                        <option value="a4">A4 (8.27" * 11.69")</option>
-                        <option value="a5">A5 (5.83" * 8.27")</option>
-                        <option value="b4">B4 (9.84" * 13.90")</option>
-                        <option value="b5">B5 (6.93" * 9.84")</option>
-                        <option value="custom">Custom</option>
+                        <option data-width="8.5" data-height="11" selected="" value="letter">Letter (8.5" x  11")</option data-width="" data-height="">
+                        <option data-width="11" data-height="17" value="tabloid">Tabloid (11" x  17")</option data-width="" data-height="">
+                        <option data-width="8.5" data-height="14" value="legal">Legal (8.5" x  14")</option data-width="" data-height="">
+                        <option data-width="5.5" data-height="8.5" value="statement">Statement (5.5" x  8.5")</option data-width="" data-height="">
+                        <option data-width="7.25" data-height="10.5" value="executive">Executive (7.25" x  10.5")</option data-width="" data-height="">
+                        <option data-width="8.5" data-height="13" value="folio">Folio (8.5" x  13")</option data-width="" data-height="">
+                        <option data-width="11.69" data-height="16.54" value="a3">A3 (11.69" x  16.54")</option data-width="" data-height="">
+                        <option data-width="8.27" data-height="11.69" value="a4">A4 (8.27" x  11.69")</option data-width="" data-height="">
+                        <option data-width="5.83" data-height="8.27" value="a5">A5 (5.83" x  8.27")</option data-width="" data-height="">
+                        <option data-width="9.84" data-height="13.90" value="b4">B4 (9.84" x  13.90")</option data-width="" data-height="">
+                        <option data-width="6.93" data-height="9.84" value="b5">B5 (6.93" x  9.84")</option data-width="" data-height="">
+                        <option data-width="" data-height="" value="custom">Custom</option data-width="" data-height="">
                       </select>
                       <span class="input-group-text">Height</span>
                       <input type="number" class="form-control" id="size-height-1d" value="5.55" step="0.5">
@@ -556,96 +568,52 @@
             </div>
             <!-- Headers & Footers Content -->
             <div class="tab-pane fade" id="nav-headers-footers" role="tabpanel">
-                <div class="row">
-                    <div class=col-4>
-                        <div class="mb-3">
-                            <label for="top-left" class="form-label">Top Left</label>
-                            <input type="text" class="form-control" id="top-left">
-                        </div>
+              <table border="0" style="width:100%">
+                <tr>
+                  <td class="p-3">
+                    <label for="top-left-1d" class="form-label">Top Left</label>
+                    <input type="text" class="form-control" id="top-left-1d">
+                  </td>
+                  <td class="p-3">
+                    <label for="top-middle-1d" class="form-label">Top Middle</label>
+                    <input type="text" class="form-control" id="top-middle-1d">
+                  </td>
+                  <td class="p-3">
+                    <label for="top-right-1d" class="form-label">Top Right</label>
+                    <input type="text" class="form-control" id="top-right-1d">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="p-3">
+                    <label for="bottom-left-1d" class="form-label">Bottom Left</label>
+                    <input type="text" class="form-control" id="bottom-left-1d">
+                  </td>
+                  <td class="p-3">
+                    <label for="bottom-middle-1d" class="form-label">Bottom Middle</label>
+                    <input type="text" class="form-control" id="bottom-middle-1d">
+                  </td>
+                  <td class="p-3">
+                    <label for="bottom-right-1d" class="form-label">Bottom Right</label>
+                    <input type="text" class="form-control" id="bottom-right-1d">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="p-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="frozen-rows-1d">
+                      <label class="form-check-label" for="frozen-rows-1d">
+                        Repeat frozen rows
+                      </label>
                     </div>
-                    <div class=col-4>
-                        <div class="mb-3">
-                            <label for="top-middle" class="form-label">Top Middle</label>
-                            <input type="text" class="form-control" id="top-middle">
-                        </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="frozen-columns-1d">
+                      <label class="form-check-label" for="frozen-columns-1d">
+                        Repeat frozen columns
+                      </label>
                     </div>
-                    <div class=col-4>
-                        <div class="mb-3">
-                            <label for="top-right" class="form-label">Top Right</label>
-                            <input type="text" class="form-control" id="top-right">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class=col-4>
-                        <div class="mb-3">
-                            <label for="bottom-left" class="form-label">Bottom Left</label>
-                            <input type="text" class="form-control" id="bottom-left">
-                        </div>
-                    </div>
-                    <div class=col-4>
-                        <div class="mb-3">
-                            <label for="bottom-middle" class="form-label">Bottom Middle</label>
-                            <input type="text" class="form-control" id="bottom-middle">
-                        </div>
-                    </div>
-                    <div class=col-4>
-                        <div class="mb-3">
-                            <label for="bottom-right" class="form-label">Bottom Right</label>
-                            <input type="text" class="form-control" id="bottom-right">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="page-numbers">
-                            <label class="form-check-label" for="page-numbers">
-                                Page Numbers
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="workbook-title">
-                            <label class="form-check-label" for="workbook-title">
-                                Workbook title
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="sheet-name">
-                            <label class="form-check-label" for="sheet-name">
-                                Sheet name
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="current-date">
-                            <label class="form-check-label" for="current-date">
-                                Current Date
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="current-time">
-                            <label class="form-check-label" for="current-time">
-                                Current Time
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="frozen-rows">
-                            <label class="form-check-label" for="frozen-rows">
-                                Repeat frozen rows
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="frozen-columns">
-                            <label class="form-check-label" for="frozen-columns">
-                                Repeat frozen columns
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                  </td>
+                </tr>
+              </table>
             </div>
         </div>
                         </div>
