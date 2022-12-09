@@ -630,6 +630,9 @@
       $(`#tasks-point-${wid}`).append(html_task);
       if (!task) $(`#task-modal-${wid}-${tid}`).modal("show");
 
+      $(`#margins-top-${wid}-${tid}, #margins-left-${wid}-${tid}, #margins-right-${wid}-${tid}, #margins-bottom-${wid}-${tid}, 
+        #size-height-${wid}-${tid},#size-width-${wid}-${tid} `).prop('disabled', true);
+
       $(`#size-${wid}-${tid}`)
         .on("change", function() {
           var height = $(this)
