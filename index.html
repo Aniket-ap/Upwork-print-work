@@ -391,272 +391,317 @@
 							</div> -->
 							<!-- TAB -->
 							<nav class="mt-5">
-								<div class="nav nav-tabs" role="tablist">
-									<button type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#nav-page-setup-${wid}-${tid}" role="tab" aria-selected="true"> Page Setup <span class="ms-1 d-inline-block rounded-circle"></span>
-									</button>
-									<button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-formating-${wid}-${tid}" role="tab" aria-selected="false"> Formatting </button>
-									<button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-headers-footers-${wid}-${tid}" role="tab" aria-selected="false"> Headers & Footers <span class="ms-1 d-inline-block rounded-circle"></span>
-									</button>
-								</div>
-							</nav>
-							<!-- TAB CONTENT -->
-							<div class="tab-content mt-5">
-								<!-- page setup Content -->
-								<div class="tab-pane fade show active" id="nav-page-setup-${wid}-${tid}" role="tabpanel">
-									<div class="row">
+            <div class="nav nav-tabs" role="tablist">
+                <button type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#nav-page-setup"
+                    role="tab" aria-selected="true"> Page Setup <span class="ms-1 d-inline-block rounded-circle"></span>
+                </button>
+                <button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-formating" role="tab"
+                    aria-selected="false"> Formatting </button>
+                <button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-headers-footers"
+                    role="tab" aria-selected="false"> Headers & Footers <span
+                        class="ms-1 d-inline-block rounded-circle"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- TAB CONTENT -->
+        <div class="tab-content mt-5">
+            <!-- page setup Content -->
+            <div class="tab-pane fade show active" id="nav-page-setup" role="tabpanel">
+                <div class="row">
                     <div class="col-6">
-                      <label for="print-${wid}-${tid}" class="form-label">Print</label>
-                      <select class="form-select" id="print-${wid}-${tid}">
-                        <option selected value="currentsheet">Current sheet</option>
-                        <option value="workbook">Workbook</option>
-                        <option value="selectedcells">Selected cells(A1)</option>
-                      </select>
-                      <div class="selected-cells mt-3">
-                        <div class="">
-                            <label class="form-label">Range</label>
-                            <input type="text" class="form-control">
+                        <div class="row print-row">
+                            <div class="col-12">
+                                <label for="print" class="form-label">Print</label>
+                                <select class="form-select" id="print">
+                                    <option selected value="currentsheet">Current sheet</option>
+                                    <option value="workbook">Workbook</option>
+                                    <option value="selectedcells">Selected cells(A1)</option>
+                                </select>
+                            </div>
+                            <div class="col-6 selected-cells">
+                                <div class="d-flex align-items-end">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Range</span>
+                                        <input type="text" class="form-control" aria-label="Sizing example input"
+                                            aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>  
+                    </div>
                     <div class="col-6">
-                      <label for="paper-size-${wid}-${tid}" class="form-label">Paper size</label>
-                      <select class="form-select" id="paper-size-${wid}-${tid}">
-                        <option selected value="currentsheet">Letter (8.5" * 11")</option>
-                        <option value="currentsheet">Tabloid (11" * 17")</option>
-                        <option value="currentsheet">Legal (8.5" * 14")</option>
-                        <option value="currentsheet">Statement (5.5" * 8.5")</option>
-                        <option value="currentsheet">Executive (7.25" * 10.5")</option>
-                        <option value="currentsheet">Folio (8.5" * 13")</option>
-                        <option value="currentsheet">A3 (11.69" * 16.54")</option>
-                        <option value="currentsheet">A4 (8.27" * 11.69")</option>
-                        <option value="currentsheet">A5 (5.83" * 8.27")</option>
-                        <option value="currentsheet">B4 (9.84" * 13.90")</option>
-                        <option value="currentsheet">B5 (6.93" * 9.84")</option>
-                        <option value="custom">Custom</option>
-                      </select>
-                      <div class="row custom-paper-size mt-3">
-                        <div class=col-6>
-                          <div class="">
-                            <label class="form-label">Height</label>
-                            <input type="number" class="form-control" value="5.55" step="0.5">
-                          </div>
-                        </div>   
-                        <div class=col-6>
-                          <div class="">
-                            <label class="form-label">Width</label>
-                            <input type="number" class="form-control" value="9.99" step="0.5" >
-                          </div>
-                        </div>   
-                      </div>
-                    </div>  
-                  </div>
-									<div class="row mt-3">
-                    <div class="col-6">
-                      <label for="margin-${wid}-${tid}" class="form-label">Margins</label>
-                      <select class="form-select" id="margin-${wid}-${tid}">
-                        <option selected value="currentsheet">Normal</option>
-                        <option value="workbook">Narrow</option>
-                        <option value="selectedcells">Wide</option>
-                        <option value="custom">Custom</option>
-                      </select>
-                    </div>  
-                    <div class="col-6">
-                      <label for="scale-${wid}-${tid}" class="form-label">Scale</label>
-                      <select class="form-select" id="scale-${wid}-${tid}">
-                        <option selected value="normal">Normal (100%)</option>
-                        <option value="fittowidth">Fit to width</option>
-                        <option value="fittoheight">Fit to height</option>
-                        <option value="fittopage">Fit to page</option>
-                        <option value="fittipagebreaks">Fit to pagebreaks (100%)</option>
-                      </select>
-                    </div>  
-                  </div>
-									<div class="row mt-4">
-                    <div class="col-6">
-                      <div class="custom-margin">
-                        <div class="row">
-                          <div class="col-6 input-group mb-3">
-                            <span class="input-group-text" id="basic-addon3">Top</span>
-                            <input type="number" class="form-control" value="0.1" id="basic-url" aria-describedby="basic-addon3">
-                          </div>
-                          <div class="col-6 input-group mb-3">
-                            <span class="input-group-text" id="basic-addon3">Left</span>
-                            <input type="number" class="form-control" value="1.1" id="basic-url" aria-describedby="basic-addon3">
-                          </div>  
+                        <div class="row paper-size-row">
+                            <div class="col-12">
+                                <label for="paper-size" class="form-label">Paper size</label>
+                                <select class="form-select" id="paper-size">
+                                    <option selected value="currentsheet">Letter (8.5" * 11")</option>
+                                    <option value="currentsheet">Tabloid (11" * 17")</option>
+                                    <option value="currentsheet">Legal (8.5" * 14")</option>
+                                    <option value="currentsheet">Statement (5.5" * 8.5")</option>
+                                    <option value="currentsheet">Executive (7.25" * 10.5")</option>
+                                    <option value="currentsheet">Folio (8.5" * 13")</option>
+                                    <option value="currentsheet">A3 (11.69" * 16.54")</option>
+                                    <option value="currentsheet">A4 (8.27" * 11.69")</option>
+                                    <option value="currentsheet">A5 (5.83" * 8.27")</option>
+                                    <option value="currentsheet">B4 (9.84" * 13.90")</option>
+                                    <option value="currentsheet">B5 (6.93" * 9.84")</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="col-8 d-flex align-items-end">
+                                <div class="row custom-paper-size">
+                                    <div class=col-6>
+                                        <div class="input-group">
+                                            <span class="input-group-text"
+                                                id="inputGroup-sizing-default">Height</span>
+                                            <input type="number" class="form-control" value="5.55" step="0.5">
+                                        </div>
+                                    </div>
+                                    <div class=col-6>
+                                        <div class="input-group">
+                                            <span class="input-group-text"
+                                                id="inputGroup-sizing-default">Width</span>
+                                            <input type="number" class="form-control" value="9.99" step="0.5">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row">
-                          <div class="col-6 input-group mb-3">
-                            <span class="input-group-text" id="basic-addon3">Right</span>
-                            <input type="number" class="form-control" value="2.2" id="basic-url" aria-describedby="basic-addon3">
-                          </div>
-                          <div class="col-6 input-group mb-3">
-                            <span class="input-group-text" id="basic-addon3">Bottom</span>
-                            <input type="number" class="form-control" value="3.3" id="basic-url" aria-describedby="basic-addon3">
-                          </div>  
+                    </div>
+                </div>
+                <!-- 2nd row -->
+                <div class="row mt-3 margin">
+                    <div class="col-12">
+                        <label for="margin" class="form-label">Margins</label>
+                        <select class="form-select" id="margin">
+                            <option selected value="currentsheet">Normal</option>
+                            <option value="workbook">Narrow</option>
+                            <option value="selectedcells">Wide</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="col-9 d-flex align-items-end ">
+                        <div class="row custom-margin">
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon3">Top</span>
+                                    <input type="number" class="form-control" value="0.1" id="basic-url"
+                                        aria-describedby="basic-addon3">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon3">Left</span>
+                                    <input type="number" class="form-control" value="1.1" id="basic-url"
+                                        aria-describedby="basic-addon3">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon3">Right</span>
+                                    <input type="number" class="form-control" value="2.2" id="basic-url"
+                                        aria-describedby="basic-addon3">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon3">Bottom</span>
+                                    <input type="number" class="form-control" value="3.3" id="basic-url"
+                                        aria-describedby="basic-addon3">
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <label class="form-label d-block">Page Orientation</label>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="landscape-${wid}-${tid}" checked>
-                        <label class="form-check-label" for="landscape-${wid}-${tid}">Landscape</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="portait-${wid}-${tid}" >
-                        <label class="form-check-label" for="portait-${wid}-${tid}">Portait</label>
-                      </div>
-                    </div>  
-                    <div class="col-6 fit-to-pagebreaks-input-groups">
-                      <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon3">Break row at</span>
-                        <input type="number" class="form-control" value="20" id="basic-url" aria-describedby="basic-addon3">
-                      </div>
-                      <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon3">Break column at</span>
-                        <input type="number" class="form-control" value="5" id="basic-url" aria-describedby="basic-addon3">
-                      </div>
-                    </div>  
-                  </div>
-								</div>
-								<!-- Formating Content -->
-								<div class="tab-pane fade" id="nav-formating-${wid}-${tid}" role="tabpanel">
-									<div class="row">
+                    </div>
+                </div>
+                <!-- 3rd row -->
+                <div class="row mt-3 scale">
+                    <div class="col-12">
+                        <label for="scale" class="form-label">Scale</label>
+                        <select class="form-select" id="scale">
+                            <option selected value="normal">Normal (100%)</option>
+                            <option value="fittowidth">Fit to width</option>
+                            <option value="fittoheight">Fit to height</option>
+                            <option value="fittopage">Fit to page</option>
+                            <option value="custom">Custom</option>
+                            <option value="fittipagebreaks">Fit to pagebreaks (100%)</option>
+                        </select>
+                    </div>
+                    <div class="col-8 d-flex align-items-end ">
+                        <div class="row fit-to-pagebreaks-input-groups">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon3">Break row at</span>
+                                    <input type="number" class="form-control" value="20" id="basic-url"
+                                        aria-describedby="basic-addon3">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon3">Break column at</span>
+                                    <input type="number" class="form-control" value="5" id="basic-url"
+                                        aria-describedby="basic-addon3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 4th row -->
+                <div class="row mt-3">
                     <div class="col-6">
-                      <label for="page-order-${wid}-${tid}" class="form-label">Page order</label>
-                      <select class="form-select" id="page-order-${wid}-${tid}">
-                        <option selected value="currentsheet">Over, then down</option>
-                        <option selected value="currentsheet">Down, then over</option>
-                      </select>  
-                    </div>  
+                        <label class="form-label d-block">Page Orientation</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="landscape"
+                                checked>
+                            <label class="form-check-label" for="landscape">Landscape</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="portait">
+                            <label class="form-check-label" for="portait">Portait</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Formating Content -->
+            <div class="tab-pane fade" id="nav-formating" role="tabpanel">
+                <div class="row">
                     <div class="col-6">
-                      <label for="horizontal-${wid}-${tid}" class="form-label">Horizontal Alignment</label>
-                      <select class="form-select" id="horizontal-${wid}-${tid}">
-                        <option selected value="currentsheet">Center</option>
-                        <option value="currentsheet">Left</option>
-                        <option value="currentsheet">Right</option>
-                      </select> 
-                    </div>  
-                  </div>
-                  <div class="row mt-3">
+                        <label for="page-order" class="form-label">Page order</label>
+                        <select class="form-select" id="page-order">
+                            <option selected value="currentsheet">Over, then down</option>
+                            <option value="currentsheet">Down, then over</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="horizontal" class="form-label">Horizontal Alignment</label>
+                        <select class="form-select" id="horizontal">
+                            <option selected value="currentsheet">Center</option>
+                            <option value="currentsheet">Left</option>
+                            <option value="currentsheet">Right</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
                     <div class="col-6 d-flex flex-column justify-content-end">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="showgridlines-${wid}-${tid}">
-                        <label class="form-check-label" for="flexCheckDefault">
-                          Show gridlines
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="shownotes-${wid}-${tid}">
-                        <label class="form-check-label" for="flexCheckDefault">
-                          Show notes
-                        </label>
-                      </div>
-                    </div>  
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="showgridlines">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Show gridlines
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="shownotes">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Show notes
+                            </label>
+                        </div>
+                    </div>
                     <div class="col-6">
-                      <label for="vertical-${wid}-${tid}" class="form-label">Vertical Alignment</label>
-                      <select class="form-select" id="vertical-${wid}-${tid}">
-                        <option selected value="currentsheet">Top</option>
-                        <option value="currentsheet">Bottom</option>
-                        <option value="currentsheet">Center</option>
-                      </select> 
-                    </div>  
-                  </div>
-								</div>
-								<!-- Headers & Footers Content -->
-								<div class="tab-pane fade" id="nav-headers-footers-${wid}-${tid}" role="tabpanel">
-									<div class="row">
+                        <label for="vertical" class="form-label">Vertical Alignment</label>
+                        <select class="form-select" id="vertical">
+                            <option selected value="currentsheet">Top</option>
+                            <option value="currentsheet">Bottom</option>
+                            <option value="currentsheet">Center</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Headers & Footers Content -->
+            <div class="tab-pane fade" id="nav-headers-footers" role="tabpanel">
+                <div class="row">
                     <div class=col-4>
-                      <div class="mb-3">
-                        <label for="top-left-${wid}-${tid}" class="form-label">Top Left</label>
-                        <input type="text" class="form-control" id="top-left-${wid}-${tid}">
-                      </div>
-                    </div>   
+                        <div class="mb-3">
+                            <label for="top-left" class="form-label">Top Left</label>
+                            <input type="text" class="form-control" id="top-left">
+                        </div>
+                    </div>
                     <div class=col-4>
-                      <div class="mb-3">
-                        <label for="top-middle-${wid}-${tid}" class="form-label">Top Middle</label>
-                        <input type="text" class="form-control" id="top-middle-${wid}-${tid}">
-                      </div>
-                    </div>   
+                        <div class="mb-3">
+                            <label for="top-middle" class="form-label">Top Middle</label>
+                            <input type="text" class="form-control" id="top-middle">
+                        </div>
+                    </div>
                     <div class=col-4>
-                      <div class="mb-3">
-                        <label for="top-right-${wid}-${tid}" class="form-label">Top Right</label>
-                        <input type="text" class="form-control" id="top-right-${wid}-${tid}">
-                      </div>
-                    </div>   
-                  </div>
-									<div class="row">
+                        <div class="mb-3">
+                            <label for="top-right" class="form-label">Top Right</label>
+                            <input type="text" class="form-control" id="top-right">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class=col-4>
-                      <div class="mb-3">
-                        <label for="bottom-left-${wid}-${tid}" class="form-label">Bottom Left</label>
-                        <input type="text" class="form-control" id="bottom-left-${wid}-${tid}">
-                      </div>
-                    </div>   
+                        <div class="mb-3">
+                            <label for="bottom-left" class="form-label">Bottom Left</label>
+                            <input type="text" class="form-control" id="bottom-left">
+                        </div>
+                    </div>
                     <div class=col-4>
-                      <div class="mb-3">
-                        <label for="bottom-middle-${wid}-${tid}" class="form-label">Bottom Middle</label>
-                        <input type="text" class="form-control" id="bottom-middle-${wid}-${tid}">
-                      </div>
-                    </div>   
+                        <div class="mb-3">
+                            <label for="bottom-middle" class="form-label">Bottom Middle</label>
+                            <input type="text" class="form-control" id="bottom-middle">
+                        </div>
+                    </div>
                     <div class=col-4>
-                      <div class="mb-3">
-                        <label for="bottom-right-${wid}-${tid}" class="form-label">Bottom Right</label>
-                        <input type="text" class="form-control" id="bottom-right-${wid}-${tid}">
-                      </div>
-                    </div>   
-                  </div>
-                  
-                  <div class="row">
+                        <div class="mb-3">
+                            <label for="bottom-right" class="form-label">Bottom Right</label>
+                            <input type="text" class="form-control" id="bottom-right">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-4">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="page-numbers-${wid}-${tid}">
-                        <label class="form-check-label" for="page-numbers-${wid}-${tid}">
-                          Page Numbers
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="workbook-title-${wid}-${tid}">
-                        <label class="form-check-label" for="workbook-title-${wid}-${tid}">
-                          Workbook title
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="sheet-name-${wid}-${tid}">
-                        <label class="form-check-label" for="sheet-name-${wid}-${tid}">
-                          Sheet name
-                        </label>
-                      </div>  
-                    </div>  
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="page-numbers">
+                            <label class="form-check-label" for="page-numbers">
+                                Page Numbers
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="workbook-title">
+                            <label class="form-check-label" for="workbook-title">
+                                Workbook title
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="sheet-name">
+                            <label class="form-check-label" for="sheet-name">
+                                Sheet name
+                            </label>
+                        </div>
+                    </div>
                     <div class="col-4">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="current-date-${wid}-${tid}">
-                        <label class="form-check-label" for="current-date-${wid}-${tid}">
-                          Current Date
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="current-time-${wid}-${tid}">
-                        <label class="form-check-label" for="current-time-${wid}-${tid}">
-                          Current Time
-                        </label>
-                      </div>  
-                    </div>  
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="current-date">
+                            <label class="form-check-label" for="current-date">
+                                Current Date
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="current-time">
+                            <label class="form-check-label" for="current-time">
+                                Current Time
+                            </label>
+                        </div>
+                    </div>
                     <div class="col-4">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="frozen-rows-${wid}-${tid}">
-                        <label class="form-check-label" for="frozen-rows-${wid}-${tid}">
-                          Repeat frozen rows
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="frozen-columns-${wid}-${tid}">
-                        <label class="form-check-label" for="frozen-columns-${wid}-${tid}">
-                          Repeat frozen columns
-                        </label>
-                      </div>  
-                    </div>  
-                  </div>
-                  
-								</div>
-							</div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="frozen-rows">
+                            <label class="form-check-label" for="frozen-rows">
+                                Repeat frozen rows
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="frozen-columns">
+                            <label class="form-check-label" for="frozen-columns">
+                                Repeat frozen columns
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
 						</div>
 					<!--/form-->
 				</div>
@@ -671,55 +716,73 @@
       $(`#tasks-point-${wid}`).append(html_task);
       if(!task) $(`#task-modal-${wid}-${tid}`).modal("show");
 
-      // check page setup custom check box
-      $(`.custom-page-input-container, .fit-to-pagebreaks-input-groups, .custom-margin, .custom-paper-size, .selected-cells`).hide();
-      $(`#set-custom-page-${wid}-${tid}`).change(function() {
-        if ($(`#set-custom-page-${wid}-${tid}`).prop(`checked`)) {
-            $(`.custom-page-input-container`).show();
-          } else {
-            $(`.custom-page-input-container`).hide();
-        }
-      })
+      $(`.custom-page-input-container, .fit-to-pagebreaks-input-groups, .custom-paper-size, .custom-margin, .custom-scale, .selected-cells`).hide();
+        // check page setup custom check box
+        $(`#set-custom-page`).change(function () {
+            if ($(`#set-custom-page`).prop(`checked`)) {
+                $(`.custom-page-input-container`).show();
+            } else {
+                $(`.custom-page-input-container`).hide();
+            }
+        })
 
-      // Fit to pagebreaks 100%
-      $(`#scale-${wid}-${tid}`).change(function(){
-        let selectedValue = $(this).children("option:selected").val();
-        if(selectedValue === "fittipagebreaks"){
-          $(`.fit-to-pagebreaks-input-groups`).show();
-        }else{
-          $(`.fit-to-pagebreaks-input-groups`).hide();
-        }
-      });
+        // Fit to pagebreaks 100%
+        $(`#scale`).change(function () {
+            let selectedValue = $(this).children("option:selected").val();
+            if (selectedValue === "fittipagebreaks") {
+                $(".scale > div").removeClass("col-12");
+                $(".scale > div").addClass("col-4");
+                $(`.fit-to-pagebreaks-input-groups`).show();
+            } else {
+                $(".scale > div").addClass("col-12");
+                $(".scale > div").removeClass("col-4");
+                $(`.fit-to-pagebreaks-input-groups`).hide();
+            }
+        });
 
-      // Custom margin
-      $(`#margin-${wid}-${tid}`).change(function(){
-        let selectedValue = $(this).children("option:selected").val();
-        if(selectedValue === "custom"){
-          $(`.custom-margin`).show();
-        }else{
-          $(`.custom-margin`).hide();
-        }
-      });
+        // Custom margin
+        $(`#margin`).change(function () {
+            let selectedValue = $(this).children("option:selected").val();
+            if (selectedValue === "custom") {
+                $(".margin > div").removeClass("col-12");
+                $(".margin > div").addClass("col-3");
+                $(`.custom-margin`).show();
+            } else {
+                $(".margin > div").addClass("col-12");
+                $(".margin > div").removeClass("col-3");
+                $(`.custom-margin`).hide();
+            }
+        });
 
-      // Custom Paper size
-      $(`#paper-size-${wid}-${tid}`).change(function(){
-        let selectedValue = $(this).children("option:selected").val();
-        if(selectedValue === "custom"){
-          $(`.custom-paper-size`).show();
-        }else{
-          $(`.custom-paper-size`).hide();
-        }
-      });
+        // Custom Paper size
+        $(`#paper-size`).change(function () {
+            let selectedValue = $(this).children("option:selected").val();
+            if (selectedValue === "custom") {
+                $(".paper-size-row > div").removeClass("col-12");
+                $(".paper-size-row > div").addClass("col-4");
+                $(`.custom-paper-size`).show();
+            } else {
+                $(".paper-size-row > div").removeClass("col-4");
+                $(".paper-size-row > div").addClass("col-12");
+                $(`.custom-paper-size`).hide();
+            }
+        });
 
-      // Selected print
-      $(`#print-${wid}-${tid}`).change(function(){
-        let selectedValue = $(this).children("option:selected").val();
-        if(selectedValue === "selectedcells"){
-          $(`.selected-cells`).show();
-        }else{
-          $(`.selected-cells`).hide();
-        }
-      });
+        // Selected print
+        $(`#print`).change(function () {
+            let selectedValue = $(this).children("option:selected").val();
+            if (selectedValue === "selectedcells") {
+                $(".print-row > div").removeClass("col-12");
+                $(".print-row > div").addClass("col-6");
+                $(`.selected-cells`).addClass("d-flex align-items-end")
+                $(`.selected-cells`).show();
+            } else {
+                $(".print-row > div").addClass("col-12");
+                $(".print-row > div").removeClass("col-6");
+                $(`.selected-cells`).removeClass("d-flex align-items-end")
+                $(`.selected-cells`).hide();
+            }
+        });
 
       
 
