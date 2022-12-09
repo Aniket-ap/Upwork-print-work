@@ -443,18 +443,18 @@
                     <label for="size-${wid}-${tid}" class="form-label">Paper size</label>
                     <div class="input-group">
                       <select class="form-select" id="size-${wid}-${tid}">
-                        <option data-width="8.5" data-height="11" selected="" value="letter">Letter (8.5" x  11")</option data-width="" data-height="">
-                        <option data-width="11" data-height="17" value="tabloid">Tabloid (11" x  17")</option data-width="" data-height="">
-                        <option data-width="8.5" data-height="14" value="legal">Legal (8.5" x  14")</option data-width="" data-height="">
-                        <option data-width="5.5" data-height="8.5" value="statement">Statement (5.5" x  8.5")</option data-width="" data-height="">
-                        <option data-width="7.25" data-height="10.5" value="executive">Executive (7.25" x  10.5")</option data-width="" data-height="">
-                        <option data-width="8.5" data-height="13" value="folio">Folio (8.5" x  13")</option data-width="" data-height="">
-                        <option data-width="11.69" data-height="16.54" value="a3">A3 (11.69" x  16.54")</option data-width="" data-height="">
-                        <option data-width="8.27" data-height="11.69" value="a4">A4 (8.27" x  11.69")</option data-width="" data-height="">
-                        <option data-width="5.83" data-height="8.27" value="a5">A5 (5.83" x  8.27")</option data-width="" data-height="">
-                        <option data-width="9.84" data-height="13.90" value="b4">B4 (9.84" x  13.90")</option data-width="" data-height="">
-                        <option data-width="6.93" data-height="9.84" value="b5">B5 (6.93" x  9.84")</option data-width="" data-height="">
-                        <option data-width="" data-height="" value="custom">Custom</option data-width="" data-height="">
+                        <option data-width="8.5" data-height="11" selected="" value="letter">Letter (8.5" x 11")</option>
+                        <option data-width="11" data-height="17" value="tabloid">Tabloid (11" x 17")</option>
+                        <option data-width="8.5" data-height="14" value="legal">Legal (8.5" x 14")</option>
+                        <option data-width="5.5" data-height="8.5" value="statement">Statement (5.5" x 8.5")</option>
+                        <option data-width="7.25" data-height="10.5" value="executive">Executive (7.25" x 10.5")</option>
+                        <option data-width="8.5" data-height="13" value="folio">Folio (8.5" x 13")</option>
+                        <option data-width="11.69" data-height="16.54" value="a3">A3 (11.69" x 16.54")</option>
+                        <option data-width="8.27" data-height="11.69" value="a4">A4 (8.27" x 11.69")</option>
+                        <option data-width="5.83" data-height="8.27" value="a5">A5 (5.83" x 8.27")</option>
+                        <option data-width="9.84" data-height="13.90" value="b4">B4 (9.84" x 13.90")</option>
+                        <option data-width="6.93" data-height="9.84" value="b5">B5 (6.93" x 9.84")</option>
+                        <option data-width="" data-height="" value="custom">Custom</option>
                       </select>
                       <span class="input-group-text bg-theme">Height</span>
                       <input type="number" class="form-control" id="size-height-${wid}-${tid}" value="5.55" step="0.5">
@@ -467,20 +467,20 @@
                   <td class="p-3">
                     <label for="margins-${wid}-${tid}" class="form-label">Margins</label>
                     <div class="input-group">
-                      <select class="form-select" id="margins-1d">
+                      <select class="form-select" id="margins-${wid}-${tid}">
                         <option data-top="0.70" data-left="0.70" data-right="0.70" data-bottom="0.70" value="currentsheet" selected="">Normal</option>
                         <option data-top="0.25" data-left="0.25" data-right="0.25" data-bottom="0.25" value="workbook">Narrow</option>
                         <option data-top="1" data-left="1" data-right="1" data-bottom="1" value="selectedcells">Wide</option>
                         <option data-top="" data-left="" data-right="" data-bottom="" value="custom">Custom</option>
                       </select>
                       <span class="input-group-text bg-theme">Top</span>
-                      <input type="number" class="form-control" value="0.1" id="margins-top-1d">
+                      <input type="number" class="form-control" value="0.1" id="margins-top-${wid}-${tid}">
                       <span class="input-group-text bg-theme">Left</span>
-                      <input type="number" class="form-control" value="1.1" id="margins-left-1d">
+                      <input type="number" class="form-control" value="1.1" id="margins-left-${wid}-${tid}">
                       <span class="input-group-text bg-theme">Right</span>
-                      <input type="number" class="form-control" value="2.2" id="margins-right-1d">
+                      <input type="number" class="form-control" value="2.2" id="margins-right-${wid}-${tid}">
                       <span class="input-group-text bg-theme">Bottom</span>
-                      <input type="number" class="form-control" value="3.3" id="margins-bottom-1d">
+                      <input type="number" class="form-control" value="3.3" id="margins-bottom-${wid}-${tid}">
                     </div>
                   </td>
                 </tr>
@@ -630,111 +630,77 @@
       $(`#tasks-point-${wid}`).append(html_task);
       if (!task) $(`#task-modal-${wid}-${tid}`).modal("show");
 
-
       $(`#size-${wid}-${tid}`)
-      .on("change", function() {
-        $(`#size-height-${wid}-${tid}`)
-          .val($(this)
+        .on("change", function() {
+          var height = $(this)
             .children('option:selected')
-            .data('height'))
-        $(`#size-width-${wid}-${tid}`)
-          .val($(this)
+            .data('height')
+          var width = $(this)
             .children('option:selected')
-            .data('width'))
+            .data('width')
+          if (height == "" && width == "") {
+            $(`#size-height-${wid}-${tid}`)
+              .prop('disabled', false)
+            $(`#size-width-${wid}-${tid}`)
+              .prop('disabled', false)
+          } else {
+            $(`#size-height-${wid}-${tid}`)
+              .prop('disabled', true)
+            $(`#size-width-${wid}-${tid}`)
+              .prop('disabled', true)
+          }
+          $(`#size-height-${wid}-${tid}`)
+            .val(height)
+          $(`#size-width-${wid}-${tid}`)
+            .val(width)
       })
 
       $(`#margins-${wid}-${tid}`)
-        .on("change", function() {
-          $(`#margins-top-${wid}-${tid}`)
+      .on("change", function() {
+          var top = $(`#margins-top-${wid}-${tid}`)
             .val($(this)
               .children('option:selected')
               .data('top')) 
             
-            $(`#margins-left-${wid}-${tid}`)
+          var left = $(`#margins-left-${wid}-${tid}`)
             .val($(this)
               .children('option:selected')
               .data('left')) 
               
-            $(`#margins-right-${wid}-${tid}`)
+          var right = $(`#margins-right-${wid}-${tid}`)
             .val($(this)
               .children('option:selected')
               .data('right')) 
             
-            $(`#margins-bottom-${wid}-${tid}`)
+          var bottom = $(`#margins-bottom-${wid}-${tid}`)
             .val($(this)
               .children('option:selected')
               .data('bottom'))
-      })
 
-      $(`.custom-page-input-container, .fit-to-pagebreaks-input-groups, .custom-paper-size, .custom-margin, .custom-scale, .selected-cells`).hide();
-      // check page setup custom check box
-      $(`#set-custom-page`).change(function () {
-        if ($(`#set-custom-page`).prop(`checked`)) {
-          $(`.custom-page-input-container`).show();
-        } else {
-          $(`.custom-page-input-container`).hide();
-        }
-      })
-
-      // Fit to pagebreaks 100%
-      $(`#scale`).change(function () {
-        let selectedValue = $(this).children("option:selected").val();
-        if (selectedValue === "fittipagebreaks") {
-          $(".scale > div").removeClass("col-12");
-          $(".scale > div").addClass("col-4");
-          $(`.fit-to-pagebreaks-input-groups`).show();
-        } else {
-          $(".scale > div").addClass("col-12");
-          $(".scale > div").removeClass("col-4");
-          $(`.fit-to-pagebreaks-input-groups`).hide();
-        }
-      });
-
-      // Custom margin
-      $(`#margin`).change(function () {
-        let selectedValue = $(this).children("option:selected").val();
-        if (selectedValue === "custom") {
-          $(".margin > div").removeClass("col-12");
-          $(".margin > div").addClass("col-3");
-          $(`.custom-margin`).show();
-        } else {
-          $(".margin > div").addClass("col-12");
-          $(".margin > div").removeClass("col-3");
-          $(`.custom-margin`).hide();
-        }
-      });
-
-      // Custom Paper size
-      $(`#paper-size`).change(function () {
-        let selectedValue = $(this).children("option:selected").val();
-        if (selectedValue === "custom") {
-          $(".paper-size-row > div").removeClass("col-12");
-          $(".paper-size-row > div").addClass("col-4");
-          $(`.custom-paper-size`).show();
-        } else {
-          $(".paper-size-row > div").removeClass("col-4");
-          $(".paper-size-row > div").addClass("col-12");
-          $(`.custom-paper-size`).hide();
-        }
-      });
-
-      // Selected print
-      $(`#print`).change(function () {
-        let selectedValue = $(this).children("option:selected").val();
-        if (selectedValue === "selectedcells") {
-          $(".print-row > div").removeClass("col-12");
-          $(".print-row > div").addClass("col-6");
-          $(`.selected-cells`).addClass("d-flex align-items-end")
-          $(`.selected-cells`).show();
-        } else {
-          $(".print-row > div").addClass("col-12");
-          $(".print-row > div").removeClass("col-6");
-          $(`.selected-cells`).removeClass("d-flex align-items-end")
-          $(`.selected-cells`).hide();
-        }
-      });
-
-
+            if (top.val() == "" && left.val() == "" && bottom.val() == "" && right.val() == "") {
+              $(`#margins-top-${wid}-${tid}`)
+                .prop('disabled', false)
+              $(`#margins-left-${wid}-${tid}`)
+                .prop('disabled', false)
+              $(`#margins-right-${wid}-${tid}`)
+                .prop('disabled', false)
+              $(`#margins-bottom-${wid}-${tid}`)
+                .prop('disabled', false)
+            } else {
+              $(`#margins-top-${wid}-${tid}`)
+                .prop('disabled', true)
+              $(`#margins-left-${wid}-${tid}`)
+                .prop('disabled', true)
+              $(`#margins-right-${wid}-${tid}`)
+                .prop('disabled', true)
+              $(`#margins-bottom-${wid}-${tid}`)
+                .prop('disabled', true)
+            }
+            $(`#margins-top-${wid}-${tid}`).val(top.val())
+            $(`#margins-left-${wid}-${tid}`).val(top.val())
+            $(`#margins-right-${wid}-${tid}`).val(top.val())
+            $(`#margins-bottom-${wid}-${tid}`).val(top.val())
+        })
 
       $(`.done-${wid}-${tid}`).on('click', function (e) {
         e.preventDefault()
