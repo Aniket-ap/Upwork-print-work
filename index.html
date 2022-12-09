@@ -473,6 +473,8 @@
 											<input type="number" class="form-control" value="20" id="break-row-${wid}-${tid}">
 											<span class="input-group-text bg-theme break-span">Break column at</span>
 											<input type="number" class="form-control" value="5" id="break-column-${wid}-${tid}">
+											<span class="input-group-text bg-theme custom-span">Percentage</span>
+											<input type="number" class="form-control" value="88" step="1" id="percentage-${wid}-${tid}">
 										</div>
 									</td>
 								</tr>
@@ -606,8 +608,8 @@
 		$(`#margins-top-${wid}-${tid}, #margins-left-${wid}-${tid}, #margins-right-${wid}-${tid}, #margins-bottom-${wid}-${tid}, 
         #size-height-${wid}-${tid},#size-width-${wid}-${tid} `).prop('disabled', true);
 
-		// Hide range, break row at, break column text box
-		$(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
+		// Hide range, break row at, break column and custom text box
+		$(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}, .custom-span, #percentage-${wid}-${tid}`).hide();
 
 		// Initial style for print and scale select tag
 		$(`#print-${wid}-${tid}, #scale-${wid}-${tid}`).css("border-radius", ".375rem")
@@ -712,6 +714,16 @@
 					});
 				} else {
 					$(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
+					$(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
+				}
+				if (value == "custom") {
+					$(`.custom-span, #percentage-${wid}-${tid}`).show();
+					$(`#scale-${wid}-${tid}`).css({
+						"border-top-right-radius": "0",
+						"border-bottom-right-radius": "0"
+					});
+				} else {
+					$(`.custom-span, #percentage-${wid}-${tid}`).hide();
 					$(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
 				}
 			})
