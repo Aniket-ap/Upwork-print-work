@@ -637,6 +637,9 @@
       // Hide range, break row at, break column text box
       $(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
 
+      // Initial style for print and scale select tag
+      $(`#print-${wid}-${tid}, #scale-${wid}-${tid}`).css("border-radius", ".375rem")
+
       $(`#size-${wid}-${tid}`)
         .on("change", function() {
           var height = $(this)
@@ -715,19 +718,23 @@
             .children('option:selected').val();
           if(value == "selectedcells"){
             $(`.range-span, #print-range-${wid}-${tid}`).show()
+            $(`#print-${wid}-${tid}`).css({"border-top-right-radius": "0", "border-bottom-right-radius" :"0"});
           } else{
-            $(`.range-span, #print-range-${wid}-${tid}`).hide()
+            $(`.range-span, #print-range-${wid}-${tid}`).hide();
+            $(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
           }  
-      })
-
-      $(`#scale-${wid}-${tid}`)
+        })
+        
+        $(`#scale-${wid}-${tid}`)
         .on("change", function() {
           var value = $(this)
-            .children('option:selected').val();
+          .children('option:selected').val();
           if(value == "fittipagebreaks"){
             $(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).show();
+            $(`#scale-${wid}-${tid}`).css({"border-top-right-radius": "0", "border-bottom-right-radius" :"0"});
           } else{
             $(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
+            $(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
           } 
       })
 
