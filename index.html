@@ -3,8 +3,11 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/somethinggoodone/cdn/AniketPradhan_bootstrap.css" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <style>
     .input-group-text {
       background-color: #fff;
@@ -15,17 +18,21 @@
     textarea {
       text-overflow: ellipsis;
     }
-    button:focus, button:active{
-        outline: 0;
-        box-shadow: 0 0 2px 2px #c6a5ff;
+
+    button:focus,
+    button:active {
+      outline: 0;
+      box-shadow: 0 0 2px 2px #c6a5ff;
     }
-    .delrow:focus{
-        margin-right: 1px solid #c6a5ff;
-        z-index: 1;
+
+    .delrow:focus {
+      margin-right: 1px solid #c6a5ff;
+      z-index: 1;
     }
-    .addrow:focus{
-        margin-left: 1px solid #c6a5ff;
-        z-index: 1;
+
+    .addrow:focus {
+      margin-left: 1px solid #c6a5ff;
+      z-index: 1;
     }
   </style>
 </head>
@@ -41,7 +48,7 @@
     function atoo(f, b) {
       var c = [],
         d = !1;
-      f.forEach(function(g, e) {
+      f.forEach(function (g, e) {
         var a = {};
         a.key = g;
         a.value = 0 === b[e].length ? "" : b[e];
@@ -97,14 +104,14 @@
       result.url.path = urlValues.pathname.split('/')
         .filter((val) => val !== "");
       let dataArr = atoo($(`#nav-qp-${wid}-${tid} .key`)
-        .map(function() {
+        .map(function () {
           return this.value;
         })
         .get(), $(`#nav-qp-${wid}-${tid} .value`)
-        .map(function() {
-          return this.value;
-        })
-        .get());
+          .map(function () {
+            return this.value;
+          })
+          .get());
       if (dataArr !== false) {
         if (dataArr.length > 0) {
           result.url.query = dataArr;
@@ -127,21 +134,21 @@
           return;
         }
         result.auth.apikey = [{
-            "key": "key",
-            "value": key,
-            "type": "string"
-          },
-          {
-            "key": "value",
-            "value": value,
-            "type": "string"
-          },
-          {
-            "key": "in",
-            "value": $('input[name=addToRadioOptions]:checked', `.authtab-${wid}-${tid}`)
-              .val(),
-            "type": "string"
-          }
+          "key": "key",
+          "value": key,
+          "type": "string"
+        },
+        {
+          "key": "value",
+          "value": value,
+          "type": "string"
+        },
+        {
+          "key": "in",
+          "value": $('input[name=addToRadioOptions]:checked', `.authtab-${wid}-${tid}`)
+            .val(),
+          "type": "string"
+        }
         ];
       } else if (result.auth.type === "bearertoken") {
         let bearerTokenValue = $(`#bearer-value-${wid}-${tid}`)
@@ -194,14 +201,14 @@
       }
       // HEADER 
       let headerData = atoo($(`#nav-headers-${wid}-${tid} .key`)
-        .map(function() {
+        .map(function () {
           return this.value;
         })
         .get(), $(`#nav-headers-${wid}-${tid} .value`)
-        .map(function() {
-          return this.value;
-        })
-        .get())
+          .map(function () {
+            return this.value;
+          })
+          .get())
       if (headerData !== false) {
         result.header = headerData;
         result.header.forEach((res) => {
@@ -218,14 +225,14 @@
         result.body = {};
         result.body.mode = "urlencoded";
         let bodyTabUrlArr = atoo($(`.urlencodedtab-${wid}-${tid} .key`)
-          .map(function() {
+          .map(function () {
             return this.value;
           })
           .get(), $(`.urlencodedtab-${wid}-${tid} .value`)
-          .map(function() {
-            return this.value;
-          })
-          .get())
+            .map(function () {
+              return this.value;
+            })
+            .get())
 
         if (bodyTabUrlArr !== false) {
           if (bodyTabUrlArr.length === 0) {
@@ -261,14 +268,14 @@
           result.body = {};
           result.body.mode = "formdata";
           var bodyTabFormDataArr = atoo($(`.jsontab-${wid}-${tid} .key`)
-            .map(function() {
+            .map(function () {
               return this.value;
             })
             .get(), $(`.jsontab-${wid}-${tid} .value`)
-            .map(function() {
-              return this.value;
-            })
-            .get())
+              .map(function () {
+                return this.value;
+              })
+              .get())
 
           if (bodyTabFormDataArr !== false) {
             if (bodyTabFormDataArr.length === 0) {
@@ -404,159 +411,100 @@
         <div class="tab-content mt-5">
             <!-- page setup Content -->
             <div class="tab-pane fade show active" id="nav-page-setup" role="tabpanel">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="row print-row">
-                            <div class="col-12">
-                                <label for="print" class="form-label">Print</label>
-                                <select class="form-select" id="print">
-                                    <option selected value="currentsheet">Current sheet</option>
-                                    <option value="workbook">Workbook</option>
-                                    <option value="selectedcells">Selected cells(A1)</option>
-                                </select>
-                            </div>
-                            <div class="col-6 selected-cells">
-                                <div class="d-flex align-items-end">
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Range</span>
-                                        <input type="text" class="form-control" aria-label="Sizing example input"
-                                            aria-describedby="inputGroup-sizing-default">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row paper-size-row">
-                            <div class="col-12">
-                                <label for="paper-size" class="form-label">Paper size</label>
-                                <select class="form-select" id="paper-size">
-                                    <option selected value="currentsheet">Letter (8.5" * 11")</option>
-                                    <option value="currentsheet">Tabloid (11" * 17")</option>
-                                    <option value="currentsheet">Legal (8.5" * 14")</option>
-                                    <option value="currentsheet">Statement (5.5" * 8.5")</option>
-                                    <option value="currentsheet">Executive (7.25" * 10.5")</option>
-                                    <option value="currentsheet">Folio (8.5" * 13")</option>
-                                    <option value="currentsheet">A3 (11.69" * 16.54")</option>
-                                    <option value="currentsheet">A4 (8.27" * 11.69")</option>
-                                    <option value="currentsheet">A5 (5.83" * 8.27")</option>
-                                    <option value="currentsheet">B4 (9.84" * 13.90")</option>
-                                    <option value="currentsheet">B5 (6.93" * 9.84")</option>
-                                    <option value="custom">Custom</option>
-                                </select>
-                            </div>
-                            <div class="col-8 d-flex align-items-end">
-                                <div class="row custom-paper-size">
-                                    <div class=col-6>
-                                        <div class="input-group">
-                                            <span class="input-group-text"
-                                                id="inputGroup-sizing-default">Height</span>
-                                            <input type="number" class="form-control" value="5.55" step="0.5">
-                                        </div>
-                                    </div>
-                                    <div class=col-6>
-                                        <div class="input-group">
-                                            <span class="input-group-text"
-                                                id="inputGroup-sizing-default">Width</span>
-                                            <input type="number" class="form-control" value="9.99" step="0.5">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2nd row -->
-                <div class="row mt-3 margin">
-                    <div class="col-12">
-                        <label for="margin" class="form-label">Margins</label>
-                        <select class="form-select" id="margin">
-                            <option selected value="currentsheet">Normal</option>
-                            <option value="workbook">Narrow</option>
-                            <option value="selectedcells">Wide</option>
-                            <option value="custom">Custom</option>
-                        </select>
-                    </div>
-                    <div class="col-9 d-flex align-items-end ">
-                        <div class="row custom-margin">
-                            <div class="col-3">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon3">Top</span>
-                                    <input type="number" class="form-control" value="0.1" id="basic-url"
-                                        aria-describedby="basic-addon3">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon3">Left</span>
-                                    <input type="number" class="form-control" value="1.1" id="basic-url"
-                                        aria-describedby="basic-addon3">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon3">Right</span>
-                                    <input type="number" class="form-control" value="2.2" id="basic-url"
-                                        aria-describedby="basic-addon3">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon3">Bottom</span>
-                                    <input type="number" class="form-control" value="3.3" id="basic-url"
-                                        aria-describedby="basic-addon3">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 3rd row -->
-                <div class="row mt-3 scale">
-                    <div class="col-12">
-                        <label for="scale" class="form-label">Scale</label>
-                        <select class="form-select" id="scale">
-                            <option selected value="normal">Normal (100%)</option>
-                            <option value="fittowidth">Fit to width</option>
-                            <option value="fittoheight">Fit to height</option>
-                            <option value="fittopage">Fit to page</option>
-                            <option value="custom">Custom</option>
-                            <option value="fittipagebreaks">Fit to pagebreaks (100%)</option>
-                        </select>
-                    </div>
-                    <div class="col-8 d-flex align-items-end ">
-                        <div class="row fit-to-pagebreaks-input-groups">
-                            <div class="col-6">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon3">Break row at</span>
-                                    <input type="number" class="form-control" value="20" id="basic-url"
-                                        aria-describedby="basic-addon3">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon3">Break column at</span>
-                                    <input type="number" class="form-control" value="5" id="basic-url"
-                                        aria-describedby="basic-addon3">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 4th row -->
-                <div class="row mt-3">
-                    <div class="col-6">
-                        <label class="form-label d-block">Page Orientation</label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="landscape"
-                                checked>
-                            <label class="form-check-label" for="landscape">Landscape</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="portait">
-                            <label class="form-check-label" for="portait">Portait</label>
-                        </div>
-                    </div>
-                </div>
+              <table border="0" style="width:100%">
+        <tr>
+          <td>
+            <label for="print-1d" class="form-label">Print</label>
+            <div class="input-group">
+              <select class="form-select" id="print-1d">
+                <option selected value="currentsheet">Current sheet</option>
+                <option value="workbook">Workbook</option>
+                <option value="selectedcells">Selected cells(A1)</option>
+              </select>
+              <span class="input-group-text">Range</span>
+              <input type="text" class="form-control" id="print-range-1d" aria-label="Range input" >
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="size-1d" class="form-label">Paper size</label>
+            <div class="input-group">
+              <select class="form-select" id="size-1d">
+                <option selected value="letter">Letter (8.5" * 11")</option>
+                <option value="tabloid">Tabloid (11" * 17")</option>
+                <option value="legal">Legal (8.5" * 14")</option>
+                <option value="statement">Statement (5.5" * 8.5")</option>
+                <option value="executive">Executive (7.25" * 10.5")</option>
+                <option value="folio">Folio (8.5" * 13")</option>
+                <option value="a3">A3 (11.69" * 16.54")</option>
+                <option value="a4">A4 (8.27" * 11.69")</option>
+                <option value="a5">A5 (5.83" * 8.27")</option>
+                <option value="b4">B4 (9.84" * 13.90")</option>
+                <option value="b5">B5 (6.93" * 9.84")</option>
+                <option value="custom">Custom</option>
+              </select>
+              <span class="input-group-text">Height</span>
+              <input type="number" class="form-control" id="size-height-1d" value="5.55" step="0.5">
+              <span class="input-group-text">Width</span>
+              <input type="number" class="form-control" id="size-width-1d" value="9.99" step="0.5">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="margins-1d" class="form-label">Margins</label>
+            <div class="input-group">
+              <select class="form-select" id="margins-1d">
+                <option selected value="currentsheet">Normal</option>
+                <option value="workbook">Narrow</option>
+                <option value="selectedcells">Wide</option>
+                <option value="custom">Custom</option>
+              </select>
+              <span class="input-group-text">Top</span>
+              <input type="number" class="form-control" value="0.1" id="margins-top-1d">
+              <span class="input-group-text">Left</span>
+              <input type="number" class="form-control" value="1.1" id="margins-left-1d">
+              <span class="input-group-text">Right</span>
+              <input type="number" class="form-control" value="2.2" id="margins-right-1d">
+              <span class="input-group-text">Bottom</span>
+              <input type="number" class="form-control" value="3.3" id="margins-bottom-1d">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="scale-1d" class="form-label">Scale</label>
+            <div class="input-group">
+              <select class="form-select" id="scale-1d">
+                <option selected value="normal">Normal (100%)</option>
+                <option value="fittowidth">Fit to width</option>
+                <option value="fittoheight">Fit to height</option>
+                <option value="fittopage">Fit to page</option>
+                <option value="custom">Custom</option>
+                <option value="fittipagebreaks">Fit to pagebreaks (100%)</option>
+              </select>
+              <span class="input-group-text">Break row at</span>
+              <input type="number" class="form-control" value="20" id="break-row-1d">
+              <span class="input-group-text">Break column at</span>
+              <input type="number" class="form-control" value="5" id="break-column-1d">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Page Orientation</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="landscape-1d">
+              <label class="form-check-label" for="landscape-1d">Landscape</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="portait-1d" checked>
+              <label class="form-check-label" for="portait-1d">Portait</label>
+            </div>
+          </td>
+        </tr>
+      </table>
             </div>
             <!-- Formating Content -->
             <div class="tab-pane fade" id="nav-formating" role="tabpanel">
@@ -708,79 +656,79 @@
     </div>`);
 
       $(`#tasks-point-${wid}`).append(html_task);
-      if(!task) $(`#task-modal-${wid}-${tid}`).modal("show");
+      if (!task) $(`#task-modal-${wid}-${tid}`).modal("show");
 
       $(`.custom-page-input-container, .fit-to-pagebreaks-input-groups, .custom-paper-size, .custom-margin, .custom-scale, .selected-cells`).hide();
-        // check page setup custom check box
-        $(`#set-custom-page`).change(function () {
-            if ($(`#set-custom-page`).prop(`checked`)) {
-                $(`.custom-page-input-container`).show();
-            } else {
-                $(`.custom-page-input-container`).hide();
-            }
-        })
+      // check page setup custom check box
+      $(`#set-custom-page`).change(function () {
+        if ($(`#set-custom-page`).prop(`checked`)) {
+          $(`.custom-page-input-container`).show();
+        } else {
+          $(`.custom-page-input-container`).hide();
+        }
+      })
 
-        // Fit to pagebreaks 100%
-        $(`#scale`).change(function () {
-            let selectedValue = $(this).children("option:selected").val();
-            if (selectedValue === "fittipagebreaks") {
-                $(".scale > div").removeClass("col-12");
-                $(".scale > div").addClass("col-4");
-                $(`.fit-to-pagebreaks-input-groups`).show();
-            } else {
-                $(".scale > div").addClass("col-12");
-                $(".scale > div").removeClass("col-4");
-                $(`.fit-to-pagebreaks-input-groups`).hide();
-            }
-        });
+      // Fit to pagebreaks 100%
+      $(`#scale`).change(function () {
+        let selectedValue = $(this).children("option:selected").val();
+        if (selectedValue === "fittipagebreaks") {
+          $(".scale > div").removeClass("col-12");
+          $(".scale > div").addClass("col-4");
+          $(`.fit-to-pagebreaks-input-groups`).show();
+        } else {
+          $(".scale > div").addClass("col-12");
+          $(".scale > div").removeClass("col-4");
+          $(`.fit-to-pagebreaks-input-groups`).hide();
+        }
+      });
 
-        // Custom margin
-        $(`#margin`).change(function () {
-            let selectedValue = $(this).children("option:selected").val();
-            if (selectedValue === "custom") {
-                $(".margin > div").removeClass("col-12");
-                $(".margin > div").addClass("col-3");
-                $(`.custom-margin`).show();
-            } else {
-                $(".margin > div").addClass("col-12");
-                $(".margin > div").removeClass("col-3");
-                $(`.custom-margin`).hide();
-            }
-        });
+      // Custom margin
+      $(`#margin`).change(function () {
+        let selectedValue = $(this).children("option:selected").val();
+        if (selectedValue === "custom") {
+          $(".margin > div").removeClass("col-12");
+          $(".margin > div").addClass("col-3");
+          $(`.custom-margin`).show();
+        } else {
+          $(".margin > div").addClass("col-12");
+          $(".margin > div").removeClass("col-3");
+          $(`.custom-margin`).hide();
+        }
+      });
 
-        // Custom Paper size
-        $(`#paper-size`).change(function () {
-            let selectedValue = $(this).children("option:selected").val();
-            if (selectedValue === "custom") {
-                $(".paper-size-row > div").removeClass("col-12");
-                $(".paper-size-row > div").addClass("col-4");
-                $(`.custom-paper-size`).show();
-            } else {
-                $(".paper-size-row > div").removeClass("col-4");
-                $(".paper-size-row > div").addClass("col-12");
-                $(`.custom-paper-size`).hide();
-            }
-        });
+      // Custom Paper size
+      $(`#paper-size`).change(function () {
+        let selectedValue = $(this).children("option:selected").val();
+        if (selectedValue === "custom") {
+          $(".paper-size-row > div").removeClass("col-12");
+          $(".paper-size-row > div").addClass("col-4");
+          $(`.custom-paper-size`).show();
+        } else {
+          $(".paper-size-row > div").removeClass("col-4");
+          $(".paper-size-row > div").addClass("col-12");
+          $(`.custom-paper-size`).hide();
+        }
+      });
 
-        // Selected print
-        $(`#print`).change(function () {
-            let selectedValue = $(this).children("option:selected").val();
-            if (selectedValue === "selectedcells") {
-                $(".print-row > div").removeClass("col-12");
-                $(".print-row > div").addClass("col-6");
-                $(`.selected-cells`).addClass("d-flex align-items-end")
-                $(`.selected-cells`).show();
-            } else {
-                $(".print-row > div").addClass("col-12");
-                $(".print-row > div").removeClass("col-6");
-                $(`.selected-cells`).removeClass("d-flex align-items-end")
-                $(`.selected-cells`).hide();
-            }
-        });
+      // Selected print
+      $(`#print`).change(function () {
+        let selectedValue = $(this).children("option:selected").val();
+        if (selectedValue === "selectedcells") {
+          $(".print-row > div").removeClass("col-12");
+          $(".print-row > div").addClass("col-6");
+          $(`.selected-cells`).addClass("d-flex align-items-end")
+          $(`.selected-cells`).show();
+        } else {
+          $(".print-row > div").addClass("col-12");
+          $(".print-row > div").removeClass("col-6");
+          $(`.selected-cells`).removeClass("d-flex align-items-end")
+          $(`.selected-cells`).hide();
+        }
+      });
 
-      
 
-      $(`.done-${wid}-${tid}`).on('click', function(e) {
+
+      $(`.done-${wid}-${tid}`).on('click', function (e) {
         e.preventDefault()
         e.stopPropagation()
         console.log(getWebhookValues(wid, tid));
@@ -791,137 +739,137 @@
     }
 
     // Delete Instance
-    $(`.tdelete`).on('click', function(e) {
+    $(`.tdelete`).on('click', function (e) {
       $(this).parent().parent().parent().parent().remove();
     })
 
-    $("#webhook").click(function(event) {
+    $("#webhook").click(function (event) {
       createTask_Webhook("l9zgqjql")
     });
 
-    $("#restoreall").click(function(event) {
+    $("#restoreall").click(function (event) {
       $("#tasks-point-l9zgqjql").html('')
       var wflw = {
         id: "l9zgqjql",
 
         tasks: [{
-            "taskType": "webhook",
-            "id": "ey1lue4g",
+          "taskType": "webhook",
+          "id": "ey1lue4g",
 
-            "name": "ey1lue4g",
-            "method": "POST",
-            "url": {
-              "raw": "https://beautifier.io/",
-              "protocol": "https",
-              "host": ["beautifier", "io"],
-              "path": [],
-              "query": [{
-                "key": "param1",
-                "value": "value1"
-              }, {
-                "key": "param2",
-                "value": "value2"
-              }]
-            },
-            "auth": {
-              "type": "apikey",
-              "apikey": [{
-                "key": "key",
-                "value": "x-apikey",
-                "type": "string"
-              }, {
-                "key": "value",
-                "value": "x-value",
-                "type": "string"
-              }, {
-                "key": "in",
-                "value": "queryparams",
-                "type": "string"
-              }]
-            },
-            "header": [{
-              "key": "hkey1",
-              "value": "hvalue1",
-              "type": "text"
+          "name": "ey1lue4g",
+          "method": "POST",
+          "url": {
+            "raw": "https://beautifier.io/",
+            "protocol": "https",
+            "host": ["beautifier", "io"],
+            "path": [],
+            "query": [{
+              "key": "param1",
+              "value": "value1"
             }, {
-              "key": "hkey2",
-              "value": "",
-              "type": "text"
+              "key": "param2",
+              "value": "value2"
+            }]
+          },
+          "auth": {
+            "type": "apikey",
+            "apikey": [{
+              "key": "key",
+              "value": "x-apikey",
+              "type": "string"
             }, {
-              "key": "hkey3",
-              "value": "hvalue3",
-              "type": "text"
-            }],
-            "body": {
-              "mode": "raw",
-              "raw": "\"{\\n\\\"bodykey\\\":\\\"bodyvalue\\\"\\n}\"",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+              "key": "value",
+              "value": "x-value",
+              "type": "string"
+            }, {
+              "key": "in",
+              "value": "queryparams",
+              "type": "string"
+            }]
+          },
+          "header": [{
+            "key": "hkey1",
+            "value": "hvalue1",
+            "type": "text"
+          }, {
+            "key": "hkey2",
+            "value": "",
+            "type": "text"
+          }, {
+            "key": "hkey3",
+            "value": "hvalue3",
+            "type": "text"
+          }],
+          "body": {
+            "mode": "raw",
+            "raw": "\"{\\n\\\"bodykey\\\":\\\"bodyvalue\\\"\\n}\"",
+            "options": {
+              "raw": {
+                "language": "json"
               }
+            }
+          },
+          "response": []
+        },
+        {
+          "taskType": "webhook",
+          "id": "fx1hwe8q",
+
+          "name": "fx1hwe8q",
+          "method": "PATCH",
+          "url": {
+            "raw": "https://www.upwork.com/",
+            "protocol": "https",
+            "host": [
+              "beautifier",
+              "io"
+            ],
+            "path": [],
+            "query": [{
+              "key": "iparam1",
+              "value": "ivalue1"
             },
-            "response": []
+            {
+              "key": "iparam2",
+              "value": "ivalue2"
+            }
+            ]
+          },
+          "auth": {
+            "type": "bearertoken",
+            "bearer": [{
+              "key": "token",
+              "value": "xxxxx.yyyyy.zzzzz",
+              "type": "string"
+            }]
+          },
+          "header": [{
+            "key": "ikey1",
+            "value": "ivalue1",
+            "type": "text"
           },
           {
-            "taskType": "webhook",
-            "id": "fx1hwe8q",
-
-            "name": "fx1hwe8q",
-            "method": "PATCH",
-            "url": {
-              "raw": "https://www.upwork.com/",
-              "protocol": "https",
-              "host": [
-                "beautifier",
-                "io"
-              ],
-              "path": [],
-              "query": [{
-                  "key": "iparam1",
-                  "value": "ivalue1"
-                },
-                {
-                  "key": "iparam2",
-                  "value": "ivalue2"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearertoken",
-              "bearer": [{
-                "key": "token",
-                "value": "xxxxx.yyyyy.zzzzz",
-                "type": "string"
-              }]
-            },
-            "header": [{
-                "key": "ikey1",
-                "value": "ivalue1",
-                "type": "text"
-              },
-              {
-                "key": "ikey2",
-                "value": "",
-                "type": "text"
-              },
-              {
-                "key": "ikey3",
-                "value": "ivalue3",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "\"This is a plain text\"",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
-            },
-            "response": []
+            "key": "ikey2",
+            "value": "",
+            "type": "text"
+          },
+          {
+            "key": "ikey3",
+            "value": "ivalue3",
+            "type": "text"
           }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "\"This is a plain text\"",
+            "options": {
+              "raw": {
+                "language": "text"
+              }
+            }
+          },
+          "response": []
+        }
         ]
 
       }
@@ -933,10 +881,10 @@
       })
     });
 
-    $(`#sendall`).click(function(e) {
+    $(`#sendall`).click(function (e) {
       r = [];
       error = false;
-      $(`#tasks-point-l9zgqjql`).children().each(function() {
+      $(`#tasks-point-l9zgqjql`).children().each(function () {
         if ($(this).data("type") == "webhook") {
           var ids = $(this).data("id").split("-");
           var w = getWebhookValues(ids[0], ids[1])
