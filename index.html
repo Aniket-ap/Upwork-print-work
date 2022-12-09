@@ -467,20 +467,20 @@
                   <td class="p-3">
                     <label for="margins-${wid}-${tid}" class="form-label">Margins</label>
                     <div class="input-group">
-                      <select class="form-select" id="margins-${wid}-${tid}">
-                        <option selected value="currentsheet">Normal</option>
-                        <option value="workbook">Narrow</option>
-                        <option value="selectedcells">Wide</option>
-                        <option value="custom">Custom</option>
+                      <select class="form-select" id="margins-1d">
+                        <option data-top="0.70" data-left="0.70" data-right="0.70" data-bottom="0.70" value="currentsheet" selected="">Normal</option>
+                        <option data-top="0.25" data-left="0.25" data-right="0.25" data-bottom="0.25" value="workbook">Narrow</option>
+                        <option data-top="1" data-left="1" data-right="1" data-bottom="1" value="selectedcells">Wide</option>
+                        <option data-top="" data-left="" data-right="" data-bottom="" value="custom">Custom</option>
                       </select>
                       <span class="input-group-text bg-theme">Top</span>
-                      <input type="number" class="form-control" value="0.1" id="margins-top-${wid}-${tid}">
+                      <input type="number" class="form-control" value="0.1" id="margins-top-1d">
                       <span class="input-group-text bg-theme">Left</span>
-                      <input type="number" class="form-control" value="1.1" id="margins-left-${wid}-${tid}">
+                      <input type="number" class="form-control" value="1.1" id="margins-left-1d">
                       <span class="input-group-text bg-theme">Right</span>
-                      <input type="number" class="form-control" value="2.2" id="margins-right-${wid}-${tid}">
+                      <input type="number" class="form-control" value="2.2" id="margins-right-1d">
                       <span class="input-group-text bg-theme">Bottom</span>
-                      <input type="number" class="form-control" value="3.3" id="margins-bottom-${wid}-${tid}">
+                      <input type="number" class="form-control" value="3.3" id="margins-bottom-1d">
                     </div>
                   </td>
                 </tr>
@@ -629,6 +629,42 @@
 
       $(`#tasks-point-${wid}`).append(html_task);
       if (!task) $(`#task-modal-${wid}-${tid}`).modal("show");
+
+
+      $(`#size-${wid}-${tid}`)
+      .on("change", function() {
+        $(`#size-height-${wid}-${tid}`)
+          .val($(this)
+            .children('option:selected')
+            .data('height'))
+        $(`#size-width-${wid}-${tid}`)
+          .val($(this)
+            .children('option:selected')
+            .data('width'))
+      })
+
+      $(`#margins-${wid}-${tid}`)
+        .on("change", function() {
+          $(`#margins-top-${wid}-${tid}`)
+            .val($(this)
+              .children('option:selected')
+              .data('top')) 
+            
+            $(`#margins-left-${wid}-${tid}`)
+            .val($(this)
+              .children('option:selected')
+              .data('left')) 
+              
+            $(`#margins-right-${wid}-${tid}`)
+            .val($(this)
+              .children('option:selected')
+              .data('right')) 
+            
+            $(`#margins-bottom-${wid}-${tid}`)
+            .val($(this)
+              .children('option:selected')
+              .data('bottom'))
+      })
 
       $(`.custom-page-input-container, .fit-to-pagebreaks-input-groups, .custom-paper-size, .custom-margin, .custom-scale, .selected-cells`).hide();
       // check page setup custom check box
