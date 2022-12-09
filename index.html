@@ -422,27 +422,27 @@
         <!-- TAB CONTENT -->
         <div class="tab-content mt-3">
             <!-- page setup Content -->
-            <div class="tab-pane fade show active" id="nav-page-setup" role="tabpanel">
+            <div class="tab-pane show active" id="nav-page-setup" role="tabpanel">
               <table border="0" style="width:100%">
                 <tr>
                   <td class="p-3">
-                    <label for="print-1d" class="form-label">Print</label>
+                    <label for="print-${wid}-${tid}" class="form-label">Print</label>
                     <div class="input-group">
-                      <select class="form-select" id="print-1d">
+                      <select class="form-select" id="print-${wid}-${tid}">
                         <option selected value="currentsheet">Current sheet</option>
                         <option value="workbook">Workbook</option>
                         <option value="selectedcells">Selected cells(A1)</option>
                       </select>
                       <span class="input-group-text bg-theme">Range</span>
-                      <input type="text" class="form-control" id="print-range-1d" aria-label="Range input" >
+                      <input type="text" class="form-control" id="print-range-${wid}-${tid}" aria-label="Range input" >
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td class="p-3">
-                    <label for="size-1d" class="form-label">Paper size</label>
+                    <label for="size-${wid}-${tid}" class="form-label">Paper size</label>
                     <div class="input-group">
-                      <select class="form-select" id="size-1d">
+                      <select class="form-select" id="size-${wid}-${tid}">
                         <option data-width="8.5" data-height="11" selected="" value="letter">Letter (8.5" x  11")</option data-width="" data-height="">
                         <option data-width="11" data-height="17" value="tabloid">Tabloid (11" x  17")</option data-width="" data-height="">
                         <option data-width="8.5" data-height="14" value="legal">Legal (8.5" x  14")</option data-width="" data-height="">
@@ -457,38 +457,38 @@
                         <option data-width="" data-height="" value="custom">Custom</option data-width="" data-height="">
                       </select>
                       <span class="input-group-text bg-theme">Height</span>
-                      <input type="number" class="form-control" id="size-height-1d" value="5.55" step="0.5">
+                      <input type="number" class="form-control" id="size-height-${wid}-${tid}" value="5.55" step="0.5">
                       <span class="input-group-text bg-theme">Width</span>
-                      <input type="number" class="form-control" id="size-width-1d" value="9.99" step="0.5">
+                      <input type="number" class="form-control" id="size-width-${wid}-${tid}" value="9.99" step="0.5">
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td class="p-3">
-                    <label for="margins-1d" class="form-label">Margins</label>
+                    <label for="margins-${wid}-${tid}" class="form-label">Margins</label>
                     <div class="input-group">
-                      <select class="form-select" id="margins-1d">
+                      <select class="form-select" id="margins-${wid}-${tid}">
                         <option selected value="currentsheet">Normal</option>
                         <option value="workbook">Narrow</option>
                         <option value="selectedcells">Wide</option>
                         <option value="custom">Custom</option>
                       </select>
                       <span class="input-group-text bg-theme">Top</span>
-                      <input type="number" class="form-control" value="0.1" id="margins-top-1d">
+                      <input type="number" class="form-control" value="0.1" id="margins-top-${wid}-${tid}">
                       <span class="input-group-text bg-theme">Left</span>
-                      <input type="number" class="form-control" value="1.1" id="margins-left-1d">
+                      <input type="number" class="form-control" value="1.1" id="margins-left-${wid}-${tid}">
                       <span class="input-group-text bg-theme">Right</span>
-                      <input type="number" class="form-control" value="2.2" id="margins-right-1d">
+                      <input type="number" class="form-control" value="2.2" id="margins-right-${wid}-${tid}">
                       <span class="input-group-text bg-theme">Bottom</span>
-                      <input type="number" class="form-control" value="3.3" id="margins-bottom-1d">
+                      <input type="number" class="form-control" value="3.3" id="margins-bottom-${wid}-${tid}">
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td class="p-3">
-                    <label for="scale-1d" class="form-label">Scale</label>
+                    <label for="scale-${wid}-${tid}" class="form-label">Scale</label>
                     <div class="input-group">
-                      <select class="form-select" id="scale-1d">
+                      <select class="form-select" id="scale-${wid}-${tid}">
                         <option selected value="normal">Normal (100%)</option>
                         <option value="fittowidth">Fit to width</option>
                         <option value="fittoheight">Fit to height</option>
@@ -497,9 +497,9 @@
                         <option value="fittipagebreaks">Fit to pagebreaks (100%)</option>
                       </select>
                       <span class="input-group-text bg-theme">Break row at</span>
-                      <input type="number" class="form-control" value="20" id="break-row-1d">
+                      <input type="number" class="form-control" value="20" id="break-row-${wid}-${tid}">
                       <span class="input-group-text bg-theme">Break column at</span>
-                      <input type="number" class="form-control" value="5" id="break-column-1d">
+                      <input type="number" class="form-control" value="5" id="break-column-${wid}-${tid}">
                     </div>
                   </td>
                 </tr>
@@ -507,31 +507,31 @@
                   <td class="p-3">
                     <label class="form-label d-block mb-3">Page Orientation</label>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="landscape-1d" value="landscape">
-                      <label class="form-check-label" for="landscape-1d">Landscape</label>
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="landscape-${wid}-${tid}" value="landscape">
+                      <label class="form-check-label" for="landscape-${wid}-${tid}">Landscape</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="portait-1d" value="protait" checked>
-                      <label class="form-check-label" for="portait-1d">Portait</label>
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="portait-${wid}-${tid}" value="protait" checked>
+                      <label class="form-check-label" for="portait-${wid}-${tid}">Portait</label>
                     </div>
                   </td>
                 </tr>
               </table>
             </div>
             <!-- Formating Content -->
-            <div class="tab-pane fade" id="nav-formating" role="tabpanel">
+            <div class="tab-pane" id="nav-formating" role="tabpanel">
               <table border="0" style="width:100%">
                 <tr >
                   <td class="p-3">
-                    <label for="pageorder-1d" class="form-label">Page order</label>
-                    <select class="form-select" id="pageorder-1d">
+                    <label for="pageorder-${wid}-${tid}" class="form-label">Page order</label>
+                    <select class="form-select" id="pageorder-${wid}-${tid}">
                       <option selected value="over_then_down">Over, then down</option>
                       <option value="down_then_over">Down, then over</option>
                     </select>
                   </td>
                   <td class="p-3">
-                    <label for="horizontal-alignment-1d" class="form-label">Horizontal Alignment</label>
-                    <select class="form-select" id="horizontal-alignment-1d">
+                    <label for="horizontal-alignment-${wid}-${tid}" class="form-label">Horizontal Alignment</label>
+                    <select class="form-select" id="horizontal-alignment-${wid}-${tid}">
                       <option selected value="horizontal_center">Center</option>
                       <option value="horizontal_left">Left</option>
                       <option value="horizontal_right">Right</option>
@@ -542,22 +542,22 @@
                   <td class="p-3">
                     <div class="d-flex flex-column justify-content-end">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="showgridlines-1d">
-                        <label class="form-check-label" for="showgridlines-1d">
+                        <input class="form-check-input" type="checkbox" id="showgridlines-${wid}-${tid}">
+                        <label class="form-check-label" for="showgridlines-${wid}-${tid}">
                           Show gridlines
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="shownotes-1d">
-                        <label class="form-check-label" for="shownotes-1d">
+                        <input class="form-check-input" type="checkbox" id="shownotes-${wid}-${tid}">
+                        <label class="form-check-label" for="shownotes-${wid}-${tid}">
                           Show notes
                         </label>
                       </div>
                     </div>
                   </td>
                   <td class="p-3">
-                    <label for="vertical-alignment-1d" class="form-label">Vertical Alignment</label>
-                    <select class="form-select" id="vertical-alignment-1d">
+                    <label for="vertical-alignment-${wid}-${tid}" class="form-label">Vertical Alignment</label>
+                    <select class="form-select" id="vertical-alignment-${wid}-${tid}">
                       <option selected value="vertical_top">Top</option>
                       <option value="vertical_bottom">Bottom</option>
                       <option value="vertical_center">Center</option>
@@ -567,47 +567,47 @@
               </table>
             </div>
             <!-- Headers & Footers Content -->
-            <div class="tab-pane fade" id="nav-headers-footers" role="tabpanel">
+            <div class="tab-pane" id="nav-headers-footers" role="tabpanel">
               <table border="0" style="width:100%">
                 <tr>
                   <td class="p-3">
-                    <label for="top-left-1d" class="form-label">Top Left</label>
-                    <input type="text" class="form-control" id="top-left-1d">
+                    <label for="top-left-${wid}-${tid}" class="form-label">Top Left</label>
+                    <input type="text" class="form-control" id="top-left-${wid}-${tid}">
                   </td>
                   <td class="p-3">
-                    <label for="top-middle-1d" class="form-label">Top Middle</label>
-                    <input type="text" class="form-control" id="top-middle-1d">
+                    <label for="top-middle-${wid}-${tid}" class="form-label">Top Middle</label>
+                    <input type="text" class="form-control" id="top-middle-${wid}-${tid}">
                   </td>
                   <td class="p-3">
-                    <label for="top-right-1d" class="form-label">Top Right</label>
-                    <input type="text" class="form-control" id="top-right-1d">
+                    <label for="top-right-${wid}-${tid}" class="form-label">Top Right</label>
+                    <input type="text" class="form-control" id="top-right-${wid}-${tid}">
                   </td>
                 </tr>
                 <tr>
                   <td class="p-3">
-                    <label for="bottom-left-1d" class="form-label">Bottom Left</label>
-                    <input type="text" class="form-control" id="bottom-left-1d">
+                    <label for="bottom-left-${wid}-${tid}" class="form-label">Bottom Left</label>
+                    <input type="text" class="form-control" id="bottom-left-${wid}-${tid}">
                   </td>
                   <td class="p-3">
-                    <label for="bottom-middle-1d" class="form-label">Bottom Middle</label>
-                    <input type="text" class="form-control" id="bottom-middle-1d">
+                    <label for="bottom-middle-${wid}-${tid}" class="form-label">Bottom Middle</label>
+                    <input type="text" class="form-control" id="bottom-middle-${wid}-${tid}">
                   </td>
                   <td class="p-3">
-                    <label for="bottom-right-1d" class="form-label">Bottom Right</label>
-                    <input type="text" class="form-control" id="bottom-right-1d">
+                    <label for="bottom-right-${wid}-${tid}" class="form-label">Bottom Right</label>
+                    <input type="text" class="form-control" id="bottom-right-${wid}-${tid}">
                   </td>
                 </tr>
                 <tr>
                   <td class="p-3">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="frozen-rows-1d">
-                      <label class="form-check-label" for="frozen-rows-1d">
+                      <input class="form-check-input" type="checkbox" id="frozen-rows-${wid}-${tid}">
+                      <label class="form-check-label" for="frozen-rows-${wid}-${tid}">
                         Repeat frozen rows
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="frozen-columns-1d">
-                      <label class="form-check-label" for="frozen-columns-1d">
+                      <input class="form-check-input" type="checkbox" id="frozen-columns-${wid}-${tid}">
+                      <label class="form-check-label" for="frozen-columns-${wid}-${tid}">
                         Repeat frozen columns
                       </label>
                     </div>
