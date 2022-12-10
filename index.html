@@ -379,9 +379,8 @@
 										<label for="print-${wid}-${tid}" class="form-label">Print</label>
 										<div class="input-group">
 											<select class="form-select" id="print-${wid}-${tid}">
-												<option selected value="currentsheet">Current sheet</option>
-												<option value="workbook">Workbook</option>
-												<option value="selectedcells">Selected cells(A1)</option>
+												<option selected value="workbook">Workbook</option>
+												<option value="currentsheet">Current sheet</option>
 											</select>
 											<span class="input-group-text bg-theme range-span">Range</span>
 											<input type="text" class="form-control" id="print-range-${wid}-${tid}" aria-label="Range input">
@@ -667,7 +666,7 @@
 			.on("change", function() {
 				var value = $(this)
 					.children('option:selected').val();
-				if (value == "selectedcells") {
+				if (value.indexOf('s') == 0) {
 					$(`.range-span, #print-range-${wid}-${tid}`).show()
 					$(`#print-${wid}-${tid}`).css({
 						"border-top-right-radius": "0",
@@ -708,6 +707,15 @@
 				}
 			})
 
+			$(`.restore-${wid}-${tid}`).on('click', function(e) {
+                // if (!task) return;
+				var data = ["Sheet1", "Sheet2", "Sheet3", "Sheet4"];
+				for (var index = 0; index < data.length; index++) {
+					$(`#print-${wid}-${tid}`).append(`<option value="${data[index].toLowerCase()}">${data[index]}</option>`);
+				}
+
+			}).click();
+
 		$(`.done-${wid}-${tid}`).on('click', function(e) {
 			e.preventDefault()
 			e.stopPropagation()
@@ -715,7 +723,10 @@
 			$(`#task-modal-${wid}-${tid}`).modal('hide');
 		})
 
+
 	}
+
+	
 
 	// Delete Instance
 	$(`.tdelete`).on('click', function(e) {
