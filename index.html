@@ -71,272 +71,94 @@
 		result.taskType = "pdfprint";
 		result.id = tid;
 		result.name = `${wid}-${tid}`;
-		let urlInputEle = $(`#url-${wid}-${tid}`);
-		let urlVal = urlInputEle.val();
-		// URL INPUT VALIDATION
-		if (urlVal.length === 0 || !isValidUrl(urlVal)) {
-			alert("URL is Required")
-			return;
+		// Page setup
+		// Print
+		let printValue = $(`#print-${wid}-${tid}`).val();
+		let printTextValue = $(`#print-${wid}-${tid} option:selected`).text();
+		if(printTextValue.indexOf("Selected range of ") == 0){
+			let rangeVal = $(`#print-range-${wid}-${tid}`).val();
+			result.print = {
+				"type" : "custom",
+				"value": {
+					"range": `${rangeVal}`
+				}
+			}
+		} else{
+			result.print = {
+				"type" : `${printValue}`
+			}
 		}
-		result.method = $(`#method-${wid}-${tid}`)
-			.val()
-			.toUpperCase();
-		// URL key
-		result.url = {};
-		result.url.raw = urlVal;
-		let urlValues = new URL(urlVal);
-		result.url.protocol = urlValues.protocol.replace(':', '');
-		result.url.host = urlValues.hostname.split('.');
-		result.url.path = urlValues.pathname.split('/')
-			.filter((val) => val !== "");
-		let dataArr = atoo($(`#nav-qp-${wid}-${tid} .key`)
-			.map(function() {
-				return this.value;
-			})
-			.get(), $(`#nav-qp-${wid}-${tid} .value`)
-			.map(function() {
-				return this.value;
-			})
-			.get());
-		if (dataArr !== false) {
-			if (dataArr.length > 0) {
-				result.url.query = dataArr;
+		// Paper Size
+		let paperSizeVal = $(`#size-${wid}-${tid}`).val();
+		if(paperSizeVal == "custom"){
+			let height = $(`#size-height-${wid}-${tid}`).val();
+			let width = $(`#size-width-${wid}-${tid}`).val();
+			result.size = {
+				"type" : "custom",
+				"value" : {
+					"height" : `${height}`,
+					"width" : `${width}`,
+				}
 			}
-		} else {
-			alert("Key is missing in Params Tab");
-			return;
+		} else{
+			result.size = {
+				"type" : `${paperSizeVal}`
+			}
 		}
-		// AUTHORIZATION
-		result.auth = {};
-		result.auth.type = $(`#auth-type-${wid}-${tid}`)
-			.val();
-		if (result.auth.type === "apikey") {
-			let key = $(`#apiKeyInput-${wid}-${tid}`)
-				.val();
-			let value = $(`#apikey-value-${wid}-${tid}`)
-				.val();
-			if ((key.trim() === "" && value !== "") || (key.trim() === "" && value.trim() === "")) {
-				alert("API Key is missing in Authorization tab");
-				return;
-			}
-			result.auth.apikey = [{
-					"key": "key",
-					"value": key,
-					"type": "string"
-				},
-				{
-					"key": "value",
-					"value": value,
-					"type": "string"
-				},
-				{
-					"key": "in",
-					"value": $('input[name=addToRadioOptions]:checked', `.authtab-${wid}-${tid}`)
-						.val(),
-					"type": "string"
+		// Scale
+		let scaleVal = $(`#scale-${wid}-${tid}`).val();
+		if(scaleVal == "custom"){
+			let percentageVal = $(`#percentage-${wid}-${tid}`).val();
+			result.scale = {
+				"type" : "custom",
+				"value" : {
+					"percentage" : `${percentageVal}`,
 				}
-			];
-		} else if (result.auth.type === "bearertoken") {
-			let bearerTokenValue = $(`#bearer-value-${wid}-${tid}`)
-				.val();
-			if (bearerTokenValue.trim() === "") {
-				alert("Bearer token is missing in Authorization tab");
-				return;
 			}
-			result.auth.bearer = [{
-				"key": "token",
-				"value": `${bearerTokenValue}`,
-				"type": "string"
-			}]
-		} else if (result.auth.type === "basic") {
-			let uNameValue = $(`#basic-username-${wid}-${tid}`)
-				.val();
-			let passwordValue = $(`#basic-password-${wid}-${tid}`)
-				.val();
-
-			if (uNameValue.trim() === '' || passwordValue.trim() === '') {
-				alert("Username and Password must not be empty in the Authorization Tab");
-				return;
+		} else if(scaleVal == "fittipagebreaks"){
+			let row = $(`#break-row-${wid}-${tid}`).val();
+			let col = $(`#break-column-${wid}-${tid}`).val();
+			result.scale = {
+				"type" : "fit_pagebreak",
+				"value" : {
+					"row" : `${row}`,
+					"column" : `${col}`
+				}
 			}
-
-			result.auth.basic = [{
-				"key": "username",
-				"value": `${uNameValue}`,
-				"type": "string"
-			}, {
-				"key": "password",
-				"value": `${passwordValue}`,
-				"type": "string"
-			}]
-		} else if (result.auth.type === "oauth2") {
-			let oauthTokenValue = $(`#oauth-value-${wid}-${tid}`)
-				.val();
-			if (oauthTokenValue.trim() === "") {
-				alert("OAuth token is missing in Authorization tab");
-				return;
+		} else{
+			result.scale = {
+				"type" : `${scaleVal}`
 			}
-			result.auth.oauth2 = [{
-				"key": "token",
-				"value": `${oauthTokenValue}`,
-				"type": "string"
-			}, {
-				"key": "addTokenTo",
-				"value": "header",
-				"type": "string"
-			}]
 		}
-		// HEADER 
-		let headerData = atoo($(`#nav-headers-${wid}-${tid} .key`)
-			.map(function() {
-				return this.value;
-			})
-			.get(), $(`#nav-headers-${wid}-${tid} .value`)
-			.map(function() {
-				return this.value;
-			})
-			.get())
-		if (headerData !== false) {
-			result.header = headerData;
-			result.header.forEach((res) => {
-				res.type = "text";
-			})
-		} else {
-			alert("Key is missing in Headers Tab");
-			return;
+		// Margins
+		let marginsVal = $(`#margins-${wid}-${tid}`).val();
+		if(marginsVal == "custom"){
+			let top = $(`#margins-top-${wid}-${tid}`).val();
+			let left = $(`#margins-left-${wid}-${tid}`).val();
+			let right = $(`#margins-right-${wid}-${tid}`).val();
+			let bottom = $(`#margins-bottom-${wid}-${tid}`).val();
+			result.margins = {
+				"type" : "custom",
+				"value" : {
+					"top" : `${top}`,
+					"left" : `${left}`,
+					"right" : `${right}`,
+					"bottom" : `${bottom}`,
+				}
+			}
+		} else{
+			result.margins = {
+				"type" : `${marginsVal}`
+			}
 		}
-
-		// BODY
-		let bodyContentType = $(`#body-content-type-${wid}-${tid}`).val();
-		if (bodyContentType === "appurlencoded") {
-			result.body = {};
-			result.body.mode = "urlencoded";
-			let bodyTabUrlArr = atoo($(`.urlencodedtab-${wid}-${tid} .key`)
-				.map(function() {
-					return this.value;
-				})
-				.get(), $(`.urlencodedtab-${wid}-${tid} .value`)
-				.map(function() {
-					return this.value;
-				})
-				.get())
-
-			if (bodyTabUrlArr !== false) {
-				if (bodyTabUrlArr.length === 0) {
-					alert("Key and Value is Missing");
-					return;
-				}
-				result.body.urlencoded = bodyTabUrlArr;
-				result.body.urlencoded.forEach((res) => {
-					res.type = "text";
-				})
-			} else {
-				alert("Key is missing in Body Tab");
-				return;
-			}
-
-		} else if (bodyContentType === "appjson") {
-			if ($(`#use-raw-${wid}-${tid}`)
-				.prop('checked')) {
-				result.body = {};
-				result.body.mode = "raw";
-				result.body.raw = JSON.stringify($(`#json-value-${wid}-${tid}`)
-					.val());
-				if (result.body.raw.length <= 2) {
-					alert("Result body should not be empty in Body tab");
-					return;
-				}
-				result.body.options = {
-					"raw": {
-						"language": "json"
-					}
-				}
-			} else {
-				result.body = {};
-				result.body.mode = "formdata";
-				var bodyTabFormDataArr = atoo($(`.jsontab-${wid}-${tid} .key`)
-					.map(function() {
-						return this.value;
-					})
-					.get(), $(`.jsontab-${wid}-${tid} .value`)
-					.map(function() {
-						return this.value;
-					})
-					.get())
-
-				if (bodyTabFormDataArr !== false) {
-					if (bodyTabFormDataArr.length === 0) {
-						alert("Key and Value is Missing");
-						return;
-					}
-					result.body.formdata = bodyTabFormDataArr;
-					result.body.formdata.forEach((res) => {
-						res.type = "text";
-					})
-				} else {
-					alert("Key is missing in Body Tab");
-					return;
-				}
-
-			}
-		} else if (bodyContentType === "textplain") {
-			result.body = {};
-			result.body.mode = "raw";
-			result.body.raw = JSON.stringify($(`#text-value-${wid}-${tid}`)
-				.val());
-			if (result.body.raw.length <= 2) {
-				alert("Result body should not be empty in Body tab");
-				return;
-			}
-			result.body.options = {
-				"raw": {
-					"language": "text"
-				}
-			}
-		} else if (bodyContentType === "texthtml") {
-			result.body = {};
-			result.body.mode = "raw";
-			result.body.raw = JSON.stringify($(`#html-value-${wid}-${tid}`)
-				.val());
-			if (result.body.raw.length <= 2) {
-				alert("Result body should not be empty in Body tab");
-				return;
-			}
-			result.body.options = {
-				"raw": {
-					"language": "html"
-				}
-			}
-		} else if (bodyContentType === "appxml") {
-			result.body = {};
-			result.body.mode = "raw";
-			result.body.raw = JSON.stringify($(`#xml-value-${wid}-${tid}`)
-				.val());
-			if (result.body.raw.length <= 2) {
-				alert("Result body should not be empty in Body tab");
-				return;
-			}
-			result.body.options = {
-				"raw": {
-					"language": "xml"
-				}
-			}
-		} else if (bodyContentType === "appjavascript") {
-			result.body = {};
-			result.body.mode = "raw";
-			result.body.raw = JSON.stringify($(`#js-value-${wid}-${tid}`)
-				.val());
-			if (result.body.raw.length <= 2) {
-				alert("Result body should not be empty in Body tab");
-				return;
-			}
-			result.body.options = {
-				"raw": {
-					"language": "javascript"
-				}
-			}
+		// Page Orietation
+		let selectedRadioValue = $("input[name='pageSetupRadio']:checked").val();
+		result.orientation = {
+			"type": `${selectedRadioValue}`
 		}
 		// Response
-		result.response = []
+		result.response = [];
+		console.log(result)
 		return result;
 
 	}
@@ -456,11 +278,11 @@
 									<td class="p-3">
 										<label class="form-label d-block mb-3">Page Orientation</label>
 										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="inlineRadioOptions" id="landscape-${wid}-${tid}" value="landscape">
+											<input class="form-check-input" type="radio" name="pageSetupRadio" id="landscape-${wid}-${tid}" value="landscape">
 											<label class="form-check-label" for="landscape-${wid}-${tid}">Landscape</label>
 										</div>
 										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="inlineRadioOptions" id="portait-${wid}-${tid}" value="protait" checked>
+											<input class="form-check-input" type="radio" name="pageSetupRadio" id="portait-${wid}-${tid}" value="protait" checked>
 											<label class="form-check-label" for="portait-${wid}-${tid}">Portait</label>
 										</div>
 									</td>
@@ -705,13 +527,13 @@
 				}
 			})
 
-			$(`.restore-${wid}-${tid}`).on('click', function(e) {
+		$(`.restore-${wid}-${tid}`).on('click', function(e) {
                 // if (!task) return;
 				var data = ["Sheet1", "Sheet2", "Sheet3", "Sheet4"];
 				for (var index = 0; index < data.length; index++) {
 					$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">${data[index]}</option>`);
 					$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">Selected range of ${data[index]}</option>`);
-				}
+		}
 
 			}).click();
 
