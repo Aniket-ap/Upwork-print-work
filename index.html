@@ -380,7 +380,6 @@
 										<div class="input-group">
 											<select class="form-select" id="print-${wid}-${tid}">
 												<option selected value="workbook">Workbook</option>
-												<option value="currentsheet">Current sheet</option>
 											</select>
 											<span class="input-group-text bg-theme range-span">Range</span>
 											<input type="text" class="form-control" id="print-range-${wid}-${tid}" aria-label="Range input">
@@ -665,8 +664,8 @@
 		$(`#print-${wid}-${tid}`)
 			.on("change", function() {
 				var value = $(this)
-					.children('option:selected').val();
-				if (value.indexOf('s') == 0) {
+					.children('option:selected').text();
+				if (value.indexOf('Selected range of') == 0) {
 					$(`.range-span, #print-range-${wid}-${tid}`).show()
 					$(`#print-${wid}-${tid}`).css({
 						"border-top-right-radius": "0",
