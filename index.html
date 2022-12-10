@@ -429,10 +429,10 @@
 												<option data-width="6.93" data-height="9.84" value="b5">B5 (6.93" x 9.84")</option>
 												<option data-width="" data-height="" value="custom">Custom</option>
 											</select>
-											<span class="input-group-text bg-theme">Height</span>
-											<input type="number" class="form-control" id="size-height-${wid}-${tid}" value="5.55" step="0.5">
 											<span class="input-group-text bg-theme">Width</span>
-											<input type="number" class="form-control" id="size-width-${wid}-${tid}" value="9.99" step="0.5">
+											<input type="number" class="form-control" id="size-width-${wid}-${tid}" step="0.5">
+											<span class="input-group-text bg-theme">Height</span>
+											<input type="number" class="form-control" id="size-height-${wid}-${tid}" step="0.5">
 										</div>
 									</td>
 								</tr>
@@ -473,7 +473,7 @@
 											<input type="number" class="form-control" value="20" id="break-row-${wid}-${tid}">
 											<span class="input-group-text bg-theme break-span">Break column at</span>
 											<input type="number" class="form-control" value="5" id="break-column-${wid}-${tid}">
-											<span class="input-group-text bg-theme custom-span">Percentage</span>
+											<span class="input-group-text bg-theme custom-span">%</span>
 											<input type="number" class="form-control" value="88" step="1" id="percentage-${wid}-${tid}">
 										</div>
 									</td>
@@ -633,10 +633,10 @@
 					$(`#size-width-${wid}-${tid}`)
 						.prop('disabled', true)
 				}
-				$(`#size-height-${wid}-${tid}`)
-					.val(height)
 				$(`#size-width-${wid}-${tid}`)
-					.val(width)
+					.val(width);
+				$(`#size-height-${wid}-${tid}`)
+					.val(height);
 			})
 
 		$(`#margins-${wid}-${tid}`)
