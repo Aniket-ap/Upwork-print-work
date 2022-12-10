@@ -77,6 +77,10 @@
 		let printTextValue = $(`#print-${wid}-${tid} option:selected`).text();
 		if(printTextValue.indexOf("Selected range of ") == 0){
 			let rangeVal = $(`#print-range-${wid}-${tid}`).val();
+			if(rangeVal.trim().length === 0){
+				alert("Range should not be empty in Page setup tab");
+				return;
+			}
 			result.print = {
 				"type" : "custom",
 				"value": {
@@ -93,6 +97,10 @@
 		if(paperSizeVal == "custom"){
 			let height = $(`#size-height-${wid}-${tid}`).val();
 			let width = $(`#size-width-${wid}-${tid}`).val();
+			if(height.trim().length === 0 || width.trim().length === 0){
+				alert("Height and Width should not be empty in Page setup tab");
+				return;
+			}
 			result.size = {
 				"type" : "custom",
 				"value" : {
@@ -109,6 +117,10 @@
 		let scaleVal = $(`#scale-${wid}-${tid}`).val();
 		if(scaleVal == "custom"){
 			let percentageVal = $(`#percentage-${wid}-${tid}`).val();
+			if(percentageVal.trim().length === 0){
+				alert("Percentage should not be empty in Page setup tab");
+				return;
+			}
 			result.scale = {
 				"type" : "custom",
 				"value" : {
@@ -118,6 +130,10 @@
 		} else if(scaleVal == "fittipagebreaks"){
 			let row = $(`#break-row-${wid}-${tid}`).val();
 			let col = $(`#break-column-${wid}-${tid}`).val();
+			if(row.trim().length === 0 || col.trim().length === 0){
+				alert("Row and Column value should not be empty in Page setup tab");
+				return;
+			}
 			result.scale = {
 				"type" : "fit_pagebreak",
 				"value" : {
@@ -137,6 +153,10 @@
 			let left = $(`#margins-left-${wid}-${tid}`).val();
 			let right = $(`#margins-right-${wid}-${tid}`).val();
 			let bottom = $(`#margins-bottom-${wid}-${tid}`).val();
+			if(top.trim().length === 0 || left.trim().length === 0 || right.trim().length === 0 || bottom.trim().length === 0){
+				alert("Top, Left, Right and Bottom value should not be empty in Page setup tab");
+				return;
+			}
 			result.margins = {
 				"type" : "custom",
 				"value" : {
@@ -156,6 +176,74 @@
 		result.orientation = {
 			"type": `${selectedRadioValue}`
 		}
+		// Format tab
+		// gridlines
+		if($(`#showgridlines-${wid}-${tid}`).is(":checked")){
+			result.gridlines = {
+				"value" : "true"
+			}
+		} else{
+			result.gridlines = {
+				"value" : "false"
+			}
+		}
+		// notes
+		if($(`#shownotes-${wid}-${tid}`).is(":checked")){
+			result.notes = {
+				"value" : "true"
+			}
+		} else{
+			result.notes = {
+				"value" : "false"
+			}
+		}
+		// Pageorder
+		let pageOrderVal = $(`#pageorder-${wid}-${tid}`).val();
+		result.pageorder = {
+			"value" : `${pageOrderVal}`
+		}
+		// Alignment
+		let h_val = $(`#horizontal-alignment-${wid}-${tid}`).val();
+		result.h_alignment = {
+			"value" : `${h_val}`
+		}
+		let v_val = $(`#vertical-alignment-${wid}-${tid}`).val();
+		result.v_alignment = {
+			"value" : `${v_val}`
+		}
+		// Headers & Footer
+		if($(`#frozen-rows-${wid}-${tid}`).is(":checked")){
+			result.hf = {
+				"options" : {
+					"hf_fzr" : "true",
+					"hf_fzc" : "false"
+				}
+			}
+		} else{
+			result.hf = {
+				"options" : {
+					"hf_fzr" : "false",
+					"hf_fzc" : "false"
+				}
+			}
+		}
+		// TO BE DONE AFTER CONFIRMATION
+		// if($(`#frozen-columns-${wid}-${tid}`).is(":checked")){
+		// 	result.hf = {
+		// 		"options" : {
+		// 			"hf_fzr" : "false",
+		// 			"hf_fzc" : "true"
+		// 		}
+		// 	}
+		// } else{
+		// 	result.hf = {
+		// 		"options" : {
+		// 			"hf_fzr" : "false",
+		// 			"hf_fzc" : "false"
+		// 		}
+		// 	}
+		// }
+
 		// Response
 		result.response = [];
 		console.log(result)
