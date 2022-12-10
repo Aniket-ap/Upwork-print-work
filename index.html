@@ -711,7 +711,8 @@
                 // if (!task) return;
 				var data = ["Sheet1", "Sheet2", "Sheet3", "Sheet4"];
 				for (var index = 0; index < data.length; index++) {
-					$(`#print-${wid}-${tid}`).append(`<option value="${data[index].toLowerCase()}">${data[index]}</option>`);
+					$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">${data[index]}</option>`);
+					$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">Selected range of ${data[index]}</option>`);
 				}
 
 			}).click();
