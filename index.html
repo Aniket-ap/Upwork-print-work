@@ -469,12 +469,12 @@
 												<option value="custom">Custom</option>
 												<option value="fittipagebreaks">Fit to pagebreaks (100%)</option>
 											</select>
+											<span class="input-group-text bg-theme custom-span">%</span>
+											<input type="number" class="form-control" value="88" step="1" id="percentage-${wid}-${tid}">
 											<span class="input-group-text bg-theme break-span">Break row at</span>
 											<input type="number" class="form-control" value="20" id="break-row-${wid}-${tid}">
 											<span class="input-group-text bg-theme break-span">Break column at</span>
 											<input type="number" class="form-control" value="5" id="break-column-${wid}-${tid}">
-											<span class="input-group-text bg-theme custom-span">%</span>
-											<input type="number" class="form-control" value="88" step="1" id="percentage-${wid}-${tid}">
 										</div>
 									</td>
 								</tr>
@@ -722,9 +722,12 @@
 						"border-top-right-radius": "0",
 						"border-bottom-right-radius": "0"
 					});
+					$(`#percentage-${wid}-${tid}`).css({
+						"border-top-right-radius": ".375rem",
+						"border-bottom-right-radius": ".375rem"
+					});
 				} else {
 					$(`.custom-span, #percentage-${wid}-${tid}`).hide();
-					$(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
 				}
 			})
 
