@@ -665,7 +665,7 @@
 			.on("change", function() {
 				var value = $(this)
 					.children('option:selected').text();
-				if (value.indexOf('Selected range of') == 0) {
+				if (value.indexOf('Selected range of ') == 0) {
 					$(`.range-span, #print-range-${wid}-${tid}`).show()
 					$(`#print-${wid}-${tid}`).css({
 						"border-top-right-radius": "0",
