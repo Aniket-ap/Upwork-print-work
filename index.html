@@ -241,36 +241,35 @@
 		}
 		// Headers & Footer
 		if($(`#frozen-rows-${wid}-${tid}`).is(":checked")){
-			result.hf = {
+			result.fzr_hf = {
 				"options" : {
 					"hf_fzr" : "true",
 					"hf_fzc" : "false"
 				}
 			}
 		} else{
-			result.hf = {
+			result.fzr_hf = {
 				"options" : {
 					"hf_fzr" : "false",
 					"hf_fzc" : "false"
 				}
 			}
 		}
-		// TO BE DONE AFTER CONFIRMATION
-		// if($(`#frozen-columns-${wid}-${tid}`).is(":checked")){
-		// 	result.hf = {
-		// 		"options" : {
-		// 			"hf_fzr" : "false",
-		// 			"hf_fzc" : "true"
-		// 		}
-		// 	}
-		// } else{
-		// 	result.hf = {
-		// 		"options" : {
-		// 			"hf_fzr" : "false",
-		// 			"hf_fzc" : "false"
-		// 		}
-		// 	}
-		// }
+		if($(`#frozen-columns-${wid}-${tid}`).is(":checked")){
+			result.fzc_hf = {
+				"options" : {
+					"hf_fzr" : "false",
+					"hf_fzc" : "true"
+				}
+			}
+		} else{
+			result.fzc_hf = {
+				"options" : {
+					"hf_fzr" : "false",
+					"hf_fzc" : "false"
+				}
+			}
+		}
 
 		// Response
 		result.response = [];
