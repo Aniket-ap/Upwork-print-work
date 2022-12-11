@@ -101,11 +101,11 @@
 				alert("Height and Width should not be empty in Page setup tab");
 				return;
 			}
-			if(Number(height) > 2.4 && Number(height) <= 60){
+			if(Number(height) > 2.4 || Number(height) <= 60){
 				alert("Please enter height number in between 2.4 to 60");
 				return;
 			}
-			if(Number(width) > 2.5 && Number(width) <= 60){
+			if(Number(width) > 2.5 || Number(width) <= 60){
 				alert("Please enter width number in between 2.5 to 60");
 				return;
 			}
