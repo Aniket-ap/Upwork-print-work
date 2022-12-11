@@ -101,6 +101,14 @@
 				alert("Height and Width should not be empty in Page setup tab");
 				return;
 			}
+			if(Number(height) > 2.4 && Number(height) <= 60){
+				alert("Please enter height number in between 2.4 to 60");
+				return;
+			}
+			if(Number(width) > 2.5 && Number(width) <= 60){
+				alert("Please enter width number in between 2.5 to 60");
+				return;
+			}
 			result.size = {
 				"type" : "custom",
 				"value" : {
@@ -119,6 +127,10 @@
 			let percentageVal = $(`#percentage-${wid}-${tid}`).val();
 			if(percentageVal.trim().length === 0){
 				alert("Percentage should not be empty in Page setup tab");
+				return;
+			}
+			if(Number(percentageVal) < 1){
+				alert("Please enter a positive percentage number ");
 				return;
 			}
 			result.scale = {
@@ -155,6 +167,22 @@
 			let bottom = $(`#margins-bottom-${wid}-${tid}`).val();
 			if(top.trim().length === 0 || left.trim().length === 0 || right.trim().length === 0 || bottom.trim().length === 0){
 				alert("Top, Left, Right and Bottom value should not be empty in Page setup tab");
+				return;
+			}
+			if(Number(top) <= 0 || Number(top) >= 0.3){
+				alert("Please enter top value in inches between 0 to 0.3 ");
+				return;
+			}
+			if(Number(right) <= 0 || Number(top) >= 1.5){
+				alert("Please enter right value in inches between 0 to 1.5 ");
+				return;
+			}
+			if(Number(bottom) <= 0 || Number(bottom) >= 0.3){
+				alert("Please enter bottom value in inches between 0 to 0.3 ");
+				return;
+			}
+			if(Number(left) <= 0 || Number(left) >= 0.75){
+				alert("Please enter left value in inches between 0 to 0.75 ");
 				return;
 			}
 			result.margins = {
