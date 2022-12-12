@@ -147,7 +147,6 @@
 		} else if(scaleVal == "fittipagebreaks"){
 			let row = $(`#break-row-${wid}-${tid}`).val();
 			let col = $(`#break-column-${wid}-${tid}`).val();
-			$(`#colname`).text(`\u00A0${toColumnName(Math.round(col))}`);
 			result.scale = {
 				"type" : "fit_pagebreak",
 				"value" : {
@@ -536,6 +535,14 @@
 
 		// Initial style for print and scale select tag
 		$(`#print-${wid}-${tid}, #scale-${wid}-${tid}`).css("border-radius", ".375rem")
+
+		// Initial set break column value
+		$(`#colname`).text(`\u00A0${toColumnName($(`#break-column-${wid}-${tid}`).val())}`);
+		// Dynamic Break column at value
+		$(`#break-column-${wid}-${tid}`).on('input', function(e){
+			let val = $(`#break-column-${wid}-${tid}`).val();
+			$(`#colname`).text(`\u00A0${toColumnName(Math.round(val))}`);
+		})
 
 		$(`#size-${wid}-${tid}`)
 			.on("change", function() {
