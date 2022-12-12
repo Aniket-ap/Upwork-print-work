@@ -138,7 +138,7 @@
 		} else if(scaleVal == "fittipagebreaks"){
 			let row = $(`#break-row-${wid}-${tid}`).val();
 			let col = $(`#break-column-${wid}-${tid}`).val();
-			$(`#colname`).text(`\u00A0 ${toColumnName(Math.round(col))}`);
+			$(`#colname`).text(`\u00A0${toColumnName(Math.round(col))}`);
 			result.scale = {
 				"type" : "fit_pagebreak",
 				"value" : {
