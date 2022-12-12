@@ -94,19 +94,21 @@
 		}
 		// Paper Size
 		let paperSizeVal = $(`#size-${wid}-${tid}`).val();
+		let height;
+		let width;
 		if(paperSizeVal == "custom"){
-			let height = $(`#size-height-${wid}-${tid}`).val();
-			let width = $(`#size-width-${wid}-${tid}`).val();
+			height = $(`#size-height-${wid}-${tid}`).val();
+			width = $(`#size-width-${wid}-${tid}`).val();
 			if(height.trim().length === 0 || width.trim().length === 0){
 				alert("Height and Width should not be empty in Page setup tab");
 				return;
 			}
-			if(Number(height) > 2.4 || Number(height) <= 60){
-				alert("Please enter height number in between 2.4 to 60");
+			if(Number(height) < 2.4 || Number(height) >= 60){
+				alert("Please enter a number in inches between 2.4 to 60");
 				return;
 			}
-			if(Number(width) > 2.5 || Number(width) <= 60){
-				alert("Please enter width number in between 2.5 to 60");
+			if(Number(width) < 2.5 || Number(width) >= 60){
+				alert("Please enter a number in inches between 2.5 to 60");
 				return;
 			}
 			result.size = {
@@ -117,6 +119,8 @@
 				}
 			}
 		} else{
+			width = $(`#size-${wid}-${tid}`).find(':selected').attr('data-width');
+			height = $(`#size-${wid}-${tid}`).find(':selected').attr('data-height');
 			result.size = {
 				"type" : `${paperSizeVal}`
 			}
@@ -162,20 +166,24 @@
 				alert("Top, Left, Right and Bottom value should not be empty in Page setup tab");
 				return;
 			}
-			if(Number(top) <= 0 || Number(top) >= 0.3){
-				alert("Please enter top value in inches between 0 to 0.3 ");
+			let maxTopValue = (height - 1) - bottom;
+			let maxBottomValue = (height - 1) - top;
+			let maxLeftValue = (width - 1) - right;
+			let maxRightValue = (width - 1) - left;
+			if(top < 0 || top > maxTopValue){
+				alert(`Please enter a number in inches between 0" and ${maxTopValue}".`);
 				return;
 			}
-			if(Number(right) <= 0 || Number(top) >= 1.5){
-				alert("Please enter right value in inches between 0 to 1.5 ");
+			if(left < 0 || left > maxLeftValue){
+				alert(`Please enter a number in inches between 0" and ${maxLeftValue}".`);
 				return;
 			}
-			if(Number(bottom) <= 0 || Number(bottom) >= 0.3){
-				alert("Please enter bottom value in inches between 0 to 0.3 ");
+			if(right < 0 || right > maxRightValue){
+				alert(`Please enter a number in inches between 0" and ${maxRightValue}".`);
 				return;
 			}
-			if(Number(left) <= 0 || Number(left) >= 0.75){
-				alert("Please enter left value in inches between 0 to 0.75 ");
+			if(bottom < 0 || bottom > maxBottomValue){
+				alert(`Please enter a number in inches between 0" and ${maxBottomValue}".`);
 				return;
 			}
 			result.margins = {
