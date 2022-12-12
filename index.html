@@ -125,32 +125,25 @@
 		let scaleVal = $(`#scale-${wid}-${tid}`).val();
 		if(scaleVal == "custom"){
 			let percentageVal = $(`#percentage-${wid}-${tid}`).val();
-			if(percentageVal.trim().length === 0){
-				alert("Percentage should not be empty in Page setup tab");
-				return;
-			}
-			if(Number(percentageVal) < 1){
+			if(Number(percentageVal) < 1 || percentageVal.length === 0){
 				alert("Please enter a positive percentage number ");
 				return;
 			}
 			result.scale = {
 				"type" : "custom",
 				"value" : {
-					"percentage" : `${percentageVal}`,
+					"percentage" : `${Math.round(percentageVal)}`,
 				}
 			}
 		} else if(scaleVal == "fittipagebreaks"){
 			let row = $(`#break-row-${wid}-${tid}`).val();
 			let col = $(`#break-column-${wid}-${tid}`).val();
-			if(row.trim().length === 0 || col.trim().length === 0){
-				alert("Row and Column value should not be empty in Page setup tab");
-				return;
-			}
+			$(`#colname`).text(`\u00A0 ${toColumnName(Math.round(col))}`);
 			result.scale = {
 				"type" : "fit_pagebreak",
 				"value" : {
-					"row" : `${row}`,
-					"column" : `${col}`
+					"row" : `${Math.round(row)}`,
+					"column" : `${Math.round(col)}`
 				}
 			}
 		} else{
@@ -278,6 +271,12 @@
 
 	}
 
+	// Dynamic columnName
+	function toColumnName(d) {
+		for (var a = "", b = 1, c = 26; 0 <= (d -= b); b = c, c *= 26) a = String.fromCharCode(parseInt(d % c / b) + 65) + a;
+		return a
+	};
+
 	function createTask_PDFFile(wid, task) {
 		var tid = task?.id ? task.id : Math.random().toString(36).substr(2, 8);
 		var html_task = getAddTaskEnvelope(wid, tid, "pdfprint", `<div class="ms-5 ps-3">
@@ -378,13 +377,13 @@
 												<option value="fittoheight">Fit to height</option>
 												<option value="fittopage">Fit to page</option>
 												<option value="custom">Custom</option>
-												<option value="fittipagebreaks">Fit to pagebreaks (100%)</option>
+												<option value="fittipagebreaks">Fit to pagebreaks</option>
 											</select>
 											<span class="input-group-text bg-theme custom-span">%</span>
 											<input type="number" class="form-control" value="88" step="1" id="percentage-${wid}-${tid}">
-											<span class="input-group-text bg-theme break-span">Break row at</span>
+											<span class="input-group-text bg-theme break-span">Break row at </span>
 											<input type="number" class="form-control" value="20" id="break-row-${wid}-${tid}">
-											<span class="input-group-text bg-theme break-span">Break column at</span>
+											<span class="input-group-text bg-theme break-span">Break column at <span id="colname"></span> </span>
 											<input type="number" class="form-control" value="5" id="break-column-${wid}-${tid}">
 										</div>
 									</td>
@@ -655,8 +654,10 @@
 		$(`.done-${wid}-${tid}`).on('click', function(e) {
 			e.preventDefault()
 			e.stopPropagation()
-			console.log(getPDFFileValues(wid, tid));
-			$(`#task-modal-${wid}-${tid}`).modal('hide');
+			// console.log(getPDFFileValues(wid, tid));
+			if(getPDFFileValues(wid, tid)){
+				$(`#task-modal-${wid}-${tid}`).modal('hide');
+			}
 		})
 
 
