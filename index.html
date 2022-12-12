@@ -103,14 +103,19 @@
 				alert("Height and Width should not be empty in Page setup tab");
 				return;
 			}
-			if(Number(height) < 2.4 || Number(height) >= 60){
-				alert("Please enter a number in inches between 2.4 to 60");
+			if(height < 2.5){
+				alert(`Please enter a number greater than 2.5" in Paper size`);
 				return;
 			}
-			if(Number(width) < 2.5 || Number(width) >= 60){
-				alert("Please enter a number in inches between 2.5 to 60");
+			if(height > 60 || width > 60){
+				alert(`Please enter a number no greater than 60" in Paper size`);
 				return;
 			}
+			if(width < 2.4){
+				alert(`Please enter a number greater than 2.4" in Paper size`);
+				return;
+			}
+
 			result.size = {
 				"type" : "custom",
 				"value" : {
