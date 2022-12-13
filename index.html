@@ -3,31 +3,35 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/somethinggoodone/cdn/AniketPradhan_bootstrap.css" />
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<style>
-	input,
-	select,
-	textarea {
-		text-overflow: ellipsis;
-	}
+		input,
+		select,
+		textarea {
+			text-overflow: ellipsis;
+		}
 
-	button:focus,
-	button:active {
-		outline-color: #c6a5ff;
-	}
-	label {
-		font-weight: 500 !important;
-		color: #374151 !important;
-	}
+		button:focus,
+		button:active {
+			outline-color: #c6a5ff;
+		}
 
-	.bg-theme {
-		background: rgba(103, 58, 183, .07) !important;
-	}
+		label {
+			font-weight: 500 !important;
+			color: #374151 !important;
+		}
 
-	.text-theme {
-		color: #673ab7;
-	}
+		.bg-theme {
+			background: rgba(103, 58, 183, .07) !important;
+		}
+
+		.text-theme {
+			color: #673ab7;
+		}
 	</style>
 </head>
 
@@ -39,20 +43,20 @@
 	<ul class="list-group" id="tasks-point-l9zgqjql"></ul>
 	<div id="modal"></div>
 	<script>
-	function atoo(f, b) {
-		var c = [],
-			d = !1;
-		f.forEach(function(g, e) {
-			var a = {};
-			a.key = g;
-			a.value = 0 === b[e].length ? "" : b[e];
-			"" === a.key.trim() && "" !== a.value ? d = !0 : "" !== a.key.trim() && c.push(a);
-		});
-		return d ? !1 : c;
-	}
+		function atoo(f, b) {
+			var c = [],
+				d = !1;
+			f.forEach(function (g, e) {
+				var a = {};
+				a.key = g;
+				a.value = 0 === b[e].length ? "" : b[e];
+				"" === a.key.trim() && "" !== a.value ? d = !0 : "" !== a.key.trim() && c.push(a);
+			});
+			return d ? !1 : c;
+		}
 
-	function getAddTaskEnvelope(wid, tid, tasktype, task_body) {
-		return `<li class="border-top-0 border-end-0 border-start-0 list-group-item tsk-${wid}-${tid} ${tasktype}" data-id="${wid}-${tid}" data-type="${tasktype}">
+		function getAddTaskEnvelope(wid, tid, tasktype, task_body) {
+			return `<li class="border-top-0 border-end-0 border-start-0 list-group-item tsk-${wid}-${tid} ${tasktype}" data-id="${wid}-${tid}" data-type="${tasktype}">
 			<img src="https://img.icons8.com/color/48/null/pdf.png" class="float-start" />
 			<div class="btn-group float-end">
 				<button type="button" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" aria-expanded="false"> Actions </button>
@@ -64,234 +68,253 @@
 			</div>
 			${task_body}
 		</li>`
-	}
-
-	function getPDFFileValues(wid, tid) {
-		let result = {};
-		result.taskType = "pdfprint";
-		result.id = tid;
-		result.name = `${wid}-${tid}`;
-		// Page setup
-		// Print
-		let printValue = $(`#print-${wid}-${tid}`).val();
-		let printTextValue = $(`#print-${wid}-${tid} option:selected`).text();
-		if(printTextValue.indexOf("Selected range of ") == 0){
-			let rangeVal = $(`#print-range-${wid}-${tid}`).val();
-			if(rangeVal.trim().length === 0){
-				alert("Range should not be empty in Page setup tab");
-				return;
-			}
-			result.print = {
-				"type" : "custom",
-				"value": {
-					"range": `${rangeVal}`
-				}
-			}
-		} else{
-			result.print = {
-				"type" : `${printValue}`
-			}
-		}
-		// Paper Size
-		let paperSizeVal = $(`#size-${wid}-${tid}`).val();
-		let height;
-		let width;
-		if(paperSizeVal == "custom"){
-			height = $(`#size-height-${wid}-${tid}`).val();
-			width = $(`#size-width-${wid}-${tid}`).val();
-			if(height.trim().length === 0 || width.trim().length === 0){
-				alert("Height and Width should not be empty in Page setup tab");
-				return;
-			}
-			if(height < 2.5){
-				alert(`Please enter a number greater than 2.5" in Paper size`);
-				return;
-			}
-			if(height > 60 || width > 60){
-				alert(`Please enter a number no greater than 60" in Paper size`);
-				return;
-			}
-			if(width < 2.4){
-				alert(`Please enter a number greater than 2.4" in Paper size`);
-				return;
-			}
-
-			result.size = {
-				"type" : "custom",
-				"value" : {
-					"height" : `${height}`,
-					"width" : `${width}`,
-				}
-			}
-		} else{
-			width = $(`#size-${wid}-${tid}`).find(':selected').attr('data-width');
-			height = $(`#size-${wid}-${tid}`).find(':selected').attr('data-height');
-			result.size = {
-				"type" : `${paperSizeVal}`
-			}
-		}
-		// Scale
-		let scaleVal = $(`#scale-${wid}-${tid}`).val();
-		if(scaleVal == "custom"){
-			let percentageVal = $(`#percentage-${wid}-${tid}`).val();
-			if(Number(percentageVal) < 1 || percentageVal.length === 0){
-				alert("Please enter a positive percentage number ");
-				return;
-			}
-			result.scale = {
-				"type" : "custom",
-				"value" : {
-					"percentage" : `${Math.round(percentageVal)}`,
-				}
-			}
-		} else if(scaleVal == "fittipagebreaks"){
-			let row = $(`#break-row-${wid}-${tid}`).val();
-			let col = $(`#break-column-${wid}-${tid}`).val();
-			result.scale = {
-				"type" : "fit_pagebreak",
-				"value" : {
-					"row" : `${Math.round(row)}`,
-					"column" : `${Math.round(col)}`
-				}
-			}
-		} else{
-			result.scale = {
-				"type" : `${scaleVal}`
-			}
-		}
-		// Margins
-		let marginsVal = $(`#margins-${wid}-${tid}`).val();
-		if(marginsVal == "custom"){
-			let top = $(`#margins-top-${wid}-${tid}`).val();
-			let left = $(`#margins-left-${wid}-${tid}`).val();
-			let right = $(`#margins-right-${wid}-${tid}`).val();
-			let bottom = $(`#margins-bottom-${wid}-${tid}`).val();
-			if(top.trim().length === 0 || left.trim().length === 0 || right.trim().length === 0 || bottom.trim().length === 0){
-				alert("Top, Left, Right and Bottom value should not be empty in Page setup tab");
-				return;
-			}
-			let maxTopValue = (height - 1) - bottom;
-			let maxBottomValue = (height - 1) - top;
-			let maxLeftValue = (width - 1) - right;
-			let maxRightValue = (width - 1) - left;
-			if(top < 0 || top > maxTopValue){
-				alert(`Please enter a number in inches between 0" and ${maxTopValue}".`);
-				return;
-			}
-			if(left < 0 || left > maxLeftValue){
-				alert(`Please enter a number in inches between 0" and ${maxLeftValue}".`);
-				return;
-			}
-			if(right < 0 || right > maxRightValue){
-				alert(`Please enter a number in inches between 0" and ${maxRightValue}".`);
-				return;
-			}
-			if(bottom < 0 || bottom > maxBottomValue){
-				alert(`Please enter a number in inches between 0" and ${maxBottomValue}".`);
-				return;
-			}
-			result.margins = {
-				"type" : "custom",
-				"value" : {
-					"top" : `${top}`,
-					"left" : `${left}`,
-					"right" : `${right}`,
-					"bottom" : `${bottom}`,
-				}
-			}
-		} else{
-			result.margins = {
-				"type" : `${marginsVal}`
-			}
-		}
-		// Page Orietation
-		let selectedRadioValue = $("input[name='pageSetupRadio']:checked").val();
-		result.orientation = {
-			"type": `${selectedRadioValue}`
-		}
-		// Format tab
-		// gridlines
-		if($(`#showgridlines-${wid}-${tid}`).is(":checked")){
-			result.gridlines = {
-				"value" : "true"
-			}
-		} else{
-			result.gridlines = {
-				"value" : "false"
-			}
-		}
-		// notes
-		if($(`#shownotes-${wid}-${tid}`).is(":checked")){
-			result.notes = {
-				"value" : "true"
-			}
-		} else{
-			result.notes = {
-				"value" : "false"
-			}
-		}
-		// Pageorder
-		let pageOrderVal = $(`#pageorder-${wid}-${tid}`).val();
-		result.pageorder = {
-			"value" : `${pageOrderVal}`
-		}
-		// Alignment
-		let h_val = $(`#horizontal-alignment-${wid}-${tid}`).val();
-		result.h_alignment = {
-			"value" : `${h_val}`
-		}
-		let v_val = $(`#vertical-alignment-${wid}-${tid}`).val();
-		result.v_alignment = {
-			"value" : `${v_val}`
-		}
-		// Headers & Footer
-		if($(`#frozen-rows-${wid}-${tid}`).is(":checked")){
-			result.fzr_hf = {
-				"options" : {
-					"hf_fzr" : "true",
-					"hf_fzc" : "false"
-				}
-			}
-		} else{
-			result.fzr_hf = {
-				"options" : {
-					"hf_fzr" : "false",
-					"hf_fzc" : "false"
-				}
-			}
-		}
-		if($(`#frozen-columns-${wid}-${tid}`).is(":checked")){
-			result.fzc_hf = {
-				"options" : {
-					"hf_fzr" : "false",
-					"hf_fzc" : "true"
-				}
-			}
-		} else{
-			result.fzc_hf = {
-				"options" : {
-					"hf_fzr" : "false",
-					"hf_fzc" : "false"
-				}
-			}
 		}
 
-		// Response
-		result.response = [];
-		console.log(result)
-		return result;
+		function getPDFFileValues(wid, tid) {
+			let result = {};
+			result.taskType = "pdfprint";
+			result.id = tid;
+			result.name = `${wid}-${tid}`;
+			// Page setup
+			function pageSetupTabRedirect() {
+				$(`[data-bs-target="#nav-page-setup"]`).trigger('click');
+			}
+			// Print
+			let printValue = $(`#print-${wid}-${tid}`).val();
+			let printTextValue = $(`#print-${wid}-${tid} option:selected`).text();
+			if (printTextValue.indexOf("Selected range of ") == 0) {
+				let rangeVal = $(`#print-range-${wid}-${tid}`).val();
+				if (rangeVal.trim().length === 0) {
+					pageSetupTabRedirect();
+					alert("Range should not be empty in Page setup tab");
+					return;
+				}
+				result.print = {
+					"type": "custom",
+					"value": {
+						"range": `${rangeVal}`
+					}
+				}
+			} else {
+				result.print = {
+					"type": `${printValue}`
+				}
+			}
+			// Paper Size
+			let paperSizeVal = $(`#size-${wid}-${tid}`).val();
+			let height;
+			let width;
+			if (paperSizeVal == "custom") {
+				height = $(`#size-height-${wid}-${tid}`).val();
+				width = $(`#size-width-${wid}-${tid}`).val();
+				if (height.trim().length === 0 || width.trim().length === 0) {
+					pageSetupTabRedirect();
+					alert("Height and Width should not be empty in Page setup tab");
+					return;
+				}
+				if (height < 2.5) {
+					pageSetupTabRedirect()
+					alert(`Please enter a number greater than 2.5" in Paper size`);
+					return;
+				}
+				if (height > 60 || width > 60) {
+					pageSetupTabRedirect()
+					alert(`Please enter a number no greater than 60" in Paper size`);
+					return;
+				}
+				if (width < 2.4) {
+					pageSetupTabRedirect()
+					alert(`Please enter a number greater than 2.4" in Paper size`);
+					return;
+				}
 
-	}
+				result.size = {
+					"type": "custom",
+					"value": {
+						"height": `${height}`,
+						"width": `${width}`,
+					}
+				}
+			} else {
+				width = $(`#size-${wid}-${tid}`).find(':selected').attr('data-width');
+				height = $(`#size-${wid}-${tid}`).find(':selected').attr('data-height');
+				result.size = {
+					"type": `${paperSizeVal}`
+				}
+			}
+			// Scale
+			let scaleVal = $(`#scale-${wid}-${tid}`).val();
+			if (scaleVal == "custom") {
+				let percentageVal = $(`#percentage-${wid}-${tid}`).val();
+				if (Number(percentageVal) < 1 || percentageVal.length === 0) {
+					pageSetupTabRedirect();
+					alert("Please enter a positive percentage number ");
+					return;
+				}
+				result.scale = {
+					"type": "custom",
+					"value": {
+						"percentage": `${Math.round(percentageVal)}`,
+					}
+				}
+			} else if (scaleVal == "fit_pagebreak") {
+				let row = $(`#break-row-${wid}-${tid}`).val();
+				let col = $(`#break-column-${wid}-${tid}`).val();
+				if (col > 18278) {
+					pageSetupTabRedirect();
+					alert("Please enter a value less then 18278");
+					return;
+				}
+				result.scale = {
+					"type": "fit_pagebreak",
+					"value": {
+						"row": `${Math.round(row)}`,
+						"column": `${Math.round(col)}`
+					}
+				}
+			} else {
+				result.scale = {
+					"type": `${scaleVal}`
+				}
+			}
+			// Margins
+			let marginsVal = $(`#margins-${wid}-${tid}`).val();
+			if (marginsVal == "custom") {
+				let top = $(`#margins-top-${wid}-${tid}`).val();
+				let left = $(`#margins-left-${wid}-${tid}`).val();
+				let right = $(`#margins-right-${wid}-${tid}`).val();
+				let bottom = $(`#margins-bottom-${wid}-${tid}`).val();
+				if (top.trim().length === 0 || left.trim().length === 0 || right.trim().length === 0 || bottom.trim().length === 0) {
+					pageSetupTabRedirect();
+					alert("Top, Left, Right and Bottom value should not be empty in Page setup tab");
+					return;
+				}
+				let maxTopValue = (height - 1) - bottom;
+				let maxBottomValue = (height - 1) - top;
+				let maxLeftValue = (width - 1) - right;
+				let maxRightValue = (width - 1) - left;
+				if (top < 0 || top > maxTopValue) {
+					pageSetupTabRedirect();
+					alert(`Please enter a number in inches between 0" and ${maxTopValue}".`);
+					return;
+				}
+				if (left < 0 || left > maxLeftValue) {
+					pageSetupTabRedirect();
+					alert(`Please enter a number in inches between 0" and ${maxLeftValue}".`);
+					return;
+				}
+				if (right < 0 || right > maxRightValue) {
+					pageSetupTabRedirect();
+					alert(`Please enter a number in inches between 0" and ${maxRightValue}".`);
+					return;
+				}
+				if (bottom < 0 || bottom > maxBottomValue) {
+					pageSetupTabRedirect();
+					alert(`Please enter a number in inches between 0" and ${maxBottomValue}".`);
+					return;
+				}
+				result.margins = {
+					"type": "custom",
+					"value": {
+						"top": `${top}`,
+						"left": `${left}`,
+						"right": `${right}`,
+						"bottom": `${bottom}`,
+					}
+				}
+			} else {
+				result.margins = {
+					"type": `${marginsVal}`
+				}
+			}
+			// Page Orietation
+			let selectedRadioValue = $("input[name='pageSetupRadio']:checked").val();
+			result.orientation = {
+				"type": `${selectedRadioValue}`
+			}
+			// Format tab
+			// gridlines
+			if ($(`#showgridlines-${wid}-${tid}`).is(":checked")) {
+				result.gridlines = {
+					"value": "true"
+				}
+			} else {
+				result.gridlines = {
+					"value": "false"
+				}
+			}
+			// notes
+			if ($(`#shownotes-${wid}-${tid}`).is(":checked")) {
+				result.notes = {
+					"value": "true"
+				}
+			} else {
+				result.notes = {
+					"value": "false"
+				}
+			}
+			// Pageorder
+			let pageOrderVal = $(`#pageorder-${wid}-${tid}`).val();
+			result.pageorder = {
+				"value": `${pageOrderVal}`
+			}
+			// Alignment
+			let h_val = $(`#horizontal-alignment-${wid}-${tid}`).val();
+			result.h_alignment = {
+				"value": `${h_val}`
+			}
+			let v_val = $(`#vertical-alignment-${wid}-${tid}`).val();
+			result.v_alignment = {
+				"value": `${v_val}`
+			}
+			// Headers & Footer
+			if ($(`#frozen-rows-${wid}-${tid}`).is(":checked")) {
+				result.fzr_hf = {
+					"options": {
+						"hf_fzr": "true",
+						"hf_fzc": "false"
+					}
+				}
+			} else {
+				result.fzr_hf = {
+					"options": {
+						"hf_fzr": "false",
+						"hf_fzc": "false"
+					}
+				}
+			}
+			if ($(`#frozen-columns-${wid}-${tid}`).is(":checked")) {
+				result.fzc_hf = {
+					"options": {
+						"hf_fzr": "false",
+						"hf_fzc": "true"
+					}
+				}
+			} else {
+				result.fzc_hf = {
+					"options": {
+						"hf_fzr": "false",
+						"hf_fzc": "false"
+					}
+				}
+			}
 
-	// Dynamic columnName
-	function toColumnName(d) {
-		for (var a = "", b = 1, c = 26; 0 <= (d -= b); b = c, c *= 26) a = String.fromCharCode(parseInt(d % c / b) + 65) + a;
-		return a
-	};
+			// Response
+			result.response = [];
+			console.log(result)
+			return result;
 
-	function createTask_PDFFile(wid, task) {
-		var tid = task?.id ? task.id : Math.random().toString(36).substr(2, 8);
-		var html_task = getAddTaskEnvelope(wid, tid, "pdfprint", `<div class="ms-5 ps-3">
+		}
+
+		// Dynamic columnName
+		function toColumnName(d) {
+			for (var a = "", b = 1, c = 26; 0 <= (d -= b); b = c, c *= 26) a = String.fromCharCode(parseInt(d % c / b) + 65) + a;
+			return a
+		};
+
+		function createTask_PDFFile(wid, task) {
+			var tid = task?.id ? task.id : Math.random().toString(36).substr(2, 8);
+			var html_task = getAddTaskEnvelope(wid, tid, "pdfprint", `<div class="ms-5 ps-3">
 	<span class="task-title">PDF File: ${wid}-${tid} </span><br>
 	<span class="text-secondary small">Last updated </span><span class="time text-secondary small" data-time="1667889127596">15 days ago</span>
 </div>
@@ -363,9 +386,9 @@
 										<label for="margins-${wid}-${tid}" class="form-label">Margins</label>
 										<div class="input-group">
 											<select class="form-select" id="margins-${wid}-${tid}">
-												<option data-top="0.70" data-left="0.70" data-right="0.70" data-bottom="0.70" value="currentsheet" selected="">Normal</option>
-												<option data-top="0.25" data-left="0.25" data-right="0.25" data-bottom="0.25" value="workbook">Narrow</option>
-												<option data-top="1" data-left="1" data-right="1" data-bottom="1" value="selectedcells">Wide</option>
+												<option data-top="0.70" data-left="0.70" data-right="0.70" data-bottom="0.70" value="normal" selected="">Normal</option>
+												<option data-top="0.25" data-left="0.25" data-right="0.25" data-bottom="0.25" value="narrow">Narrow</option>
+												<option data-top="1" data-left="1" data-right="1" data-bottom="1" value="wide">Wide</option>
 												<option data-top="" data-left="" data-right="" data-bottom="" value="custom">Custom</option>
 											</select>
 											<span class="input-group-text bg-theme">Top ″</span>
@@ -389,7 +412,7 @@
 												<option value="fittoheight">Fit to height</option>
 												<option value="fittopage">Fit to page</option>
 												<option value="custom">Custom</option>
-												<option value="fittipagebreaks">Fit to pagebreaks</option>
+												<option value="fit_pagebreak">Fit to pagebreaks</option>
 											</select>
 											<span class="input-group-text bg-theme custom-span">%</span>
 											<input type="number" class="form-control" value="88" step="1" id="percentage-${wid}-${tid}">
@@ -523,183 +546,294 @@
 	</div>
 </div>`);
 
-		$(`#tasks-point-${wid}`).append(html_task);
-		if (!task) $(`#task-modal-${wid}-${tid}`).modal("show");
+			$(`#tasks-point-${wid}`).append(html_task);
+			if (!task) $(`#task-modal-${wid}-${tid}`).modal("show");
 
-		// Initially disabled margin and page sizes value
-		$(`#margins-top-${wid}-${tid}, #margins-left-${wid}-${tid}, #margins-right-${wid}-${tid}, #margins-bottom-${wid}-${tid}, 
+			// Initially disabled margin and page sizes value
+			$(`#margins-top-${wid}-${tid}, #margins-left-${wid}-${tid}, #margins-right-${wid}-${tid}, #margins-bottom-${wid}-${tid}, 
         #size-height-${wid}-${tid},#size-width-${wid}-${tid} `).prop('disabled', true);
 
-		// Hide range, break row at, break column and custom text box
-		$(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}, .custom-span, #percentage-${wid}-${tid}`).hide();
+			// Hide range, break row at, break column and custom text box
+			$(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}, .custom-span, #percentage-${wid}-${tid}`).hide();
 
-		// Initial style for print and scale select tag
-		$(`#print-${wid}-${tid}, #scale-${wid}-${tid}`).css("border-radius", ".375rem")
+			// Initial style for print and scale select tag
+			$(`#print-${wid}-${tid}, #scale-${wid}-${tid}`).css("border-radius", ".375rem")
 
-		// Initial set break column value
-		$(`#colname`).text(`\u00A0${toColumnName($(`#break-column-${wid}-${tid}`).val())}`);
-		// Dynamic Break column at value
-		$(`#break-column-${wid}-${tid}`).on('input', function(e){
-			let val = $(`#break-column-${wid}-${tid}`).val();
-			$(`#colname`).text(`\u00A0${toColumnName(Math.round(val))}`);
-		})
+			// Initial set break column value
+			$(`#colname`).text(`\u00A0${toColumnName($(`#break-column-${wid}-${tid}`).val())}`);
+			// Dynamic Break column at value
+			$(`#break-column-${wid}-${tid}`).on('input', function (e) {
+				let val = $(`#break-column-${wid}-${tid}`).val();
+				$(`#colname`).text(`\u00A0${toColumnName(Math.round(val))}`);
+			})
 
-		$(`#size-${wid}-${tid}`)
-			.on("change", function() {
-				var height = $(this)
-					.children('option:selected')
-					.data('height')
-				var width = $(this)
-					.children('option:selected')
-					.data('width')
-				if (height == "" && width == "") {
-					$(`#size-height-${wid}-${tid}`)
-						.prop('disabled', false)
+			$(`#size-${wid}-${tid}`)
+				.on("change", function () {
+					var height = $(this)
+						.children('option:selected')
+						.data('height')
+					var width = $(this)
+						.children('option:selected')
+						.data('width')
+					if (height == "" && width == "") {
+						$(`#size-height-${wid}-${tid}`)
+							.prop('disabled', false)
+						$(`#size-width-${wid}-${tid}`)
+							.prop('disabled', false)
+					} else {
+						$(`#size-height-${wid}-${tid}`)
+							.prop('disabled', true)
+						$(`#size-width-${wid}-${tid}`)
+							.prop('disabled', true)
+					}
 					$(`#size-width-${wid}-${tid}`)
-						.prop('disabled', false)
-				} else {
+						.val(width);
 					$(`#size-height-${wid}-${tid}`)
-						.prop('disabled', true)
-					$(`#size-width-${wid}-${tid}`)
-						.prop('disabled', true)
+						.val(height);
+				})
+
+			$(`#margins-${wid}-${tid}`)
+				.on("change", function () {
+					var top = $(`#margins-top-${wid}-${tid}`)
+						.val($(this)
+							.children('option:selected')
+							.data('top'))
+
+					var left = $(`#margins-left-${wid}-${tid}`)
+						.val($(this)
+							.children('option:selected')
+							.data('left'))
+
+					var right = $(`#margins-right-${wid}-${tid}`)
+						.val($(this)
+							.children('option:selected')
+							.data('right'))
+
+					var bottom = $(`#margins-bottom-${wid}-${tid}`)
+						.val($(this)
+							.children('option:selected')
+							.data('bottom'))
+
+					if (top.val() == "" && left.val() == "" && bottom.val() == "" && right.val() == "") {
+						$(`#margins-top-${wid}-${tid}`)
+							.prop('disabled', false)
+						$(`#margins-left-${wid}-${tid}`)
+							.prop('disabled', false)
+						$(`#margins-right-${wid}-${tid}`)
+							.prop('disabled', false)
+						$(`#margins-bottom-${wid}-${tid}`)
+							.prop('disabled', false)
+					} else {
+						$(`#margins-top-${wid}-${tid}`)
+							.prop('disabled', true)
+						$(`#margins-left-${wid}-${tid}`)
+							.prop('disabled', true)
+						$(`#margins-right-${wid}-${tid}`)
+							.prop('disabled', true)
+						$(`#margins-bottom-${wid}-${tid}`)
+							.prop('disabled', true)
+					}
+					$(`#margins-top-${wid}-${tid}`).val(top.val())
+					$(`#margins-left-${wid}-${tid}`).val(top.val())
+					$(`#margins-right-${wid}-${tid}`).val(top.val())
+					$(`#margins-bottom-${wid}-${tid}`).val(top.val())
+				})
+
+			$(`#print-${wid}-${tid}`)
+				.on("change", function () {
+					var value = $(this)
+						.children('option:selected').text();
+					if (value.indexOf('Selected range of ') == 0) {
+						$(`.range-span, #print-range-${wid}-${tid}`).show()
+						$(`#print-${wid}-${tid}`).css({
+							"border-top-right-radius": "0",
+							"border-bottom-right-radius": "0"
+						});
+					} else {
+						$(`.range-span, #print-range-${wid}-${tid}`).hide();
+						$(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
+					}
+				})
+
+			$(`#scale-${wid}-${tid}`)
+				.on("change", function () {
+					var value = $(this)
+						.children('option:selected').val();
+					if (value == "fit_pagebreak") {
+						$(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).show();
+						$(`#scale-${wid}-${tid}`).css({
+							"border-top-right-radius": "0",
+							"border-bottom-right-radius": "0"
+						});
+					} else {
+						$(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
+						$(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
+					}
+					if (value == "custom") {
+						$(`.custom-span, #percentage-${wid}-${tid}`).show();
+						$(`#scale-${wid}-${tid}`).css({
+							"border-top-right-radius": "0",
+							"border-bottom-right-radius": "0"
+						});
+						$(`#percentage-${wid}-${tid}`).css({
+							"border-top-right-radius": ".375rem",
+							"border-bottom-right-radius": ".375rem"
+						});
+					} else {
+						$(`.custom-span, #percentage-${wid}-${tid}`).hide();
+					}
+				})
+
+			$(`.restore-${wid}-${tid}`).on('click', function (e) {
+				let pj = {
+					"taskType": "pdfprint",
+					"id": "olt0v3le",
+					"name": "l9zgqjql-olt0v3le",
+					"print": {
+						"type": "workbook"
+					},
+					"size": {
+						"type": "letter"
+					},
+					"scale": {
+						"type": "fit_pagebreak",
+						"value": {
+							"row": "20",
+							"column": "5"
+						}
+					},
+					"margins": {
+						"type": "normal"
+					},
+					"orientation": {
+						"type": "protait"
+					},
+					"gridlines": {
+						"value": "false"
+					},
+					"notes": {
+						"value": "true"
+					},
+					"pageorder": {
+						"value": "over_then_down"
+					},
+					"h_alignment": {
+						"value": "horizontal_center"
+					},
+					"v_alignment": {
+						"value": "vertical_top"
+					},
+					"fzr_hf": {
+						"options": {
+							"hf_fzr": "false",
+							"hf_fzc": "false"
+						}
+					},
+					"fzc_hf": {
+						"options": {
+							"hf_fzr": "false",
+							"hf_fzc": "false"
+						}
+					},
+					"response": []
 				}
-				$(`#size-width-${wid}-${tid}`)
-					.val(width);
-				$(`#size-height-${wid}-${tid}`)
-					.val(height);
+				// if (!task) return;
+
+				// Page Setup
+				// Print
+				$(`#print-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.print.type}]`).attr('selected', true).change();
+				// TODO print
+
+				// Paper size
+				if (pj.size.type === "custom") {
+					$(`#size-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.size.type}]`).attr('selected', true).change();
+					$(`#size-height-${wid}-${tid}`).val(pj.size.value.height);
+					$(`#size-width-${wid}-${tid}`).val(pj.size.value.width);
+				} else {
+					$(`#size-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.size.type}]`).attr('selected', true).change();
+				}
+
+				// Margins
+				if (pj.margins.type === "custom") {
+					$(`#margins-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.margins.type}]`).attr('selected', true).change();
+					$(`#margins-top-${wid}-${tid}`).val(pj.margins.value.top);
+					$(`#margins-left-${wid}-${tid}`).val(pj.margins.value.left);
+					$(`#margins-right-${wid}-${tid}`).val(pj.margins.value.right);
+					$(`#margins-bottom-${wid}-${tid}`).val(pj.margins.value.bottom);
+				} else {
+					$(`#margins-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.margins.type}]`).attr('selected', true).change();
+				}
+
+				// Scale
+				if (pj.scale.type === "custom") {
+					$(`#scale-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.scale.type}]`).attr('selected', true).change();
+					$(`#percentage-${wid}-${tid}`).val(pj.scale.value.percentage)
+				} else if (pj.scale.type == "fit_pagebreak") {
+					$(`#scale-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.scale.type}]`).attr('selected', true).change();
+					$(`#break-row-${wid}-${tid}`).val(pj.scale.value.row)
+					$(`#break-column-${wid}-${tid}`).val(pj.scale.value.column)
+				} else {
+					$(`#scale-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.scale.type}]`).attr('selected', true).change();
+				}
+
+				// Set page orientation
+				$("input[name='pageSetupRadio']").val([`${pj.orientation.type}`])
+
+				// Formatting Tab
+				$(`#pageorder-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.pageorder.value}]`).attr('selected', true).change();
+				$(`#horizontal-alignment-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.h_alignment.value}]`).attr('selected', true).change();
+				$(`#vertical-alignment-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.v_alignment.value}]`).attr('selected', true).change();
+				if (pj.notes.value === "true") {
+					$(`#shownotes-${wid}-${tid}`).prop('checked', true);
+				}
+				if (pj.gridlines.value === "true") {
+					$(`#showgridlines-${wid}-${tid}`).prop('checked', true);
+				}
+
+				// Headers and Footers tab
+
+
+
+			});
+
+			// Remove click here
+
+			// Print Option value added 
+			var data = ["Sheet1", "Sheet2", "Sheet3", "Sheet4"];
+			for (var index = 0; index < data.length; index++) {
+				$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">${data[index]}</option>`);
+				$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">Selected range of ${data[index]}</option>`);
+			}
+
+			$(`.done-${wid}-${tid}`).on('click', function (e) {
+				e.preventDefault()
+				e.stopPropagation()
+				// console.log(getPDFFileValues(wid, tid));
+				if (getPDFFileValues(wid, tid)) {
+					$(`#task-modal-${wid}-${tid}`).modal('hide');
+				}
 			})
 
-		$(`#margins-${wid}-${tid}`)
-			.on("change", function() {
-				var top = $(`#margins-top-${wid}-${tid}`)
-					.val($(this)
-						.children('option:selected')
-						.data('top'))
 
-				var left = $(`#margins-left-${wid}-${tid}`)
-					.val($(this)
-						.children('option:selected')
-						.data('left'))
-
-				var right = $(`#margins-right-${wid}-${tid}`)
-					.val($(this)
-						.children('option:selected')
-						.data('right'))
-
-				var bottom = $(`#margins-bottom-${wid}-${tid}`)
-					.val($(this)
-						.children('option:selected')
-						.data('bottom'))
-
-				if (top.val() == "" && left.val() == "" && bottom.val() == "" && right.val() == "") {
-					$(`#margins-top-${wid}-${tid}`)
-						.prop('disabled', false)
-					$(`#margins-left-${wid}-${tid}`)
-						.prop('disabled', false)
-					$(`#margins-right-${wid}-${tid}`)
-						.prop('disabled', false)
-					$(`#margins-bottom-${wid}-${tid}`)
-						.prop('disabled', false)
-				} else {
-					$(`#margins-top-${wid}-${tid}`)
-						.prop('disabled', true)
-					$(`#margins-left-${wid}-${tid}`)
-						.prop('disabled', true)
-					$(`#margins-right-${wid}-${tid}`)
-						.prop('disabled', true)
-					$(`#margins-bottom-${wid}-${tid}`)
-						.prop('disabled', true)
-				}
-				$(`#margins-top-${wid}-${tid}`).val(top.val())
-				$(`#margins-left-${wid}-${tid}`).val(top.val())
-				$(`#margins-right-${wid}-${tid}`).val(top.val())
-				$(`#margins-bottom-${wid}-${tid}`).val(top.val())
-			})
-
-		$(`#print-${wid}-${tid}`)
-			.on("change", function() {
-				var value = $(this)
-					.children('option:selected').text();
-				if (value.indexOf('Selected range of ') == 0) {
-					$(`.range-span, #print-range-${wid}-${tid}`).show()
-					$(`#print-${wid}-${tid}`).css({
-						"border-top-right-radius": "0",
-						"border-bottom-right-radius": "0"
-					});
-				} else {
-					$(`.range-span, #print-range-${wid}-${tid}`).hide();
-					$(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
-				}
-			})
-
-		$(`#scale-${wid}-${tid}`)
-			.on("change", function() {
-				var value = $(this)
-					.children('option:selected').val();
-				if (value == "fittipagebreaks") {
-					$(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).show();
-					$(`#scale-${wid}-${tid}`).css({
-						"border-top-right-radius": "0",
-						"border-bottom-right-radius": "0"
-					});
-				} else {
-					$(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
-					$(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
-				}
-				if (value == "custom") {
-					$(`.custom-span, #percentage-${wid}-${tid}`).show();
-					$(`#scale-${wid}-${tid}`).css({
-						"border-top-right-radius": "0",
-						"border-bottom-right-radius": "0"
-					});
-					$(`#percentage-${wid}-${tid}`).css({
-						"border-top-right-radius": ".375rem",
-						"border-bottom-right-radius": ".375rem"
-					});
-				} else {
-					$(`.custom-span, #percentage-${wid}-${tid}`).hide();
-				}
-			})
-
-		$(`.restore-${wid}-${tid}`).on('click', function(e) {
-                // if (!task) return;
-				var data = ["Sheet1", "Sheet2", "Sheet3", "Sheet4"];
-				for (var index = 0; index < data.length; index++) {
-					$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">${data[index]}</option>`);
-					$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">Selected range of ${data[index]}</option>`);
 		}
 
-			}).click();
 
-		$(`.done-${wid}-${tid}`).on('click', function(e) {
-			e.preventDefault()
-			e.stopPropagation()
-			// console.log(getPDFFileValues(wid, tid));
-			if(getPDFFileValues(wid, tid)){
-				$(`#task-modal-${wid}-${tid}`).modal('hide');
-			}
+
+		// Delete Instance
+		$(`.tdelete`).on('click', function (e) {
+			$(this).parent().parent().parent().parent().remove();
 		})
 
+		$("#pdfprint").click(function (event) {
+			createTask_PDFFile("l9zgqjql")
+		});
 
-	}
+		$("#restoreall").click(function (event) {
+			$("#tasks-point-l9zgqjql").html('')
+			var wflw = {
+				id: "l9zgqjql",
 
-	
-
-	// Delete Instance
-	$(`.tdelete`).on('click', function(e) {
-		$(this).parent().parent().parent().parent().remove();
-	})
-
-	$("#pdfprint").click(function(event) {
-		createTask_PDFFile("l9zgqjql")
-	});
-
-	$("#restoreall").click(function(event) {
-		$("#tasks-point-l9zgqjql").html('')
-		var wflw = {
-			id: "l9zgqjql",
-
-			tasks: [{
+				tasks: [{
 					"taskType": "pdfprint",
 					"id": "ey1lue4g",
 
@@ -773,13 +907,13 @@
 						],
 						"path": [],
 						"query": [{
-								"key": "iparam1",
-								"value": "ivalue1"
-							},
-							{
-								"key": "iparam2",
-								"value": "ivalue2"
-							}
+							"key": "iparam1",
+							"value": "ivalue1"
+						},
+						{
+							"key": "iparam2",
+							"value": "ivalue2"
+						}
 						]
 					},
 					"auth": {
@@ -791,20 +925,20 @@
 						}]
 					},
 					"header": [{
-							"key": "ikey1",
-							"value": "ivalue1",
-							"type": "text"
-						},
-						{
-							"key": "ikey2",
-							"value": "",
-							"type": "text"
-						},
-						{
-							"key": "ikey3",
-							"value": "ivalue3",
-							"type": "text"
-						}
+						"key": "ikey1",
+						"value": "ivalue1",
+						"type": "text"
+					},
+					{
+						"key": "ikey2",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "ikey3",
+						"value": "ivalue3",
+						"type": "text"
+					}
 					],
 					"body": {
 						"mode": "raw",
@@ -817,36 +951,36 @@
 					},
 					"response": []
 				}
-			]
+				]
 
-		}
-		wflw.tasks.forEach(t => {
-			if (t.taskType == "pdfprint") {
-				t = JSON.parse(prompt("Please override instance if you need", JSON.stringify(t)));
-				createTask_PDFFile(wflw.id, t, "pdfprint")
 			}
-		})
-	});
-
-	$(`#sendall`).click(function(e) {
-		r = [];
-		error = false;
-		$(`#tasks-point-l9zgqjql`).children().each(function() {
-			if ($(this).data("type") == "pdfprint") {
-				var ids = $(this).data("id").split("-");
-				var w = getPDFFileValues(ids[0], ids[1])
-				if (!w) {
-					$(`#task-modal-${$(this).data("id")}`).modal("show");
-					error = true;
-					return false;
-				} else
-					r.push(w);
-			}
+			wflw.tasks.forEach(t => {
+				if (t.taskType == "pdfprint") {
+					t = JSON.parse(prompt("Please override instance if you need", JSON.stringify(t)));
+					createTask_PDFFile(wflw.id, t, "pdfprint")
+				}
+			})
 		});
-		if (!error)
-			console.log(JSON.stringify(r, null, 4))
 
-	});
+		$(`#sendall`).click(function (e) {
+			r = [];
+			error = false;
+			$(`#tasks-point-l9zgqjql`).children().each(function () {
+				if ($(this).data("type") == "pdfprint") {
+					var ids = $(this).data("id").split("-");
+					var w = getPDFFileValues(ids[0], ids[1])
+					if (!w) {
+						$(`#task-modal-${$(this).data("id")}`).modal("show");
+						error = true;
+						return false;
+					} else
+						r.push(w);
+				}
+			});
+			if (!error)
+				console.log(JSON.stringify(r, null, 4))
+
+		});
 	</script>
 </body>
 
