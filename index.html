@@ -257,6 +257,15 @@
 				"options": {
 					"hf_fzr": $(`#frozen-rows-${wid}-${tid}`).is(":checked"),
 					"hf_fzc": $(`#frozen-columns-${wid}-${tid}`).is(":checked")
+				},
+				"type":"custom",
+				"value": {
+					"top_left" : $(`#top-left-${wid}-${tid}`).val(),
+					"top_center" : $(`#top-middle-${wid}-${tid}`).val(),
+					"top_right" : $(`#top-right-${wid}-${tid}`).val(),
+					"bottom_left" : $(`#bottom-left-${wid}-${tid}`).val(),
+					"bottom_center" : $(`#bottom-middle-${wid}-${tid}`).val(),
+					"bottom_right" : $(`#bottom-right-${wid}-${tid}`).val(),
 				}
 			}
 			return result;
