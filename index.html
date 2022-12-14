@@ -339,9 +339,9 @@
 												<option data-width="" data-height="" value="custom">Custom</option>
 											</select>
 											<span class="input-group-text bg-theme">Width ″</span>
-											<input type="number" class="form-control" id="size-width-${wid}-${tid}" min="0" value="8.5" step="0.5">
+											<input type="number" class="form-control" id="size-width-${wid}-${tid}" step="0.5" min="2.4" max="60" value="8.5" >
 											<span class="input-group-text bg-theme">Height ″</span>
-											<input type="number" class="form-control" id="size-height-${wid}-${tid}" min="0" value="11" step="0.5">
+											<input type="number" class="form-control" id="size-height-${wid}-${tid}" step="0.5" min="2.5" max="60" value="11" >
 										</div>
 									</td>
 								</tr>
@@ -379,7 +379,7 @@
 												<option value="fit_pagebreak">Fit to pagebreaks</option>
 											</select>
 											<span class="input-group-text bg-theme custom-span">%</span>
-											<input type="number" class="form-control" value="88" step="1" min="0" id="percentage-${wid}-${tid}">
+											<input type="number" class="form-control" value="88" step="1" min="0" max="10000" id="percentage-${wid}-${tid}">
 											<span class="input-group-text bg-theme break-span">Break row at </span>
 											<input type="number" class="form-control" value="20" min="0" id="break-row-${wid}-${tid}">
 											<span class="input-group-text bg-theme break-span colname-${wid}-${tid}">Break column at </span>
