@@ -651,6 +651,15 @@
 						"options": {
 							"hf_fzr": true,
 							"hf_fzc": false,
+						},
+						"type": "custom",
+						"value": {
+							"top_left": "",
+							"top_center": "",
+							"top_right": "",
+							"bottom_left": "",
+							"bottom_center": "",
+							"bottom_right": ""
 						}
 					},
 				}
@@ -702,6 +711,20 @@
 					$(`#showgridlines-${wid}-${tid}`).prop('checked', true);
 				}
 				// Headers and Footers tab
+				if (pj.hf.options.hf_fzr) {
+					$(`#frozen-rows-${wid}-${tid}`).prop('checked', true);
+				}
+				if (pj.hf.options.hf_fzc) {
+					$(`#frozen-columns-${wid}-${tid}`).prop('checked', true);
+				}
+
+				$(`#top-left-${wid}-${tid}`).val(pj.hf.value.top_left)
+				$(`#top-middle-${wid}-${tid}`).val(pj.hf.value.top_center)
+				$(`#top-right-${wid}-${tid}`).val(pj.hf.value.top_right)
+				$(`#bottom-left-${wid}-${tid}`).val(pj.hf.value.bottom_left)
+				$(`#bottom-middle-${wid}-${tid}`).val(pj.hf.value.bottom_center)
+				$(`#bottom-right-${wid}-${tid}`).val(pj.hf.value.bottom_right)
+
 			});
 			// Remove click here
 			// Print Option value added 
