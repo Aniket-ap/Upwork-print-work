@@ -98,6 +98,7 @@
 				}
 			} else if(printValue === "workbook"){
 				let webworkVal = $(`.selection-1d > input`).val();
+				console.log(webworkVal)
 				if(webworkVal === "All Sheets"){
 					result.print = {
 						"type": "workbook"
@@ -570,7 +571,7 @@
 					$(this).prop('checked', true);
 					return
 				}
-				$(".selection-1d input[type='text']").val(checked == totalLength ? "All sheets" : `${checked} Sheets selected`)
+				$(".selection-1d input[type='text']").val(checked == totalLength ? "All Sheets" : `${checked} Sheets selected`)
 			});
 
 			$(`#size-${wid}-${tid}`).on("change", function () {
