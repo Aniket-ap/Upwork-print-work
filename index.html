@@ -317,6 +317,21 @@
 											</select>
 											<span class="input-group-text bg-theme range-span">Range</span>
 											<input type="text" class="form-control" id="print-range-${wid}-${tid}" aria-label="Range input">
+											<div class="dropdown selection-1d">
+												<input type="text" class=" form-control dropdown-toggle" data-bs-toggle="dropdown" value="All Sheets" aria-expanded="false" data-bs-auto-close="outside" readonly>
+												<div class="dropdown-menu p-0 w-100">
+													<div class="list-group">
+														<label class="list-group-item">
+															<input class="form-check-input me-1" type="checkbox" value="" checked> Sheet1 </label>
+														<label class="list-group-item">
+															<input class="form-check-input me-1" type="checkbox" value="" checked> Sheet2 </label>
+														<label class="list-group-item">
+															<input class="form-check-input me-1" type="checkbox" value="" checked> Sheet3 </label>
+														<label class="list-group-item">
+															<input class="form-check-input me-1" type="checkbox" value="" checked> Sheet4 </label>
+													</div>
+												</div>
+											</div>
 										</div>
 									</td>
 								</tr>
@@ -522,6 +537,19 @@
 			$(`#break-column-${wid}-${tid}`).on('change', function (e) {
 				$(`.colname-${wid}-${tid}`).text(`Break column at ${toColumnName($(`#break-column-${wid}-${tid}`).val())}`).trigger("change");
 			});
+
+			// All sheet work when workbook selected
+			const totalLength = $(".selection-1d :checkbox").length;
+			$('.selection-1d :checkbox').change(function() {
+				const checked = $(".selection-1d :checkbox:checked").length
+				if (checked == 0) {
+					alert("One of the sheets must be selected");
+					$(this).prop('checked', true);
+					return
+				}
+				$("input[type='text']").val(checked == totalLength ? "All sheets" : `${checked} Sheets selected`)
+			});
+
 			$(`#size-${wid}-${tid}`).on("change", function () {
 				var height = $(this).children('option:selected').data('height')
 				var width = $(this).children('option:selected').data('width')
@@ -567,6 +595,19 @@
 				} else {
 					$(`.range-span, #print-range-${wid}-${tid}`).hide();
 					$(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
+				}
+				if (value.indexOf('Workbook') == 0) {
+					$(`.selection-1d`).show()
+					$(`#print-${wid}-${tid}`).css({
+						"border-top-right-radius": "0",
+						"border-bottom-right-radius": "0"
+					});
+					$(`.selection-1d input`).css({
+						"border-top-left-radius": "0",
+						"border-bottom-left-radius": "0"
+					});
+				} else {
+					$(`.selection-1d`).hide();
 				}
 			})
 			$(`#scale-${wid}-${tid}`).on("change", function () {
@@ -738,7 +779,7 @@
 				e.stopPropagation()
 				console.log(JSON.stringify(getPDFFileValues(wid, tid), null, 4));
 				if (getPDFFileValues(wid, tid)) {
-					$(`#task-modal-${wid}-${tid}`).modal('hide');
+					// $(`#task-modal-${wid}-${tid}`).modal('hide');
 				}
 			})
 		}
