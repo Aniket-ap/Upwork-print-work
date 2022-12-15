@@ -570,7 +570,7 @@
 					$(this).prop('checked', true);
 					return
 				}
-				$("input[type='text']").val(checked == totalLength ? "All sheets" : `${checked} Sheets selected`)
+				$(".selection-1d input[type='text']").val(checked == totalLength ? "All sheets" : `${checked} Sheets selected`)
 			});
 
 			$(`#size-${wid}-${tid}`).on("change", function () {
