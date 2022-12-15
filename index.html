@@ -88,14 +88,32 @@
 					pageSetupTabRedirect();
 					alert("Range should not be empty in Page setup tab");
 					return;
-				}
-				result.print = {
-					"type": "custom",
-					"value": {
-						"range": `${rangeVal}`
+				} else{
+					result.print = {
+						"type": "custom",
+						"value": {
+							"range": `${rangeVal}`
+						}
 					}
 				}
-			} else {
+			} else if(printValue === "workbook"){
+				let webworkVal = $(`.selection-1d > input`).val();
+				if(webworkVal === "All Sheets"){
+					result.print = {
+						"type": "workbook"
+					}
+				} else{
+					let arr = [];
+					$(".selection-1d :checkbox:checked").each(function(){
+						arr.push($(this).val());
+					});
+					result.print = {
+						"type": "workbook",
+						"value": arr
+					}
+					
+				}
+			} else{
 				result.print = {
 					"type": `${printValue}`
 				}
@@ -194,22 +212,22 @@
 				let maxRightValue = (width - 1) - left;
 				if (top < 0 || top > maxTopValue) {
 					pageSetupTabRedirect();
-					alert(`Please enter a number in inches between 0" and ${maxTopValue}".`);
+					alert(`Please enter top margin value in inches between 0" and ${maxTopValue}".`);
 					return;
 				}
 				if (left < 0 || left > maxLeftValue) {
 					pageSetupTabRedirect();
-					alert(`Please enter a number in inches between 0" and ${maxLeftValue}".`);
+					alert(`Please enter left margin value in inches between 0" and ${maxLeftValue}".`);
 					return;
 				}
 				if (right < 0 || right > maxRightValue) {
 					pageSetupTabRedirect();
-					alert(`Please enter a number in inches between 0" and ${maxRightValue}".`);
+					alert(`Please enter right margin value in inches between 0" and ${maxRightValue}".`);
 					return;
 				}
 				if (bottom < 0 || bottom > maxBottomValue) {
 					pageSetupTabRedirect();
-					alert(`Please enter a number in inches between 0" and ${maxBottomValue}".`);
+					alert(`Please enter bottom margin value in inches between 0" and ${maxBottomValue}".`);
 					return;
 				}
 				result.margins = {
@@ -317,18 +335,19 @@
 											</select>
 											<span class="input-group-text bg-theme range-span">Range</span>
 											<input type="text" class="form-control" id="print-range-${wid}-${tid}" aria-label="Range input">
-											<div class="dropdown selection-1d">
+											<span class="input-group-text bg-theme w-book-select">Selection</span>
+											<div class="dropdown selection-1d w-book-select">
 												<input type="text" class=" form-control dropdown-toggle" data-bs-toggle="dropdown" value="All Sheets" aria-expanded="false" data-bs-auto-close="outside" readonly>
 												<div class="dropdown-menu p-0 w-100">
 													<div class="list-group">
 														<label class="list-group-item">
-															<input class="form-check-input me-1" type="checkbox" value="" checked> Sheet1 </label>
+															<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="Sheet1" checked> Sheet1 </label>
 														<label class="list-group-item">
-															<input class="form-check-input me-1" type="checkbox" value="" checked> Sheet2 </label>
+															<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="Sheet2" checked> Sheet2 </label>
 														<label class="list-group-item">
-															<input class="form-check-input me-1" type="checkbox" value="" checked> Sheet3 </label>
+															<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="Sheet3" checked> Sheet3 </label>
 														<label class="list-group-item">
-															<input class="form-check-input me-1" type="checkbox" value="" checked> Sheet4 </label>
+															<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="Sheet4" checked> Sheet4 </label>
 													</div>
 												</div>
 											</div>
@@ -532,7 +551,11 @@
 			// Hide range, break row at, break column and custom text box
 			$(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}, .custom-span, #percentage-${wid}-${tid}`).hide();
 			// Initial style for print and scale select tag
-			$(`#print-${wid}-${tid}, #scale-${wid}-${tid}`).css("border-radius", ".375rem")
+			// $(`#print-${wid}-${tid}, #scale-${wid}-${tid}`).css("border-radius", ".375rem")
+			$(`.selection-1d > input`).css({
+						"border-top-left-radius": "0",
+						"border-bottom-left-radius": "0"
+			});
 			// Dynamic Break column at value
 			$(`#break-column-${wid}-${tid}`).on('change', function (e) {
 				$(`.colname-${wid}-${tid}`).text(`Break column at ${toColumnName($(`#break-column-${wid}-${tid}`).val())}`).trigger("change");
@@ -586,34 +609,41 @@
 			})
 			$(`#print-${wid}-${tid}`).on("change", function () {
 				var value = $(this).children('option:selected').text();
+				if ($(this).children('option:selected').val() === "workbook") {
+					$(`.w-book-select`).show()
+					$(`#print-${wid}-${tid}`).css({
+						"border-top-right-radius": "0",
+						"border-bottom-right-radius": "0"
+					});
+					$(`.selection-1d > input`).css({
+						"border-top-left-radius": "0",
+						"border-bottom-left-radius": "0"
+					});
+				} else {
+					$(`.w-book-select`).hide();
+					$(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
+				}
+
 				if (value.indexOf('Selected range of ') == 0) {
 					$(`.range-span, #print-range-${wid}-${tid}`).show()
 					$(`#print-${wid}-${tid}`).css({
 						"border-top-right-radius": "0",
 						"border-bottom-right-radius": "0"
 					});
+					$(`#print-range-${wid}-${tid}`).css({
+						"border-top-right-radius": ".375rem",
+						"border-bottom-right-radius": ".375rem"
+					});
 				} else {
 					$(`.range-span, #print-range-${wid}-${tid}`).hide();
 					$(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
-				}
-				if (value.indexOf('Workbook') == 0) {
-					$(`.selection-1d`).show()
-					$(`#print-${wid}-${tid}`).css({
-						"border-top-right-radius": "0",
-						"border-bottom-right-radius": "0"
-					});
-					$(`.selection-1d input`).css({
-						"border-top-left-radius": "0",
-						"border-bottom-left-radius": "0"
-					});
-				} else {
-					$(`.selection-1d`).hide();
 				}
 			})
 			$(`#scale-${wid}-${tid}`).on("change", function () {
 				var value = $(this).children('option:selected').val();
 				if (value == "fit_pagebreak") {
 					$(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).show();
+					$(`#break-column-${wid}-${tid}`).trigger("change")
 					$(`#scale-${wid}-${tid}`).css({
 						"border-top-right-radius": "0",
 						"border-bottom-right-radius": "0"
