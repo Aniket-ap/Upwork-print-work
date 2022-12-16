@@ -340,14 +340,7 @@
 												<input type="text" class=" form-control dropdown-toggle" data-bs-toggle="dropdown" value="All Sheets" aria-expanded="false" data-bs-auto-close="outside" readonly>
 												<div class="dropdown-menu p-0 w-100">
 													<div class="list-group">
-														<label class="list-group-item">
-															<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="Sheet1" checked> Sheet1 </label>
-														<label class="list-group-item">
-															<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="Sheet2" checked> Sheet2 </label>
-														<label class="list-group-item">
-															<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="Sheet3" checked> Sheet3 </label>
-														<label class="list-group-item">
-															<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="Sheet4" checked> Sheet4 </label>
+														
 													</div>
 												</div>
 											</div>
@@ -560,6 +553,17 @@
 			$(`#break-column-${wid}-${tid}`).on('change', function (e) {
 				$(`.colname-${wid}-${tid}`).text(`Break column at ${toColumnName($(`#break-column-${wid}-${tid}`).val())}`).trigger("change");
 			});
+
+			// Print Option value added 
+			var data = ["Sheet1", "Sheet2", "Sheet3", "Sheet4"];
+			for (var index = 0; index < data.length; index++) {
+				$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">${data[index]}</option>`);
+				$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">Selected range of ${data[index]}</option>`);
+				$(`.selection-1d .list-group`).append(`
+					<label class="list-group-item">
+						<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="${data[index]}" checked> ${data[index]} </label>
+				`)
+			}
 
 			// All sheet work when workbook selected
 			const totalLength = $(".selection-1d :checkbox").length;
@@ -813,12 +817,6 @@
 
 			});
 			// Remove click here
-			// Print Option value added 
-			var data = ["Sheet1", "Sheet2", "Sheet3", "Sheet4"];
-			for (var index = 0; index < data.length; index++) {
-				$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">${data[index]}</option>`);
-				$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">Selected range of ${data[index]}</option>`);
-			}
 			$(`.done-${wid}-${tid}`).on('click', function (e) {
 				e.preventDefault()
 				e.stopPropagation()
