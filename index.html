@@ -91,14 +91,14 @@
 				} else{
 					result.print = {
 						"type": "custom",
-						"value": {
-							"range": `${rangeVal}`
-						}
+						"value": [
+							{"sheet": `${printValue}`},
+							{"range": `${rangeVal}`}
+						]
 					}
 				}
 			} else if(printValue === "workbook"){
 				let webworkVal = $(`.selection-1d > input`).val();
-				console.log(webworkVal)
 				if(webworkVal === "All Sheets"){
 					result.print = {
 						"type": "workbook"
@@ -106,7 +106,7 @@
 				} else{
 					let arr = [];
 					$(".selection-1d :checkbox:checked").each(function(){
-						arr.push($(this).val());
+						arr.push({"sheet": $(this).val()});
 					});
 					result.print = {
 						"type": "workbook",
@@ -115,7 +115,10 @@
 				}
 			} else{
 				result.print = {
-					"type": `${printValue}`
+					"type": "custom",
+					"value": [
+						{"sheet": `${printValue}`}
+					]
 				}
 			}
 			// Paper Size
@@ -574,7 +577,7 @@
 					$(this).prop('checked', true);
 					return
 				}
-				$(".selection-1d input[type='text']").val(checked == totalLength ? "All Sheets" : `${checked} Sheets selected`)
+				$(".selection-1d input[type='text']").val(checked == totalLength ? "All Sheets" : `${checked} Sheet(s) selected`)
 			});
 
 			$(`#size-${wid}-${tid}`).on("change", function () {
