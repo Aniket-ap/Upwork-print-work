@@ -678,13 +678,13 @@
 					"id": "jo2ka2or",
 					"name": "l9zgqjql-jo2ka2or",
 					"print": {
-						"type": "custom",
+						"type": "workbook",
 						"value": [
 							{
 								"sheet": "Sheet3"
 							},
 							{
-								"range": "dtg"
+								"sheet": "Sheet4"
 							}
 						]
 					},
@@ -769,7 +769,7 @@
 					$(`#print-${wid}-${tid} option`).removeAttr('selected').map(function () {
 						if ($(this).text() === `Selected range of ${ pj.print.value[0].sheet}`) return this;
 					}).attr('selected', true).trigger("change");
-					$(`#print-range-${wid}-${tid} option`).val(pj.print.value[1].range)
+					$(`#print-range-${wid}-${tid}`).val(pj.print.value[1].range)
 				}
 				// Paper size
 				if (pj.size.type === "custom") {
