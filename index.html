@@ -112,7 +112,6 @@
 						"type": "workbook",
 						"value": arr
 					}
-					
 				}
 			} else{
 				result.print = {
@@ -739,7 +738,23 @@
 				// if (!task) return;
 				// Page Setup
 				// Print
-				$(`#print-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.print.type}]`).attr('selected', true).trigger("change");
+				if(pj.print.type === "workbook"){
+					$(`#print-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.print.type}]`).attr('selected', true).trigger("change");
+					$('.selection-1d').click(function(){
+						$(".selection-1d :checkbox").each(function(){
+							$(this).attr('checked', false);
+							pj.print.value.forEach((val) => {
+								if(val === $(this).val()){
+									$(this).attr('checked', true);
+								}
+							})
+						});
+					})
+				} else if(pj.print.type === "custom"){
+					// TODO: WILL ASK DARREN
+				} else{
+					$(`#print-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.print.type}]`).attr('selected', true).trigger("change");
+				}
 				// TODO print
 				// Paper size
 				if (pj.size.type === "custom") {
