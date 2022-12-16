@@ -678,10 +678,14 @@
 					"id": "jo2ka2or",
 					"name": "l9zgqjql-jo2ka2or",
 					"print": {
-						"type": "workbook",
+						"type": "custom",
 						"value": [
-							"Sheet3",
-							"Sheet4"
+							{
+								"sheet": "Sheet3"
+							},
+							{
+								"range": "dtg"
+							}
 						]
 					},
 					"size": {
@@ -751,18 +755,22 @@
 						$(".selection-1d :checkbox").each(function(){
 							$(this).attr('checked', false);
 							pj.print.value.forEach((val) => {
-								if(val === $(this).val()){
+								if(val.sheet === $(this).val()){
 									$(this).attr('checked', true);
 								}
 							})
 						});
 					})
-				} else if(pj.print.type === "custom"){
-					// TODO: WILL ASK DARREN
+				} else if(pj.print.type === "custom" && pj.print.value.length === 1){
+					$(`#print-${wid}-${tid} option`).removeAttr('selected').map(function () {
+						if ($(this).text() === pj.print.value[0].sheet) return this;
+					}).attr('selected', true).trigger("change");
 				} else{
-					$(`#print-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.print.type}]`).attr('selected', true).trigger("change");
+					$(`#print-${wid}-${tid} option`).removeAttr('selected').map(function () {
+						if ($(this).text() === `Selected range of ${ pj.print.value[0].sheet}`) return this;
+					}).attr('selected', true).trigger("change");
+					$(`#print-range-${wid}-${tid} option`).val(pj.print.value[1].range)
 				}
-				// TODO print
 				// Paper size
 				if (pj.size.type === "custom") {
 					$(`#size-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.size.type}]`).attr('selected', true).trigger("change");
