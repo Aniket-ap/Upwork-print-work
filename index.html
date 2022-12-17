@@ -77,7 +77,7 @@
 			result.name = `${wid}-${tid}`;
 			// Page setup
 			function pageSetupTabRedirect() {
-				$(`[data-bs-target="#nav-page-setup"]`).trigger('click');
+				$(`[data-bs-target="#nav-page-setup-${wid}-${tid}"]`).trigger('click');
 			}
 			// Print
 			let printValue = $(`#print-${wid}-${tid}`).val();
@@ -317,17 +317,17 @@
 					<!-- TAB -->
 					<nav class="mt-5">
 						<div class="nav nav-tabs" role="tablist">
-							<button type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#nav-page-setup" role="tab" aria-selected="true"> Page Setup <span class="ms-1 d-inline-block rounded-circle"></span>
+							<button type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#nav-page-setup-${wid}-${tid}" role="tab" aria-selected="true"> Page Setup <span class="ms-1 d-inline-block rounded-circle"></span>
 							</button>
-							<button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-formating" role="tab" aria-selected="false"> Formatting </button>
-							<button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-headers-footers" role="tab" aria-selected="false"> Headers & Footers <span class="ms-1 d-inline-block rounded-circle"></span>
+							<button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-formating-${wid}-${tid}" role="tab" aria-selected="false"> Formatting </button>
+							<button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-headers-footers-${wid}-${tid}" role="tab" aria-selected="false"> Headers & Footers <span class="ms-1 d-inline-block rounded-circle"></span>
 							</button>
 						</div>
 					</nav>
 					<!-- TAB CONTENT -->
 					<div class="tab-content mt-3">
 						<!-- page setup Content -->
-						<div class="tab-pane show active" id="nav-page-setup" role="tabpanel">
+						<div class="tab-pane show active" id="nav-page-setup-${wid}-${tid}" role="tabpanel">
 							<table border="0" style="width:100%">
 								<tr>
 									<td class="p-3">
@@ -433,7 +433,7 @@
 							</table>
 						</div>
 						<!-- Formating Content -->
-						<div class="tab-pane" id="nav-formating" role="tabpanel">
+						<div class="tab-pane" id="nav-formating-${wid}-${tid}" role="tabpanel">
 							<table border="0" style="width:100%">
 								<tr>
 									<td class="p-3">
@@ -481,7 +481,7 @@
 							</table>
 						</div>
 						<!-- Headers & Footers Content -->
-						<div class="tab-pane" id="nav-headers-footers" role="tabpanel">
+						<div class="tab-pane" id="nav-headers-footers-${wid}-${tid}" role="tabpanel">
 							<table border="0" style="width:100%">
 								<tr>
 									<td class="p-3">
