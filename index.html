@@ -206,29 +206,29 @@
 				let bottom = $(`#margins-bottom-${wid}-${tid}`).val();
 				if (top.trim().length === 0 || left.trim().length === 0 || right.trim().length === 0 || bottom.trim().length === 0) {
 					pageSetupTabRedirect();
-					alert("Top, Left, Right and Bottom value should not be empty in Page setup tab");
+					alert("Margins Top, Left, Right and Bottom value should not be empty in Page setup tab");
 					return;
 				}
 				let maxTopValue = (height - 1) - bottom;
 				let maxBottomValue = (height - 1) - top;
 				let maxLeftValue = (width - 1) - right;
 				let maxRightValue = (width - 1) - left;
-				if (top < 0 || top > maxTopValue) {
+				if (top <= 0 || top > maxTopValue) {
 					pageSetupTabRedirect();
 					alert(`Please enter top margin value in inches between 0" and ${maxTopValue}".`);
 					return;
 				}
-				if (left < 0 || left > maxLeftValue) {
+				if (left <= 0 || left > maxLeftValue) {
 					pageSetupTabRedirect();
 					alert(`Please enter left margin value in inches between 0" and ${maxLeftValue}".`);
 					return;
 				}
-				if (right < 0 || right > maxRightValue) {
+				if (right <= 0 || right > maxRightValue) {
 					pageSetupTabRedirect();
 					alert(`Please enter right margin value in inches between 0" and ${maxRightValue}".`);
 					return;
 				}
-				if (bottom < 0 || bottom > maxBottomValue) {
+				if (bottom <= 0 || bottom > maxBottomValue) {
 					pageSetupTabRedirect();
 					alert(`Please enter bottom margin value in inches between 0" and ${maxBottomValue}".`);
 					return;
@@ -751,16 +751,14 @@
 				// Print
 				if(pj.print.type === "workbook"){
 					$(`#print-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.print.type}]`).attr('selected', true).trigger("change");
-					$('.selection-1d').click(function(){
-						$(".selection-1d :checkbox").each(function(){
-							$(this).attr('checked', false);
-							pj.print.value.forEach((val) => {
-								if(val.sheet === $(this).val()){
-									$(this).attr('checked', true);
-								}
-							})
-						});
-					})
+					$(".selection-1d :checkbox").each(function(){
+						$(this).attr('checked', false);
+						pj.print.value.forEach((val) => {
+							if(val.sheet === $(this).val()){
+								$(this).attr('checked', true);
+							}
+						})
+					}).change();
 				} else if(pj.print.type === "custom" && pj.print.value.length === 1){
 					$(`#print-${wid}-${tid} option`).removeAttr('selected').map(function () {
 						if ($(this).text() === pj.print.value[0].sheet) return this;
