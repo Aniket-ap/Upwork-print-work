@@ -409,11 +409,11 @@
 												<option value="fit_pagebreak">Fit to pagebreaks</option>
 											</select>
 											<span class="input-group-text bg-theme custom-span">%</span>
-											<input type="number" class="form-control" value="88" step="1" min="0" max="10000" id="percentage-${wid}-${tid}">
+											<input type="number" class="form-control" value="100" step="1" min="0" max="10000" id="percentage-${wid}-${tid}" oninput="validity.valid||(value='');" >
 											<span class="input-group-text bg-theme break-span">Break row at </span>
-											<input type="number" class="form-control" value="20" min="0" id="break-row-${wid}-${tid}">
+											<input type="number" class="form-control" value="20" min="1" id="break-row-${wid}-${tid}" oninput="validity.valid||(value='');" />
 											<span class="input-group-text bg-theme break-span colname-${wid}-${tid}">Break column at </span>
-											<input type="number" class="form-control" value="5" min="0" id="break-column-${wid}-${tid}">
+											<input type="number" class="form-control" value="5" min="1" id="break-column-${wid}-${tid}" oninput="validity.valid||(value='');" />
 										</div>
 									</td>
 								</tr>
