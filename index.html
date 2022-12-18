@@ -98,14 +98,14 @@
 					}
 				}
 			} else if(printValue === "workbook"){
-				let webworkVal = $(`.selection-1d > input`).val();
+				let webworkVal = $(`.selection-${wid}-${tid} > input`).val();
 				if(webworkVal === "All Sheets"){
 					result.print = {
 						"type": "workbook"
 					}
 				} else{
 					let arr = [];
-					$(".selection-1d :checkbox:checked").each(function(){
+					$(`.selection-${wid}-${tid} :checkbox:checked`).each(function(){
 						arr.push({"sheet": $(this).val()});
 					});
 					result.print = {
@@ -339,7 +339,7 @@
 											<span class="input-group-text bg-theme range-span">Range</span>
 											<input type="text" class="form-control" id="print-range-${wid}-${tid}" aria-label="Range input">
 											<span class="input-group-text bg-theme w-book-select">Selection</span>
-											<div class="dropdown selection-1d w-book-select w-50">
+											<div class="dropdown selection-${wid}-${tid} w-book-select w-50">
 												<input type="text" class=" form-control dropdown-toggle" data-bs-toggle="dropdown" value="All Sheets" aria-expanded="false" data-bs-auto-close="outside" readonly>
 												<div class="dropdown-menu p-0 w-100">
 													<div class="list-group">
@@ -548,7 +548,7 @@
 			$(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}, .custom-span, #percentage-${wid}-${tid}`).hide();
 			// Initial style for print and scale select tag
 			// $(`#print-${wid}-${tid}, #scale-${wid}-${tid}`).css("border-radius", ".375rem")
-			$(`.selection-1d > input`).css({
+			$(`.selection-${wid}-${tid} > input`).css({
 						"border-top-left-radius": "0",
 						"border-bottom-left-radius": "0"
 			});
@@ -562,22 +562,22 @@
 			for (var index = 0; index < data.length; index++) {
 				$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">${data[index]}</option>`);
 				$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">Selected range of ${data[index]}</option>`);
-				$(`.selection-1d .list-group`).append(`
+				$(`.selection-${wid}-${tid} .list-group`).append(`
 					<label class="list-group-item">
 						<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="${data[index]}" checked> ${data[index]} </label>
 				`)
 			}
 
 			// All sheet work when workbook selected
-			const totalLength = $(".selection-1d :checkbox").length;
-			$('.selection-1d :checkbox').change(function() {
-				const checked = $(".selection-1d :checkbox:checked").length
+			const totalLength = $(`.selection-${wid}-${tid} :checkbox`).length;
+			$(`.selection-${wid}-${tid} :checkbox`).change(function() {
+				const checked = $(`.selection-${wid}-${tid} :checkbox:checked`).length
 				if (checked == 0) {
 					alert("One of the sheets must be selected");
 					$(this).prop('checked', true);
 					return
 				}
-				$(".selection-1d input[type='text']").val(checked == totalLength ? "All Sheets" : `${checked} Sheet(s) selected`)
+				$(`.selection-${wid}-${tid} input[type='text']`).val(checked == totalLength ? "All Sheets" : `${checked} Sheet(s) selected`)
 			});
 
 			$(`#size-${wid}-${tid}`).on("change", function () {
@@ -622,7 +622,7 @@
 						"border-top-right-radius": "0",
 						"border-bottom-right-radius": "0"
 					});
-					$(`.selection-1d > input`).css({
+					$(`.selection-${wid}-${tid} > input`).css({
 						"border-top-left-radius": "0",
 						"border-bottom-left-radius": "0"
 					});
@@ -751,14 +751,14 @@
 				// Print
 				if(pj.print.type === "workbook"){
 					$(`#print-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.print.type}]`).attr('selected', true).trigger("change");
-					$(".selection-1d :checkbox").each(function(){
+					$(`.selection-${wid}-${tid} :checkbox`).each(function(){
 						$(this).attr('checked', false);
 						pj.print.value.forEach((val) => {
 							if(val.sheet === $(this).val()){
 								$(this).attr('checked', true);
 							}
 						})
-					}).change();
+					}).trigger("change");
 				} else if(pj.print.type === "custom" && pj.print.value.length === 1){
 					$(`#print-${wid}-${tid} option`).removeAttr('selected').map(function () {
 						if ($(this).text() === pj.print.value[0].sheet) return this;
