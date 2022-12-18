@@ -752,10 +752,10 @@
 				if(pj.print.type === "workbook"){
 					$(`#print-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.print.type}]`).attr('selected', true).trigger("change");
 					$(`.selection-${wid}-${tid} :checkbox`).each(function(){
-						$(this).attr('checked', false);
+						$(this).prop('checked', false);
 						pj.print.value.forEach((val) => {
 							if(val.sheet === $(this).val()){
-								$(this).attr('checked', true);
+								$(this).prop('checked', true);
 							}
 						})
 					}).trigger("change");
