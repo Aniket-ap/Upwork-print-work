@@ -209,6 +209,14 @@
 					alert("Margins Top, Left, Right and Bottom value should not be empty in Page setup tab");
 					return;
 				}
+				if(top > (height-1) || bottom > (height-1)){
+					alert(`The maximum value of the Top/Bottom Margin for the specified paper size is ${height - 1}`)
+					return;
+				}
+				if(left > (width-1) || right > (width-1)){
+					alert(`The maximum value of the Left/Right Margin for the specified paper size is ${width - 1}`)
+					return;
+				}
 				let maxTopValue = (height - 1) - bottom;
 				let maxBottomValue = (height - 1) - top;
 				let maxLeftValue = (width - 1) - right;
