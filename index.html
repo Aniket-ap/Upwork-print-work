@@ -209,30 +209,28 @@
 					alert("Margins Top, Left, Right and Bottom value should not be empty in Page setup tab");
 					return;
 				}
-				let maxTopValue = Math.abs((height - 1) - bottom);
-				// let maxTopValue = (height - 1) - (bottom > height ? bottom : 0);
-				let maxBottomValue = Math.abs((height - 1) - top);
-				// let maxBottomValue = (height - 1) - (top > height ? 0 : top);
-				let maxLeftValue = Math.abs((width - 1) - right);
-				let maxRightValue = Math.abs((width - 1) - left);
+				let maxTopValue = (height - 1) - bottom;
+				let maxBottomValue = (height - 1) - top;
+				let maxLeftValue = (width - 1) - right;
+				let maxRightValue = (width - 1) - left;
 				if (top < 0 || top > maxTopValue) {
 					pageSetupTabRedirect();
-					alert(`Incorrect margin value for the specified paper size`);
+					alert(`Enter the top margin number between 0 and ${maxTopValue}`);
 					return;
 				}
 				if (left < 0 || left > maxLeftValue) {
 					pageSetupTabRedirect();
-					alert(`Incorrect margin value for the specified paper size`);
+					alert(`Enter the left margin number between 0 and ${maxLeftValue}`);
 					return;
 				}
 				if (right < 0 || right > maxRightValue) {
 					pageSetupTabRedirect();
-					alert(`Incorrect margin value for the specified paper size`);
+					alert(`Enter the right margin number between 0 and ${maxRightValue}`);
 					return;
 				}
 				if (bottom < 0 || bottom > maxBottomValue) {
 					pageSetupTabRedirect();
-					alert(`Incorrect margin value for the specified paper size`);
+					alert(`Enter the bottom margin number between 0 and ${maxBottomValue}`);
 					return;
 				}
 				result.margins = {
