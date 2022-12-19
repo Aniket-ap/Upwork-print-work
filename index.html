@@ -221,24 +221,24 @@
 				let maxBottomValue = (height - 1) - top;
 				let maxLeftValue = (width - 1) - right;
 				let maxRightValue = (width - 1) - left;
-				if (top < 0 || top > maxTopValue) {
+				if (top>=bottom && (top < 0 || top > maxTopValue)) {
 					pageSetupTabRedirect();
-					alert(`Enter the top margin number between 0 and ${maxTopValue}`);
+					alert(`Enter the Top margin number between 0 and ${maxTopValue}`);
 					return;
 				}
-				if (left < 0 || left > maxLeftValue) {
+				if (left>=right && (left < 0 || left > maxLeftValue)) {
 					pageSetupTabRedirect();
-					alert(`Enter the left margin number between 0 and ${maxLeftValue}`);
+					alert(`Enter the Left margin number between 0 and ${maxLeftValue}`);
 					return;
 				}
-				if (right < 0 || right > maxRightValue) {
+				if (right>=left && (right < 0 || right > maxRightValue)) {
 					pageSetupTabRedirect();
-					alert(`Enter the right margin number between 0 and ${maxRightValue}`);
+					alert(`Enter the Right margin number between 0 and ${maxRightValue}`);
 					return;
 				}
-				if (bottom < 0 || bottom > maxBottomValue) {
+				if (bottom>=top && (bottom < 0 || bottom > maxBottomValue)) {
 					pageSetupTabRedirect();
-					alert(`Enter the bottom margin number between 0 and ${maxBottomValue}`);
+					alert(`Enter the Bottom margin number between 0 and ${maxBottomValue}`);
 					return;
 				}
 				result.margins = {
