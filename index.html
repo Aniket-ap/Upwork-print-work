@@ -217,22 +217,22 @@
 				let maxRightValue = Math.abs((width - 1) - left);
 				if (top < 0 || top > maxTopValue) {
 					pageSetupTabRedirect();
-					alert(`Please enter top margin value in inches between 0" and ${maxTopValue}".`);
+					alert(`Incorrect margin value for the specified paper size`);
 					return;
 				}
 				if (left < 0 || left > maxLeftValue) {
 					pageSetupTabRedirect();
-					alert(`Please enter left margin value in inches between 0" and ${maxLeftValue}".`);
+					alert(`Incorrect margin value for the specified paper size`);
 					return;
 				}
 				if (right < 0 || right > maxRightValue) {
 					pageSetupTabRedirect();
-					alert(`Please enter right margin value in inches between 0" and ${maxRightValue}".`);
+					alert(`Incorrect margin value for the specified paper size`);
 					return;
 				}
 				if (bottom < 0 || bottom > maxBottomValue) {
 					pageSetupTabRedirect();
-					alert(`Please enter bottom margin value in inches between 0" and ${maxBottomValue}".`);
+					alert(`Incorrect margin value for the specified paper size`);
 					return;
 				}
 				result.margins = {
