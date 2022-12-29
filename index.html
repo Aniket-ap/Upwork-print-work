@@ -30,7 +30,7 @@
 		color: #673ab7;
 	}
 	.form-control.custom-width{
-		min-width: 85px;
+		min-width: 55px;
 	}
 	</style>
 </head>
@@ -801,7 +801,6 @@
 			$(`#bottom-middle-${wid}-${tid}`).val(pj.hf.value.bottom_center)
 			$(`#bottom-right-${wid}-${tid}`).val(pj.hf.value.bottom_right)
 		}).trigger("click");
-		// Remove click here
 		$(`.done-${wid}-${tid}`).on('click', function(e) {
 			e.preventDefault()
 			e.stopPropagation()
