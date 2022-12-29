@@ -32,6 +32,10 @@
 	.form-control.custom-width{
 		min-width: 75px;
 	}
+	.list-group.sheets{
+		max-height: 200px;
+		overflow-y: auto;
+	}
 	</style>
 </head>
 
@@ -352,7 +356,7 @@
 											<div class="dropdown selection-${wid}-${tid} w-book-select w-50">
 												<input type="text" class=" form-control form-select dropdown-toggle" data-bs-toggle="dropdown" value="All Sheets" aria-expanded="false" data-bs-auto-close="outside" readonly>
 												<div class="dropdown-menu p-0 w-100">
-													<div class="list-group">
+													<div class="list-group sheets">
 														
 													</div>
 												</div>
@@ -736,15 +740,15 @@
 						}
 					})
 				}).trigger("change");
-			} else if (pj.print.type === "custom" && pj.print.value.length === 1) {
+			} else if (pj.print.type === "custom" && !pj.print.value[0].hasOwnProperty('range')) {
 				$(`#print-${wid}-${tid} option`).removeAttr('selected').map(function() {
 					if ($(this).text() === pj.print.value[0].sheet) return this;
 				}).attr('selected', true).trigger("change");
 			} else {
 				$(`#print-${wid}-${tid} option`).removeAttr('selected').map(function() {
-					if ($(this).text() === `Selected range of ${ pj.print.value[0].sheet}`) return this;
+					if ($(this).text() === `Selected range of ${pj.print.value[0].sheet}`) return this;
 				}).attr('selected', true).trigger("change");
-				$(`#print-range-${wid}-${tid}`).val(pj.print.value[1].range)
+				$(`#print-range-${wid}-${tid}`).val(pj.print.value[0].range)
 			}
 			// Paper size
 			if (pj.size.type === "custom") {
@@ -840,7 +844,7 @@
 				"scale": {
 					"type": "custom",
 					"value": {
-						"percentage": "78"
+						"percentage": "0.88"
 					}
 				},
 				"margins": {
@@ -884,14 +888,13 @@
 				"id": "j2f514dg",
 				"name": "l9zgqjql-j2f514dg",
 				"print": {
-					"type": "workbook",
-					"value": [{
-						"sheet": "Sheet2"
-					}, {
-						"sheet": "Sheet3"
-					}, {
-						"sheet": "Sheet4"
-					}]
+					"type": "custom",
+					"value": [
+						{
+						"sheet": "Sheet1",
+						"range": "A2:A"
+						}
+					]
 				},
 				"size": {
 					"type": "custom",
@@ -917,7 +920,7 @@
 					}
 				},
 				"orientation": {
-					"type": "protait"
+					"type": "portrait"
 				},
 				"gridlines": {
 					"value": true
