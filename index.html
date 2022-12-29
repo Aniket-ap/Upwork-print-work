@@ -604,7 +604,9 @@
 				$(`#scale-${wid}-${tid}`).val("fit_pagebreak").change()
 				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change();
 			} else if(checked > 1){
-				$(`#scale-${wid}-${tid}`).val("normal").change();
+				if($(`#scale-${wid}-${tid}`).val() === "fit_pagebreak"){
+					$(`#scale-${wid}-${tid}`).val("normal").change();
+				}
 				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true).change();
 			}
 			$(`.selection-${wid}-${tid} input[type='text']`).val(checked == totalLength ? "All Sheets" : `${checked} Sheet(s) selected`)
@@ -677,6 +679,21 @@
 				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change()
 				$(`.range-span, #print-range-${wid}-${tid}`).hide();
 			}
+			if (value.indexOf('Sheet') == 0) {
+				$(`#scale-${wid}-${tid}`).val("fit_pagebreak").change();
+				$(`#scale-${wid}-${tid}`).click(function () {
+					$(`#scale-${wid}-${tid} option`).not(':last-child').each(function (index) {
+						$(this).prop('disabled', true);
+					});
+				});
+			} else {
+				$(`#scale-${wid}-${tid}`).click(function () {
+					$(`#scale-${wid}-${tid} option`).not(':last-child').each(function (index) {
+						$(this).prop('disabled', false);
+					});
+				});
+			}
+
 		})
 		$(`#scale-${wid}-${tid}`).on("change", function() {
 			var value = $(this).children('option:selected').val();
