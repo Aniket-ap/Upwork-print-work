@@ -599,6 +599,10 @@
 				alert("One of the sheets must be selected");
 				$(this).prop('checked', true);
 				return
+			} else if(checked === 1){
+				$(`#scale-${wid}-${tid}`).val("fit_pagebreak").change()
+			} else if(checked > 1){
+				$(`#scale-${wid}-${tid}`).val("normal").change()
 			}
 			$(`.selection-${wid}-${tid} input[type='text']`).val(checked == totalLength ? "All Sheets" : `${checked} Sheet(s) selected`)
 		});
@@ -655,6 +659,8 @@
 				$(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
 			}
 			if (value.indexOf('Selected range of ') == 0) {
+				$(`#scale-${wid}-${tid}`).val("normal").change();
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true);
 				$(`.range-span, #print-range-${wid}-${tid}`).show()
 				$(`#print-${wid}-${tid}`).css({
 					"border-top-right-radius": "0",
@@ -665,6 +671,7 @@
 					"border-bottom-right-radius": ".375rem"
 				});
 			} else {
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change()
 				$(`.range-span, #print-range-${wid}-${tid}`).hide();
 			}
 		})
