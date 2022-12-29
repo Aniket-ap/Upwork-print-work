@@ -649,7 +649,12 @@
 		$(`#print-${wid}-${tid}`).on("change", function() {
 			var value = $(this).children('option:selected').text();
 			if ($(this).children('option:selected').val() === "workbook") {
-				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true).change();
+				if($(`.selection-${wid}-${tid} :checkbox:checked`).length > 1){
+					$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true).change();
+				} else{
+					$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change();
+				}
+
 				$(`.w-book-select`).show()
 				$(`#print-${wid}-${tid}`).css({
 					"border-top-right-radius": "0",
