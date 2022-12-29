@@ -601,7 +601,6 @@
 				$(this).prop('checked', true);
 				return
 			} else if(checked === 1){
-				$(`#scale-${wid}-${tid}`).val("fit_pagebreak").change()
 				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change();
 			} else if(checked > 1){
 				if($(`#scale-${wid}-${tid}`).val() === "fit_pagebreak"){
