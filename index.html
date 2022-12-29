@@ -556,7 +556,7 @@
 		// Hide range, break row at, break column and custom text box
 		$(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}, .custom-span, #percentage-${wid}-${tid}`).hide();
 		// Initial style for print and scale select tag
-		// $(`#print-${wid}-${tid}, #scale-${wid}-${tid}`).css("border-radius", ".375rem")
+		$(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
 		$(`.selection-${wid}-${tid} > input`).css({
 			"border-top-left-radius": "0",
 			"border-bottom-left-radius": "0"
