@@ -165,7 +165,7 @@
 		// Scale
 		let scaleVal = $(`#scale-${wid}-${tid}`).val();
 		if (scaleVal == "custom") {
-			let percentageVal = $(`#percentage-${wid}-${tid}`).val();
+			let percentageVal = Math.round($(`#percentage-${wid}-${tid}`).val());
 			if (Number(percentageVal) < 1 || percentageVal.length === 0) {
 				pageSetupTabRedirect();
 				alert("Please enter a positive Percentage value ");
@@ -174,7 +174,7 @@
 			result.scale = {
 				"type": "custom",
 				"value": {
-					"percentage": `${Math.round(percentageVal)}`,
+					"percentage": `${percentageVal/100}`,
 				}
 			}
 		} else if (scaleVal == "fit_pagebreak") {
@@ -724,7 +724,7 @@
 			// Scale
 			if (pj.scale.type === "custom") {
 				$(`#scale-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.scale.type}]`).attr('selected', true).trigger("change");
-				$(`#percentage-${wid}-${tid}`).val(pj.scale.value.percentage)
+				$(`#percentage-${wid}-${tid}`).val(pj.scale.value.percentage * 100)
 			} else if (pj.scale.type == "fit_pagebreak") {
 				$(`#scale-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.scale.type}]`).attr('selected', true).trigger("change");
 				$(`#break-row-${wid}-${tid}`).val(pj.scale.value.row)
