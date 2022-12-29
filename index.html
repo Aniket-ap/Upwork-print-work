@@ -552,6 +552,7 @@
 		// Initially disabled margin and page sizes value
 		$(`#margins-top-${wid}-${tid}, #margins-left-${wid}-${tid}, #margins-right-${wid}-${tid}, #margins-bottom-${wid}-${tid}, 
         #size-height-${wid}-${tid},#size-width-${wid}-${tid} `).prop('disabled', true);
+		$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true).change()
 		// Hide range, break row at, break column and custom text box
 		$(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}, .custom-span, #percentage-${wid}-${tid}`).hide();
 		// Initial style for print and scale select tag
@@ -601,8 +602,10 @@
 				return
 			} else if(checked === 1){
 				$(`#scale-${wid}-${tid}`).val("fit_pagebreak").change()
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change();
 			} else if(checked > 1){
-				$(`#scale-${wid}-${tid}`).val("normal").change()
+				$(`#scale-${wid}-${tid}`).val("normal").change();
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true).change();
 			}
 			$(`.selection-${wid}-${tid} input[type='text']`).val(checked == totalLength ? "All Sheets" : `${checked} Sheet(s) selected`)
 		});
