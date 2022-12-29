@@ -649,6 +649,7 @@
 		$(`#print-${wid}-${tid}`).on("change", function() {
 			var value = $(this).children('option:selected').text();
 			if ($(this).children('option:selected').val() === "workbook") {
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true).change();
 				$(`.w-book-select`).show()
 				$(`#print-${wid}-${tid}`).css({
 					"border-top-right-radius": "0",
@@ -661,6 +662,7 @@
 			} else {
 				$(`.w-book-select`).hide();
 				$(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change()
 			}
 			if (value.indexOf('Selected range of ') == 0) {
 				if($(`#scale-${wid}-${tid}`).val() === "fit_pagebreak"){
@@ -677,8 +679,11 @@
 					"border-bottom-right-radius": ".375rem"
 				});
 			} else {
-				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change()
 				$(`.range-span, #print-range-${wid}-${tid}`).hide();
+			} 
+
+			if(value.indexOf('Sheet') == 0){
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change()
 			}
 
 		})
