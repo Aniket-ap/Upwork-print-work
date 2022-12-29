@@ -391,7 +391,7 @@
 												<option data-top="0.70" data-left="0.70" data-right="0.70" data-bottom="0.70" value="normal" selected="">Normal</option>
 												<option data-top="0.25" data-left="0.25" data-right="0.25" data-bottom="0.25" value="narrow">Narrow</option>
 												<option data-top="1" data-left="1" data-right="1" data-bottom="1" value="wide">Wide</option>
-												<option data-top="" data-left="" data-right="" data-bottom="" value="custom">Custom</option>
+												<option data-top="0.75" data-left="0.7" data-right="0.7" data-bottom="0.75" value="custom">Custom</option>
 											</select>
 											<span class="input-group-text bg-theme">Top ″</span>
 											<input type="number" class="form-control" value="0.1" min="0" id="margins-top-${wid}-${tid}">
@@ -599,15 +599,17 @@
 			$(`#size-height-${wid}-${tid}`).val(height);
 		})
 		$(`#margins-${wid}-${tid}`).on("change", function() {
+			let marginsVal = $(`#margins-${wid}-${tid}`).val();
 			var top = $(`#margins-top-${wid}-${tid}`).val($(this).children('option:selected').data('top'))
 			var left = $(`#margins-left-${wid}-${tid}`).val($(this).children('option:selected').data('left'))
 			var right = $(`#margins-right-${wid}-${tid}`).val($(this).children('option:selected').data('right'))
 			var bottom = $(`#margins-bottom-${wid}-${tid}`).val($(this).children('option:selected').data('bottom'))
-			if (top.val() == "" && left.val() == "" && bottom.val() == "" && right.val() == "") {
+			if (marginsVal === "custom") {
 				$(`#margins-top-${wid}-${tid}`).prop('disabled', false)
 				$(`#margins-left-${wid}-${tid}`).prop('disabled', false)
 				$(`#margins-right-${wid}-${tid}`).prop('disabled', false)
 				$(`#margins-bottom-${wid}-${tid}`).prop('disabled', false)
+				
 			} else {
 				$(`#margins-top-${wid}-${tid}`).prop('disabled', true)
 				$(`#margins-left-${wid}-${tid}`).prop('disabled', true)
@@ -615,9 +617,9 @@
 				$(`#margins-bottom-${wid}-${tid}`).prop('disabled', true)
 			}
 			$(`#margins-top-${wid}-${tid}`).val(top.val())
-			$(`#margins-left-${wid}-${tid}`).val(top.val())
-			$(`#margins-right-${wid}-${tid}`).val(top.val())
-			$(`#margins-bottom-${wid}-${tid}`).val(top.val())
+			$(`#margins-left-${wid}-${tid}`).val(left.val())
+			$(`#margins-right-${wid}-${tid}`).val(right.val())
+			$(`#margins-bottom-${wid}-${tid}`).val(bottom.val())
 		})
 		$(`#print-${wid}-${tid}`).on("change", function() {
 			var value = $(this).children('option:selected').text();
