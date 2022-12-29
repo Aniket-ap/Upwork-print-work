@@ -680,14 +680,6 @@
 				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change()
 				$(`.range-span, #print-range-${wid}-${tid}`).hide();
 			}
-			if (value.indexOf('Sheet') == 0) {
-				$(`#scale-${wid}-${tid}`).val("fit_pagebreak").change();
-				// $(`#scale-${wid}-${tid}`).click(function () {
-				// 	$(`#scale-${wid}-${tid} option`).not(':last-child').each(function (index) {
-				// 		$(this).prop('disabled', true);
-				// 	});
-				// });
-			}
 
 		})
 		$(`#scale-${wid}-${tid}`).on("change", function() {
