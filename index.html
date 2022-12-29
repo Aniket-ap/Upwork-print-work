@@ -663,7 +663,9 @@
 				$(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
 			}
 			if (value.indexOf('Selected range of ') == 0) {
-				$(`#scale-${wid}-${tid}`).val("normal").change();
+				if($(`#scale-${wid}-${tid}`).val() === "fit_pagebreak"){
+					$(`#scale-${wid}-${tid}`).val("normal").change();
+				}
 				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true);
 				$(`.range-span, #print-range-${wid}-${tid}`).show()
 				$(`#print-${wid}-${tid}`).css({
@@ -680,17 +682,11 @@
 			}
 			if (value.indexOf('Sheet') == 0) {
 				$(`#scale-${wid}-${tid}`).val("fit_pagebreak").change();
-				$(`#scale-${wid}-${tid}`).click(function () {
-					$(`#scale-${wid}-${tid} option`).not(':last-child').each(function (index) {
-						$(this).prop('disabled', true);
-					});
-				});
-			} else {
-				$(`#scale-${wid}-${tid}`).click(function () {
-					$(`#scale-${wid}-${tid} option`).not(':last-child').each(function (index) {
-						$(this).prop('disabled', false);
-					});
-				});
+				// $(`#scale-${wid}-${tid}`).click(function () {
+				// 	$(`#scale-${wid}-${tid} option`).not(':last-child').each(function (index) {
+				// 		$(this).prop('disabled', true);
+				// 	});
+				// });
 			}
 
 		})
