@@ -29,12 +29,9 @@
 	.text-theme {
 		color: #673ab7;
 	}
-	.form-control.custom-width{
+
+	.form-control.custom-width {
 		min-width: 75px;
-	}
-	.list-group.sheets{
-		max-height: 200px;
-		overflow-y: auto;
 	}
 	</style>
 </head>
@@ -350,13 +347,13 @@
 											<select class="form-select" id="print-${wid}-${tid}">
 												<option selected value="workbook">Workbook</option>
 											</select>
-											<span class="input-group-text bg-theme range-span">Range</span>
+											<span class="input-group-text bg-theme range-span-${wid}-${tid}">Range</span>
 											<input type="text" class="form-control" id="print-range-${wid}-${tid}" aria-label="Range input">
-											<span class="input-group-text bg-theme w-book-select">Selection</span>
-											<div class="dropdown selection-${wid}-${tid} w-book-select w-50">
+											<span class="input-group-text bg-theme w-book-select-${wid}-${tid}">Selection</span>
+											<div class="dropdown selection-${wid}-${tid} w-book-select-${wid}-${tid} w-50">
 												<input type="text" class=" form-control form-select dropdown-toggle" data-bs-toggle="dropdown" value="All Sheets" aria-expanded="false" data-bs-auto-close="outside" readonly>
 												<div class="dropdown-menu p-0 w-100">
-													<div class="list-group sheets">
+													<div class="list-group">
 														
 													</div>
 												</div>
@@ -422,11 +419,11 @@
 												<option value="custom">Custom</option>
 												<option value="fit_pagebreak">Fit to pagebreaks</option>
 											</select>
-											<span class="input-group-text bg-theme custom-span">%</span>
+											<span class="input-group-text bg-theme custom-span-${wid}-${tid}">%</span>
 											<input type="number" class="form-control" value="100" step="1" min="0" max="10000" id="percentage-${wid}-${tid}" oninput="validity.valid||(value='');" >
-											<span class="input-group-text bg-theme break-span">Break row at </span>
+											<span class="input-group-text bg-theme break-span-${wid}-${tid}">Break row at </span>
 											<input type="number" class="form-control" value="20" min="1" id="break-row-${wid}-${tid}" oninput="validity.valid||(value='');" />
-											<span class="input-group-text bg-theme break-span colname-${wid}-${tid}">Break column at </span>
+											<span class="input-group-text bg-theme break-span-${wid}-${tid} colname-${wid}-${tid}">Break column at </span>
 											<input type="number" class="form-control" value="5" min="1" id="break-column-${wid}-${tid}" oninput="validity.valid||(value='');" />
 										</div>
 									</td>
@@ -558,9 +555,11 @@
 		// Initially disabled margin and page sizes value
 		$(`#margins-top-${wid}-${tid}, #margins-left-${wid}-${tid}, #margins-right-${wid}-${tid}, #margins-bottom-${wid}-${tid}, 
         #size-height-${wid}-${tid},#size-width-${wid}-${tid} `).prop('disabled', true);
-		$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true).change()
+		$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true);
+		
 		// Hide range, break row at, break column and custom text box
-		$(`.range-span, #print-range-${wid}-${tid}, .break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}, .custom-span, #percentage-${wid}-${tid}`).hide();
+		$(`.range-span-${wid}-${tid}, #print-range-${wid}-${tid}, .break-span-${wid}-${tid}, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}, .custom-span-${wid}-${tid}, #percentage-${wid}-${tid}`).hide();
+		
 		// Initial style for print and scale select tag
 		$(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
 		$(`.selection-${wid}-${tid} > input`).css({
@@ -572,51 +571,53 @@
 			$(`.colname-${wid}-${tid}`).text(`Break column at ${toColumnName($(`#break-column-${wid}-${tid}`).val())}`).trigger("change");
 		});
 		// Print Option value added 
-		var data = ["Sheet1", "Sheet2", "Sheet3", "Sheet4"];
+		var data = ["Sheet1", "Sheet2", "Sheet3", "Sheet4", ];
 		for (var index = 0; index < data.length; index++) {
 			$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">${data[index]}</option>`);
-			$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}">Selected range of ${data[index]}</option>`);
+			$(`#print-${wid}-${tid}`).append(`<option value="${data[index]}" class="srange">Selected range of ${data[index]}</option>`);
 			$(`.selection-${wid}-${tid} .list-group`).append(`
 					<label class="list-group-item">
-						<input class="form-check-input me-1" type="checkbox" name="workbookSelection" value="${data[index]}" checked> ${data[index]} </label>
+						<input class="form-check-input me-1" type="checkbox" value="${data[index]}" checked> ${data[index]} </label>
 				`)
 		}
-
 		// switch height and width value according to landscape and portrait radio value
-		$("input[type='radio'][name='pageSetupRadio']").change(
-			function(){
-				let paperSizeVal = $(`#size-${wid}-${tid}`).val();
-				let width = $(`#size-width-${wid}-${tid}`).val();
-				let height = $(`#size-height-${wid}-${tid}`).val();
-				if($(this).val() == 'portrait' && paperSizeVal === "custom"){
-					$(`#size-width-${wid}-${tid}`).val(height);
-					$(`#size-height-${wid}-${tid}`).val(width);
-				}
-				else if($(this).val() == 'landscape' && paperSizeVal === "custom"){
-					$(`#size-width-${wid}-${tid}`).val(height);
-					$(`#size-height-${wid}-${tid}`).val(width);
-				}
+		$("input[type='radio'][name='pageSetupRadio']").change(function() {
+			console.log("switch height and width called")
+			let paperSizeVal = $(`#size-${wid}-${tid}`).val();
+			let width = $(`#size-width-${wid}-${tid}`).val();
+			let height = $(`#size-height-${wid}-${tid}`).val();
+			if ($(this).val() == 'portrait' && paperSizeVal === "custom") {
+				$(`#size-width-${wid}-${tid}`).val(height);
+				$(`#size-height-${wid}-${tid}`).val(width);
+			} else if ($(this).val() == 'landscape' && paperSizeVal === "custom") {
+				$(`#size-width-${wid}-${tid}`).val(height);
+				$(`#size-height-${wid}-${tid}`).val(width);
 			}
-		);
+		});
 		// All sheet work when workbook selected
+		
 		const totalLength = $(`.selection-${wid}-${tid} :checkbox`).length;
+		
 		$(`.selection-${wid}-${tid} :checkbox`).change(function() {
-			const checked = $(`.selection-${wid}-${tid} :checkbox:checked`).length
+			const checked = $(`.selection-${wid}-${tid} :checkbox:checked`).length;
+			
 			if (checked == 0) {
 				alert("One of the sheets must be selected");
 				$(this).prop('checked', true);
 				return
-			} else if(checked === 1){
-				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change();
+			} else if(checked == 1){
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false);
 			} else if(checked > 1){
 				if($(`#scale-${wid}-${tid}`).val() === "fit_pagebreak"){
-					$(`#scale-${wid}-${tid}`).val("normal").change();
+					$(`#scale-${wid}-${tid}`).val("normal").trigger("change");
 				}
-				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true).change();
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true)
 			}
 			$(`.selection-${wid}-${tid} input[type='text']`).val(checked == totalLength ? "All Sheets" : `${checked} Sheet(s) selected`)
 		});
+
 		$(`#size-${wid}-${tid}`).on("change", function() {
+			console.log("size called")
 			var height = $(this).children('option:selected').data('height')
 			var width = $(this).children('option:selected').data('width')
 			if (height == "" && width == "") {
@@ -630,38 +631,33 @@
 			$(`#size-height-${wid}-${tid}`).val(height);
 		})
 		$(`#margins-${wid}-${tid}`).on("change", function() {
+			console.log("margins called")
 			let marginsVal = $(`#margins-${wid}-${tid}`).val();
 			var top = $(`#margins-top-${wid}-${tid}`).val($(this).children('option:selected').data('top'))
 			var left = $(`#margins-left-${wid}-${tid}`).val($(this).children('option:selected').data('left'))
 			var right = $(`#margins-right-${wid}-${tid}`).val($(this).children('option:selected').data('right'))
 			var bottom = $(`#margins-bottom-${wid}-${tid}`).val($(this).children('option:selected').data('bottom'))
 			if (marginsVal === "custom") {
-				$(`#margins-top-${wid}-${tid}`).prop('disabled', false)
-				$(`#margins-left-${wid}-${tid}`).prop('disabled', false)
-				$(`#margins-right-${wid}-${tid}`).prop('disabled', false)
-				$(`#margins-bottom-${wid}-${tid}`).prop('disabled', false)
-				
+				$(`#margins-top-${wid}-${tid}, #margins-left-${wid}-${tid}, #margins-right-${wid}-${tid}, #margins-bottom-${wid}-${tid}`).prop('disabled', false);
 			} else {
-				$(`#margins-top-${wid}-${tid}`).prop('disabled', true)
-				$(`#margins-left-${wid}-${tid}`).prop('disabled', true)
-				$(`#margins-right-${wid}-${tid}`).prop('disabled', true)
-				$(`#margins-bottom-${wid}-${tid}`).prop('disabled', true)
+				$(`#margins-top-${wid}-${tid}, #margins-left-${wid}-${tid}, #margins-right-${wid}-${tid}, #margins-bottom-${wid}-${tid}`).prop('disabled', true);
 			}
 			$(`#margins-top-${wid}-${tid}`).val(top.val())
 			$(`#margins-left-${wid}-${tid}`).val(left.val())
 			$(`#margins-right-${wid}-${tid}`).val(right.val())
 			$(`#margins-bottom-${wid}-${tid}`).val(bottom.val())
-		})
+		});
+		
 		$(`#print-${wid}-${tid}`).on("change", function() {
 			var value = $(this).children('option:selected').text();
-			if ($(this).children('option:selected').val() === "workbook") {
+			if ($(this).val() === "workbook") {
 				if($(`.selection-${wid}-${tid} :checkbox:checked`).length > 1){
-					$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true).change();
+					$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true);
 				} else{
-					$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change();
+					$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false);
 				}
 
-				$(`.w-book-select`).show()
+				$(`.w-book-select-${wid}-${tid}`).show()
 				$(`#print-${wid}-${tid}`).css({
 					"border-top-right-radius": "0",
 					"border-bottom-right-radius": "0"
@@ -671,16 +667,17 @@
 					"border-bottom-left-radius": "0"
 				});
 			} else {
-				$(`.w-book-select`).hide();
+				$(`.w-book-select-${wid}-${tid}`).hide();
 				$(`#print-${wid}-${tid}`).css("border-radius", ".375rem");
-				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change()
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false)
 			}
+
 			if (value.indexOf('Selected range of ') == 0) {
 				if($(`#scale-${wid}-${tid}`).val() === "fit_pagebreak"){
-					$(`#scale-${wid}-${tid}`).val("normal").change();
+					$(`#scale-${wid}-${tid}`).val("normal").trigger("change");
 				}
 				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', true);
-				$(`.range-span, #print-range-${wid}-${tid}`).show()
+				$(`.range-span-${wid}-${tid}, #print-range-${wid}-${tid}`).show()
 				$(`#print-${wid}-${tid}`).css({
 					"border-top-right-radius": "0",
 					"border-bottom-right-radius": "0"
@@ -690,29 +687,27 @@
 					"border-bottom-right-radius": ".375rem"
 				});
 			} else {
-				$(`.range-span, #print-range-${wid}-${tid}`).hide();
+				$(`.range-span-${wid}-${tid}, #print-range-${wid}-${tid}`).hide();
+				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false)
 			} 
-
-			if(value.indexOf('Sheet') == 0){
-				$(`#scale-${wid}-${tid} option:eq(5)`).prop('disabled', false).change()
-			}
-
-		})
+		});
+		
 		$(`#scale-${wid}-${tid}`).on("change", function() {
 			var value = $(this).children('option:selected').val();
+				$(`.break-span-${wid}-${tid}, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
+				$(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
+				$(`.custom-span-${wid}-${tid}, #percentage-${wid}-${tid}`).hide();
+
 			if (value == "fit_pagebreak") {
-				$(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).show();
+				$(`.break-span-${wid}-${tid}, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).show();
 				$(`#break-column-${wid}-${tid}`).trigger("change")
 				$(`#scale-${wid}-${tid}`).css({
 					"border-top-right-radius": "0",
 					"border-bottom-right-radius": "0"
 				});
-			} else {
-				$(`.break-span, #break-column-${wid}-${tid}, #break-row-${wid}-${tid}`).hide();
-				$(`#scale-${wid}-${tid}`).css("border-radius", ".375rem");
 			}
 			if (value == "custom") {
-				$(`.custom-span, #percentage-${wid}-${tid}`).show();
+				$(`.custom-span-${wid}-${tid}, #percentage-${wid}-${tid}`).show();
 				$(`#scale-${wid}-${tid}`).css({
 					"border-top-right-radius": "0",
 					"border-bottom-right-radius": "0"
@@ -721,70 +716,83 @@
 					"border-top-right-radius": ".375rem",
 					"border-bottom-right-radius": ".375rem"
 				});
-			} else {
-				$(`.custom-span, #percentage-${wid}-${tid}`).hide();
 			}
 		})
+		
+		
 		$(`.restore-${wid}-${tid}`).on('click', function(e) {
+			console.log("Restore called")
 			if (!task) return;
-			var pj=task;
+			var pj = task;
 			// Page Setup
 			// Print
 			if (pj.print.type === "workbook") {
-				$(`#print-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.print.type}]`).attr('selected', true).trigger("change");
+				$(`#print-${wid}-${tid}`).val(pj.print.type).trigger("change");
+				
+				$(`.selection-${wid}-${tid} :checkbox`).prop('checked', false); //deselect all
 				$(`.selection-${wid}-${tid} :checkbox`).each(function() {
-					$(this).prop('checked', false);
 					pj.print.value.forEach((val) => {
 						if (val.sheet === $(this).val()) {
-							$(this).prop('checked', true);
+							$(this).prop('checked', true).trigger("change");
 						}
 					})
 				}).trigger("change");
-			} else if (pj.print.type === "custom" && !pj.print.value[0].hasOwnProperty('range')) {
+			} else if (pj.print.type === "custom") {
+				if(pj.print.value[0].hasOwnProperty("range"))
+				{
+					optionText = `Selected range of ${ pj.print.value[0].sheet}`;
+					$(`#print-range-${wid}-${tid}`).val(pj.print.value[0].range)
+				}
+				else
+					optionText = `${ pj.print.value[0].sheet}`
+
 				$(`#print-${wid}-${tid} option`).removeAttr('selected').map(function() {
-					if ($(this).text() === pj.print.value[0].sheet) return this;
+					if ($(this).text() === optionText) return this;
 				}).attr('selected', true).trigger("change");
-			} else {
-				$(`#print-${wid}-${tid} option`).removeAttr('selected').map(function() {
-					if ($(this).text() === `Selected range of ${pj.print.value[0].sheet}`) return this;
-				}).attr('selected', true).trigger("change");
-				$(`#print-range-${wid}-${tid}`).val(pj.print.value[0].range)
 			}
+
 			// Paper size
 			if (pj.size.type === "custom") {
-				$(`#size-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.size.type}]`).attr('selected', true).trigger("change");
+				$(`#size-${wid}-${tid}`).val(pj.size.type).trigger("change");
 				$(`#size-height-${wid}-${tid}`).val(pj.size.value.height);
 				$(`#size-width-${wid}-${tid}`).val(pj.size.value.width);
 			} else {
-				$(`#size-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.size.type}]`).attr('selected', true).trigger("change");
+				$(`#size-${wid}-${tid}`).val(pj.size.type).trigger("change");
 			}
 			// Margins
 			if (pj.margins.type === "custom") {
-				$(`#margins-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.margins.type}]`).attr('selected', true).trigger("change");
+				$(`#margins-${wid}-${tid}`).val(pj.margins.type).trigger("change");
 				$(`#margins-top-${wid}-${tid}`).val(pj.margins.value.top);
 				$(`#margins-left-${wid}-${tid}`).val(pj.margins.value.left);
 				$(`#margins-right-${wid}-${tid}`).val(pj.margins.value.right);
 				$(`#margins-bottom-${wid}-${tid}`).val(pj.margins.value.bottom);
 			} else {
-				$(`#margins-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.margins.type}]`).attr('selected', true).trigger("change");
+				$(`#margins-${wid}-${tid}`).val(pj.margins.type).trigger("change");
 			}
 			// Scale
+			
+			
 			if (pj.scale.type === "custom") {
-				$(`#scale-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.scale.type}]`).attr('selected', true).trigger("change");
-				$(`#percentage-${wid}-${tid}`).val(pj.scale.value.percentage * 100)
+				$(`#scale-${wid}-${tid}`).val(pj.scale.type).trigger("change");
+				$(`#percentage-${wid}-${tid}`).val(pj.scale.value.percentage * 100);
 			} else if (pj.scale.type == "fit_pagebreak") {
-				$(`#scale-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.scale.type}]`).attr('selected', true).trigger("change");
+			
+			console.log("calling " + pj.scale.type);
+			
+				$(`#scale-${wid}-${tid}`).val(pj.scale.type).trigger("change");
 				$(`#break-row-${wid}-${tid}`).val(pj.scale.value.row)
 				$(`#break-column-${wid}-${tid}`).val(pj.scale.value.column).trigger("change");
 			} else {
-				$(`#scale-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.scale.type}]`).attr('selected', true).trigger("change");
+				$(`#scale-${wid}-${tid}`).val(pj.scale.type).trigger("change");
 			}
+			
+			
 			// Set page orientation
 			$("input[name='pageSetupRadio']").val([`${pj.orientation.type}`])
 			// Formatting Tab
-			$(`#pageorder-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.pageorder.value}]`).attr('selected', true).trigger("change");
-			$(`#horizontal-alignment-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.h_alignment.value}]`).attr('selected', true).trigger("change");
-			$(`#vertical-alignment-${wid}-${tid} option`).removeAttr('selected').filter(`[value=${pj.v_alignment.value}]`).attr('selected', true).trigger("change");
+			$(`#pageorder-${wid}-${tid}`).val(pj.pageorder.value).trigger("change");
+			$(`#horizontal-alignment-${wid}-${tid}`).val(pj.h_alignment.value).trigger("change");
+			$(`#vertical-alignment-${wid}-${tid}`).val(pj.v_alignment.value).trigger("change");
 			if (pj.notes.value === "true") {
 				$(`#shownotes-${wid}-${tid}`).prop('checked', true);
 			}
@@ -805,6 +813,8 @@
 			$(`#bottom-middle-${wid}-${tid}`).val(pj.hf.value.bottom_center)
 			$(`#bottom-right-${wid}-${tid}`).val(pj.hf.value.bottom_right)
 		}).trigger("click");
+		
+		
 		$(`.done-${wid}-${tid}`).on('click', function(e) {
 			e.preventDefault()
 			e.stopPropagation()
@@ -831,12 +841,10 @@
 				"name": "l9zgqjql-y9f514dg",
 				"print": {
 					"type": "custom",
-					"value": [
-						{
-							"sheet": "Sheet1",
-							"range": "A1:A"
-						}
-					]
+					"value": [{
+						"sheet": "Sheet1",
+						"range": "A2:A"
+					}]
 				},
 				"size": {
 					"type": "letter"
@@ -891,10 +899,6 @@
 					"type": "workbook",
 					"value": [{
 						"sheet": "Sheet2"
-					}, {
-						"sheet": "Sheet3"
-					}, {
-						"sheet": "Sheet4"
 					}]
 				},
 				"size": {
@@ -921,7 +925,7 @@
 					}
 				},
 				"orientation": {
-					"type": "portrait"
+					"type": "protait"
 				},
 				"gridlines": {
 					"value": true
